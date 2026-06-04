@@ -16,7 +16,7 @@ Sebelum menginstal Zen PHP, pastikan server Anda memenuhi persyaratan berikut:
 Langkah termudah untuk menginstal Zen PHP adalah dengan menggunakan Git untuk meng-clone repositori Zen PHP:
 
 ```bash
-git clone https://github.com/razenry/zen-framework.git my-app
+git clone https://github.com/razenry/zen-fr.git my-app
 cd my-app
 ```
 
