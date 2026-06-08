@@ -43,6 +43,16 @@ function baseUrl($url = NULL)
     }
 }
 
+function asset($url = NULL)
+{
+    $base_url = baseUrl() . '/assets/';
+    if ($url != null) {
+        return rtrim($base_url, '/') . '/' . ltrim($url, '/');
+    } else {
+        return $base_url;
+    }
+}
+
 function route(string $name, $params = [])
 {
     return \App\Core\Route::getUrl($name, $params);
