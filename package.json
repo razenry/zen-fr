@@ -1,0 +1,26 @@
+{
+  "name": "zen-fr",
+  "version": "1.0.0",
+  "description": "Zen PHP ini adalah sebuah framework PHP MVC (Model-View-Controller) sederhana yang dirancang mirip dengan Laravel untuk membantu siswa SMK mempelajari konsep MVC, Routing, Database Query Builder, CLI Migrations, serta pengembangan web modern secara mudah.",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./resources/css/tailwind.css -o ./public/css/tailwind.css",
+    "watch:css": "tailwindcss -i ./resources/css/tailwind.css -o ./public/css/tailwind.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/razenry/zen-fr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/razenry/zen-fr/issues"
+  },
+  "homepage": "https://github.com/razenry/zen-fr#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  }
+}

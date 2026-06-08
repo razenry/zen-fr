@@ -14,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom Style CSS -->
     <link href="<?= baseUrl('public/css/style.css') ?>" rel="stylesheet">
+    <link href="<?= baseUrl('public/css/tailwind.css') ?>" rel="stylesheet">
     <link href="<?= baseUrl('public/css/bootstrap.min.css') ?>" rel="stylesheet">
 </head>
 

@@ -15,6 +15,8 @@ if ($argc < 2) {
     echo "  make:controller    Create a new controller class\n";
     echo "  make:model         Create a new Eloquent model class\n";
     echo "  make:migration     Create a new migration file\n";
+    echo "  make:seeder        Create a new seeder class\n";
+    echo "  db:seed            Run the database seeders\n";
     exit(1);
 }
 
@@ -135,6 +137,41 @@ switch ($command) {
         $content = "<?php\n\nuse Database\Schema;\nuse Database\Blueprint;\n\nclass {$className}\n{\n    public function up()\n    {\n        Schema::create('{$tableName}', function (Blueprint \$table) {\n            \$table->id();\n            \$table->timestamps();\n        });\n    }\n\n    public function down()\n    {\n        Schema::dropIfExists('{$tableName}');\n    }\n}\n";
         file_put_contents($file, $content);
         echo "Migration created successfully: database/migrations/{$timestamp}_{$name}.php\n";
+        break;
+
+    case 'make:seeder':
+        if (!isset($argv[2])) {
+            die("Error: Seeder name is required. Usage: php zen make:seeder NameSeeder\n");
+        }
+        $name = $argv[2];
+        $dir = __DIR__ . "/database/seeders";
+        if (!is_dir($dir)) mkdir($dir, 0755, true);
+        
+        $file = $dir . "/{$name}.php";
+        if (file_exists($file)) die("Error: Seeder already exists!\n");
+
+        $content = "<?php\n\nnamespace Database\Seeders;\n\nuse Database\Seeder;\n\nclass {$name} extends Seeder\n{\n    /**\n     * Run the database seeds.\n     *\n     * @return void\n     */\n    public function run()\n    {\n        // Write your database seeder logic here...\n    }\n}\n";
+        file_put_contents($file, $content);
+        echo "Seeder created successfully: database/seeders/{$name}.php\n";
+        break;
+
+    case 'db:seed':
+        $seederClass = isset($argv[2]) ? $argv[2] : 'DatabaseSeeder';
+        $fullClass = "\\Database\\Seeders\\" . $seederClass;
+        
+        $file = __DIR__ . "/database/seeders/{$seederClass}.php";
+        if (file_exists($file)) {
+            require_once $file;
+        }
+
+        if (class_exists($fullClass)) {
+            echo "Running Seeder: {$seederClass}...\n";
+            $seeder = new $fullClass();
+            $seeder->run();
+            echo "Seeder completed successfully!\n";
+        } else {
+            echo "Error: Seeder class '{$fullClass}' not found. Make sure the file exists in database/seeders/.\n";
+        }
         break;
 
     default:
