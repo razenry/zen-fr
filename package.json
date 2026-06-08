@@ -4,8 +4,8 @@
   "description": "Zen PHP ini adalah sebuah framework PHP MVC (Model-View-Controller) sederhana yang dirancang mirip dengan Laravel untuk membantu siswa SMK mempelajari konsep MVC, Routing, Database Query Builder, CLI Migrations, serta pengembangan web modern secara mudah.",
   "main": "tailwind.config.js",
   "scripts": {
-    "build:css": "tailwindcss -i ./resources/css/tailwind.css -o ./public/css/tailwind.css",
-    "watch:css": "tailwindcss -i ./resources/css/tailwind.css -o ./public/css/tailwind.css --watch"
+    "build": "tailwindcss -i ./resources/css/tailwind.css -o ./public/css/tailwind.css",
+    "dev": "tailwindcss -i ./resources/css/tailwind.css -o ./public/css/tailwind.css --watch"
   },
   "repository": {
     "type": "git",
