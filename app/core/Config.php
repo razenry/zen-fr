@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Database constants from environment
  */
@@ -9,38 +8,40 @@ define('DB_USER', getenv('DB_USER') ?: 'root');
 define('DB_PASS', getenv('DB_PASS') ?: '');
 define('DB_NAME', getenv('DB_NAME') ?: '');
 
+function baseUrl($url = NULL)
+{
+    $envBase = getenv('BASE_URL');
+    if ($envBase && $envBase !== 'http://localhost' && $envBase !== 'http://localhost/') {
+        $base_url = rtrim($envBase, '/');
+    } else {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+        $dir = str_replace('\\', '/', dirname($scriptName));
+        $dir = ($dir === '/' || $dir === '.') ? '' : $dir;
+        $base_url = rtrim($protocol . $host . $dir, '/');
+    }
+
+    if ($url !== null && $url !== '') {
+        return $base_url . '/' . ltrim($url, '/');
+    } else {
+        return $base_url;
+    }
+}
 
 function adminUrl($path = '')
 {
-    $host = getenv('BASE_URL') ?: "http://localhost/";
-    $baseUrl = rtrim($host, '/') . '/' . ltrim($path, '/');
-    return $baseUrl;
+    return baseUrl('storage/images/' . ltrim($path, '/'));
 }
 
 function baseImageUrl($path = '')
 {
-    // Make sure this matches your actual directory structure
-    $host = adminUrl('storage/images/');
-    return rtrim($host, '/') . '/' . ltrim($path, '/');
+    return baseUrl('storage/images/' . ltrim($path, '/'));
 }
 
 function imageUrl($path = '')
 {
-    // Make sure this matches your actual directory structure
-    $host = 'storage/images/';
-    return rtrim($host, '/') . '/' . ltrim($path, '/');
-}
-
-
-
-function baseUrl($url = NULL)
-{
-    $base_url = getenv('BASE_URL') ?: 'http://localhost';
-    if ($url != null) {
-        return rtrim($base_url, '/') . '/' . ltrim($url, '/');
-    } else {
-        return $base_url;
-    }
+    return 'storage/images/' . ltrim($path, '/');
 }
 
 function route(string $name, $params = [])
@@ -50,15 +51,5 @@ function route(string $name, $params = [])
 
 function views($url = NULL)
 {
-    $base_url = (getenv('BASE_URL') ?: 'http://localhost') . '/app/views/';
-    if ($url != null) {
-        return rtrim($base_url, '/') . '/' . ltrim($url, '/') . ".php";
-    } else {
-        return $base_url;
-    }
+    return baseUrl('app/views/' . ($url ? ltrim($url, '/') . '.php' : ''));
 }
-
-// Helper
-
-
-

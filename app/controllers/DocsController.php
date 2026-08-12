@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Core\Lang;
 use Exception;
 use Parsedown;
 
@@ -10,42 +11,43 @@ class DocsController extends Controller
 {
     public function index()
     {
-        // Redirect ke halaman pertama dokumentasi
         $this->redirect(route('docs.show', ['page' => 'installation']));
     }
 
     public function show($page)
     {
-        // Cegah akses directory traversal
         $page = preg_replace('/[^a-zA-Z0-9_-]/', '', $page);
-        $filePath = __DIR__ . '/../../resources/docs/' . $page . '.md';
+        $locale = Lang::getLocale();
+
+        // Check localized docs path e.g. resources/docs/en/installation.md
+        $localizedPath = __DIR__ . '/../../resources/docs/' . $locale . '/' . $page . '.md';
+        $fallbackPath  = __DIR__ . '/../../resources/docs/' . $page . '.md';
+
+        $filePath = file_exists($localizedPath) ? $localizedPath : $fallbackPath;
 
         if (!file_exists($filePath)) {
-            // Tampilkan halaman 404 jika dokumen tidak ditemukan
             http_response_code(404);
             return $this->view('errors/404');
         }
 
         $markdownContent = file_get_contents($filePath);
         
-        // Parse markdown ke HTML
         $parsedown = new Parsedown();
-        $parsedown->setSafeMode(false); // Dianggap aman karena konten kita yang buat
+        $parsedown->setSafeMode(false);
         $htmlContent = $parsedown->text($markdownContent);
 
-        // Ambil sidebar configuration
-        $sidebarPath = __DIR__ . '/../../resources/docs/sidebar.json';
+        // Sidebar configuration resolution
+        $localizedSidebar = __DIR__ . '/../../resources/docs/sidebar_' . $locale . '.json';
+        $fallbackSidebar  = __DIR__ . '/../../resources/docs/sidebar.json';
+        $sidebarPath = file_exists($localizedSidebar) ? $localizedSidebar : $fallbackSidebar;
+
         $sidebarData = [];
         if (file_exists($sidebarPath)) {
             $sidebarData = json_decode(file_get_contents($sidebarPath), true);
         }
 
-        // Tentukan judul dari halaman untuk <title>
         $title = ucfirst(str_replace('-', ' ', $page)) . ' - Zen PHP Documentation';
 
-        // Render view dengan layout khusus docs
-        // Karena layout standar mungkin tidak cocok, kita bisa passing custom flag atau buat method `viewLayout`
-        // Namun, kita bisa mengirim flag ke view 'docs/show' dan menggunakan 'layouts/docs.php' di sana.
         return \App\Core\App::View('layouts/docs', [
             'content' => $htmlContent,
             'sidebar' => $sidebarData,

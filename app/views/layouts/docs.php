@@ -7,11 +7,19 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     
     <!-- Syntax Highlighting (PrismJS) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Custom Style CSS -->
+    <link href="<?= baseUrl('public/css/style.css') ?>" rel="stylesheet">
     
+    <script>window.ZEN_BASE_URL = "<?= baseUrl('') ?>";</script>
+
     <style>
         :root {
             --docs-primary: #4f46e5;
@@ -24,12 +32,6 @@
             --docs-sidebar-w: 280px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
             color: var(--docs-text);
@@ -38,62 +40,9 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Navbar */
-        .docs-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 65px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            padding: 0 2rem;
-            z-index: 50;
-            justify-content: space-between;
-        }
-
-        .docs-logo {
-            font-size: 1.35rem;
-            font-weight: 800;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #111827;
-            letter-spacing: -0.02em;
-        }
-        
-        .docs-logo span {
-            background: linear-gradient(135deg, var(--docs-primary), #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--docs-text-light);
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-left: 1.5rem;
-            transition: all 0.2s;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-        }
-        
-        .nav-links a:hover {
-            color: var(--docs-primary);
-            background: #f3f4f6;
-        }
-
         /* Layout */
         .docs-container {
             display: flex;
-            margin-top: 65px;
             min-height: calc(100vh - 65px);
         }
 
@@ -105,10 +54,11 @@
             bottom: 0;
             left: 0;
             overflow-y: auto;
-            border-right: 1px solid rgba(229, 231, 235, 0.5);
+            border-right: 1px solid rgba(229, 231, 235, 0.8);
             padding: 2.5rem 1.5rem;
-            background: rgba(249, 250, 251, 0.6);
+            background: rgba(249, 250, 251, 0.95);
             backdrop-filter: blur(20px);
+            z-index: 40;
         }
 
         /* Custom Scrollbar for Sidebar */
@@ -142,6 +92,8 @@
 
         .sidebar-nav {
             list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
         .sidebar-nav li {
@@ -177,7 +129,7 @@
             flex: 1;
             margin-left: var(--docs-sidebar-w);
             padding: 4rem 3rem;
-            max-width: 850px;
+            max-width: 880px;
         }
 
         /* Typography & Markdown Styles */
@@ -255,8 +207,8 @@
         .prose pre {
             border-radius: 0.75rem;
             margin-bottom: 2rem;
-            background: #0f172a !important; /* Sangat gelap, ala terminal modern */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            background: #0f172a !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255,255,255,0.1);
             padding: 1.25rem 1.5rem !important;
             overflow-x: auto;
@@ -265,7 +217,7 @@
         .prose pre code {
             background: transparent;
             padding: 0;
-            color: #f8fafc; /* Warna terang agar terbaca di background gelap */
+            color: #f8fafc;
             font-size: 0.9em;
             border: none;
             font-weight: 400;
@@ -286,26 +238,10 @@
             margin-bottom: 0;
         }
 
-        /* Mobile Menu */
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .menu-toggle svg {
-            width: 24px;
-            height: 24px;
-            color: var(--docs-text);
-        }
-
         @media (max-width: 768px) {
             .docs-sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
-                z-index: 40;
                 background: white;
             }
 
@@ -318,34 +254,13 @@
                 margin-left: 0;
                 padding: 2rem 1rem;
             }
-
-            .menu-toggle {
-                display: block;
-            }
-            
-            .nav-links {
-                display: none;
-            }
         }
     </style>
 </head>
 <body>
 
-    <nav class="docs-nav">
-        <a href="<?= route('home') ?>" class="docs-logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--docs-primary)"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-            Zen <span>PHP</span>
-        </a>
-        <div class="nav-links">
-            <a href="<?= route('home') ?>">Kembali ke App</a>
-            <a href="https://github.com/razenry/zen-framework" target="_blank">GitHub</a>
-        </div>
-        <button class="menu-toggle" id="menuToggle">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-        </button>
-    </nav>
+    <!-- Unified Shared Header Component -->
+    <?php \App\Core\App::Component('header', ['title' => $title ?? 'Zen PHP Docs']); ?>
 
     <div class="docs-container">
         <!-- Sidebar -->
@@ -381,19 +296,13 @@
         </main>
     </div>
 
-    <!-- Scripts -->
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Syntax Highlighting Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
-    <script>
-        // Toggle Sidebar on Mobile
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
-    </script>
 </body>
 </html>

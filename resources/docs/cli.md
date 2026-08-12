@@ -1,51 +1,94 @@
 # Zen CLI (Command Line Interface)
 
-Zen PHP dilengkapi dengan alat command-line bawaan yang dinamakan **Zen**. Alat ini mirip dengan Artisan pada Laravel. Zen CLI akan sangat membantu mempercepat produktivitas Anda dalam membuat berkas, migrasi database, dan lain-lain.
+Zen PHP dilengkapi dengan alat command-line bawaan yang dinamis dan efisien yang dinamakan Zen CLI. Alat ini membantu mempercepat produktivitas pengembang solo maupun tim.
 
-## Menjalankan Zen
+---
 
-Untuk melihat daftar semua perintah yang tersedia, jalankan perintah ini di root folder proyek:
+## Menjalankan Perintah Zen
+
+Untuk melihat daftar semua perintah yang tersedia, jalankan perintah ini di terminal root proyek:
 
 ```bash
 php zen
 ```
 
-## Membuat Controller
+---
 
-Untuk membuat controller baru dengan cepat:
+## Setup Clean Project (`zen setup`)
 
+Perintah `zen setup` digunakan untuk mengonfigurasi direktori dasar dan menyiapkan lingkungan kerja yang bersih siap pakai:
+
+```bash
+php zen setup
+```
+
+Perintah ini akan:
+- Membuat berkas `.env` dari `.env.example` (jika belum ada).
+- Menyiapkan struktur direktori `app/repositories`, `app/services`, `app/pulse`, `app/views/pulse`, `public/uploads`, `tests/Unit`, dan `tests/Feature`.
+- Memastikan instalasi siap digunakan untuk proyek baru.
+
+---
+
+## Generator Perintah (Scaffolding)
+
+### Membuat Repository
+```bash
+php zen make:repository UserRepository
+```
+*Menghasilkan `app/repositories/UserRepository.php`.*
+
+### Membuat Service
+```bash
+php zen make:service UserService
+```
+*Menghasilkan `app/services/UserService.php`.*
+
+### Membuat Komponen Zen Pulse Reaktif
+```bash
+php zen make:pulse Counter
+```
+*Menghasilkan `app/pulse/Counter.php` dan `app/views/pulse/counter.php`.*
+
+### Membuat Controller
 ```bash
 php zen make:controller UserController
 ```
+*Menghasilkan `app/controllers/UserController.php`.*
 
-Perintah di atas akan menghasilkan file `UserController.php` di dalam folder `app/controllers/`.
-
-## Membuat Model
-
-Untuk membuat model baru:
-
+### Membuat Model
 ```bash
 php zen make:model User
 ```
+*Menghasilkan `app/models/User.php`.*
 
-File model akan dibuat di `app/models/User.php`.
-
-## Membuat File Migrasi
-
-Anda dapat membuat file migrasi baru untuk memodifikasi struktur database Anda menggunakan perintah:
-
+### Membuat File Migrasi
 ```bash
 php zen make:migration create_users_table
 ```
+*Menghasilkan berkas migrasi di `database/migrations/`.*
 
-File migrasi yang dihasilkan akan diletakkan di dalam folder `database/migrations/` dengan timestamp yang akurat (Zona waktu otomatis di-set ke Asia/Jakarta).
+### Membuat File Test (Pest PHP)
+```bash
+php zen make:test UserServiceTest
+```
+*Menghasilkan berkas pengujian di `tests/Unit/UserServiceTest.php`.*
 
-## Menjalankan Migrasi Database
+---
 
-Setelah menulis skema migrasi Anda, jalankan migrasi dengan:
+## Menjalankan Test Suite
 
 ```bash
-php zen migrate
+php zen test
 ```
 
-Perintah ini akan mengeksekusi semua file migrasi yang ada di folder `database/migrations/` dan membuat tabel di database Anda.
+---
+
+## Manajemen Migrasi Database
+
+```bash
+# Menjalankan migrasi database
+php zen migrate
+
+# Reset tabel dan jalankan ulang semua migrasi
+php zen migrate:refresh
+```

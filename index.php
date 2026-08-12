@@ -16,8 +16,9 @@ set_exception_handler(function (\Throwable $e) {
     $error->serverError($e);
 });
 
-// Include the routes
+// Include web and API routes
 require_once 'routes/web.php';
+require_once 'routes/api.php';
 
 use App\Core\Route;
 

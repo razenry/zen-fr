@@ -1,0 +1,43 @@
+[
+    {
+        "title": "クイックスタート",
+        "items": [
+            {"title": "インストール", "path": "installation"},
+            {"title": "Zen CLI ツール", "path": "cli"},
+            {"title": "パッチノート & アップグレード", "path": "patch-notes"}
+        ]
+    },
+    {
+        "title": "アーキテクチャ & API",
+        "items": [
+            {"title": "API 開発 (RESTful)", "path": "api-development"},
+            {"title": "Service & Repository パターン", "path": "services-repositories"},
+            {"title": "Zen Pulse & リアルタイム SSE", "path": "zen-pulse"},
+            {"title": "テスト (Pest PHP)", "path": "testing"}
+        ]
+    },
+    {
+        "title": "基本概念",
+        "items": [
+            {"title": "ルーティング", "path": "routing"},
+            {"title": "コントローラー", "path": "controllers"},
+            {"title": "ビュー & レイアウト", "path": "views"}
+        ]
+    },
+    {
+        "title": "データベース",
+        "items": [
+            {"title": "接続 & マイグレーション", "path": "database"},
+            {"title": "データベース シーダー", "path": "seeders"},
+            {"title": "Eloquent モデル", "path": "models"}
+        ]
+    },
+    {
+        "title": "チュートリアル",
+        "items": [
+            {"title": "基本 CRUD 構築", "path": "crud"},
+            {"title": "リレーション CRUD & UI コンポーネント", "path": "crud-relasi"},
+            {"title": "ユーザー認証", "path": "authentication"}
+        ]
+    }
+]

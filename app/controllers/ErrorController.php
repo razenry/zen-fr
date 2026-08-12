@@ -14,7 +14,7 @@ class ErrorController extends Controller
         App::Layout('main', 'errors/404', $data);
     }
 
-    public function serverError(\Throwable $exception = null)
+    public function serverError(?\Throwable $exception = null)
     {
         if (!headers_sent()) {
             header("HTTP/1.1 500 Internal Server Error");

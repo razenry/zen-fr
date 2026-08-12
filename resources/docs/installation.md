@@ -1,56 +1,78 @@
-# Instalasi Zen PHP
+# Instalasi & Memulai Zen PHP
 
-Selamat datang di dokumentasi resmi Zen PHP! Framework ini dirancang untuk memberikan pengalaman pengembangan yang cepat, ekspresif, dan elegan seperti Laravel, namun dengan fondasi yang ringan (MVC murni).
+Selamat datang di dokumentasi resmi Zen PHP Framework. Framework ini dirancang ultra-ringan, sangat cepat, dan tangguh bersaing di era modern dengan dukungan Service-Repository Pattern, Zen Pulse Reactive Engine, dan Real-time SSE.
+
+---
 
 ## Persyaratan Sistem
 
-Sebelum menginstal Zen PHP, pastikan server Anda memenuhi persyaratan berikut:
-- PHP >= 8.0
-- Ekstensi PDO PHP
-- Ekstensi Mbstring PHP
+- PHP >= 8.0 (PHP 8.3 / 8.4 didukung penuh)
+- Ekstensi PDO PHP & Mbstring
 - Composer
-- Server Database (MySQL/MariaDB)
+- Database MySQL / MariaDB
 
-## Cara Menginstal
+---
 
-Langkah termudah untuk menginstal Zen PHP adalah dengan menggunakan Git untuk meng-clone repositori Zen PHP:
+## Cara Menginstal via Composer (Rekomendasi)
+
+Cara tercepat untuk menginstal Zen PHP adalah dengan menggunakan Composer `create-project`:
+
+```bash
+composer create-project razenry/zen-php my-app
+cd my-app
+```
+
+---
+
+## Cara Alternatif (Git Clone)
+
+Anda juga dapat melakukan clone langsung dari repositori Git:
 
 ```bash
 git clone https://github.com/razenry/zen-framework.git my-app
 cd my-app
-```
-
-Setelah berhasil di-clone, install dependensi via Composer:
-
-```bash
 composer install
 ```
 
-## Konfigurasi Environment
+---
 
-Duplikat file `.env.example` dan ubah namanya menjadi `.env`:
+## Inisialisasi Otomatis via Zen Setup
+
+Setelah proyek dibuat, jalankan perintah otomatis Zen Setup:
 
 ```bash
-cp .env.example .env
+php zen setup
 ```
 
-Buka file `.env` dan sesuaikan koneksi database Anda:
+Perintah `zen setup` akan:
+- Membuat berkas `.env` dari `.env.example` (jika belum ada).
+- Menyiapkan struktur direktori `app/repositories`, `app/services`, `app/pulse`, `app/views/pulse`, dan `public/uploads`.
+- Menyiapkan proyek untuk langsung digunakan.
+
+---
+
+## Konfigurasi Environment (`.env`)
+
+Buka berkas `.env` dan sesuaikan pengaturan koneksi database Anda:
 
 ```env
-DB_HOST=localhost
+DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=nama_database
+DB_DATABASE=zen_db
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-## Menjalankan Aplikasi
+Jalankan migrasi database bawaan:
+```bash
+php zen migrate
+```
 
-Jika Anda menggunakan XAMPP/MAMP/Laragon, Anda bisa menaruh proyek ini di dalam folder `htdocs` atau `www`.
-Sebagai alternatif, Anda juga bisa menggunakan built-in server PHP di terminal:
+---
+
+## Menjalankan Server Development
 
 ```bash
 php -S localhost:8000
 ```
-
-Buka `http://localhost:8000` di browser Anda untuk melihat halaman beranda Zen PHP.
+Buka browser di `http://localhost:8000` untuk mengakses aplikasi Zen PHP Anda.

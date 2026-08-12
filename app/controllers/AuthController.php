@@ -4,10 +4,17 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\App;
-use App\Models\User;
+use App\Services\UserService;
 
 class AuthController extends Controller
 {
+    protected $userService;
+
+    public function __construct(?UserService $userService = null)
+    {
+        $this->userService = $userService ?? new UserService();
+    }
+
     public function login()
     {
         if (isset($_SESSION['user_id'])) {
@@ -22,16 +29,17 @@ class AuthController extends Controller
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        $user = User::where('email', '=', $email)->first();
+        $result = $this->userService->authenticate($email, $password);
 
-        if ($user && password_verify($password, $user->password)) {
+        if ($result['status']) {
+            $user = $result['data'];
             $_SESSION['user_id'] = $user->id;
             $_SESSION['user_name'] = $user->name;
             $_SESSION['success'] = 'Welcome back, ' . $user->name . '!';
             $this->redirect(route('home'));
         }
 
-        $_SESSION['error'] = 'Invalid email or password.';
+        $_SESSION['error'] = $result['message'];
         $this->redirect(route('login'));
     }
 
@@ -56,24 +64,18 @@ class AuthController extends Controller
             $this->redirect(route('register'));
         }
 
-        $existingUser = User::where('email', '=', $email)->first();
-        if ($existingUser) {
-            $_SESSION['error'] = 'Email is already taken.';
-            $this->redirect(route('register'));
-        }
-
-        $user = User::create([
-            'name' => $name,
-            'email' => $email,
-            'password' => password_hash($password, PASSWORD_DEFAULT)
+        $result = $this->userService->registerUser([
+            'name'     => $name,
+            'email'    => $email,
+            'password' => $password
         ]);
 
-        if ($user) {
-            $_SESSION['success'] = 'Registration successful! Please login.';
+        if ($result['status']) {
+            $_SESSION['success'] = $result['message'];
             $this->redirect(route('login'));
         }
 
-        $_SESSION['error'] = 'Failed to register. Please try again.';
+        $_SESSION['error'] = $result['message'];
         $this->redirect(route('register'));
     }
 

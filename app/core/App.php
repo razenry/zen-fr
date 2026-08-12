@@ -13,7 +13,7 @@ class App
       $viewPath = 'app/views/' . $view . '.php';
       
       if (file_exists($viewPath)) {
-         require_once $viewPath;
+         require $viewPath;
       } else {
          throw new \Exception("View file '$view' not found.");
       }
@@ -25,7 +25,7 @@ class App
       $componentPath = 'app/views/components/' . $component . '.php';
       
       if (file_exists($componentPath)) {
-         require_once $componentPath;
+         require $componentPath;
       } else {
          throw new \Exception("Component file '$component' not found.");
       }
@@ -40,7 +40,7 @@ class App
       $layoutPath = 'app/views/layouts/' . $layout . '.php';
       
       if (file_exists($layoutPath)) {
-         require_once $layoutPath;
+         require $layoutPath;
       } else {
          throw new \Exception("Layout file '$layout' not found.");
       }

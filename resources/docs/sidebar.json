@@ -3,7 +3,17 @@
         "title": "Mulai Cepat",
         "items": [
             {"title": "Instalasi", "path": "installation"},
-            {"title": "Zen CLI", "path": "cli"}
+            {"title": "Zen CLI", "path": "cli"},
+            {"title": "Patch Notes & Upgrade", "path": "patch-notes"}
+        ]
+    },
+    {
+        "title": "Arsitektur & RESTful API",
+        "items": [
+            {"title": "API Development (RESTful)", "path": "api-development"},
+            {"title": "Service & Repository Pattern", "path": "services-repositories"},
+            {"title": "Zen Pulse & Real-Time SSE", "path": "zen-pulse"},
+            {"title": "Testing (Pest PHP)", "path": "testing"}
         ]
     },
     {
@@ -11,20 +21,22 @@
         "items": [
             {"title": "Routing", "path": "routing"},
             {"title": "Controllers", "path": "controllers"},
-            {"title": "Views", "path": "views"}
+            {"title": "Views & Layouts", "path": "views"}
         ]
     },
     {
-        "title": "Database",
+        "title": "Database Layer",
         "items": [
             {"title": "Koneksi & Migrasi", "path": "database"},
+            {"title": "Database Seeders", "path": "seeders"},
             {"title": "Models", "path": "models"}
         ]
     },
     {
         "title": "Tutorials",
         "items": [
-            {"title": "Membuat CRUD", "path": "crud"},
+            {"title": "Membuat CRUD Dasar", "path": "crud"},
+            {"title": "CRUD Relasi & UI Components", "path": "crud-relasi"},
             {"title": "Autentikasi User", "path": "authentication"}
         ]
     }

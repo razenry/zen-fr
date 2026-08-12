@@ -1,0 +1,43 @@
+[
+    {
+        "title": "Getting Started",
+        "items": [
+            {"title": "Installation", "path": "installation"},
+            {"title": "Zen CLI Tool", "path": "cli"},
+            {"title": "Patch Notes & Upgrade", "path": "patch-notes"}
+        ]
+    },
+    {
+        "title": "Architecture & RESTful API",
+        "items": [
+            {"title": "API Development (RESTful)", "path": "api-development"},
+            {"title": "Service & Repository Pattern", "path": "services-repositories"},
+            {"title": "Zen Pulse & Real-Time SSE", "path": "zen-pulse"},
+            {"title": "Testing (Pest PHP)", "path": "testing"}
+        ]
+    },
+    {
+        "title": "Core Concepts",
+        "items": [
+            {"title": "Routing Engine", "path": "routing"},
+            {"title": "Controllers", "path": "controllers"},
+            {"title": "Views & Layouts", "path": "views"}
+        ]
+    },
+    {
+        "title": "Database Layer",
+        "items": [
+            {"title": "Connection & Migrations", "path": "database"},
+            {"title": "Database Seeders", "path": "seeders"},
+            {"title": "Eloquent Models", "path": "models"}
+        ]
+    },
+    {
+        "title": "Tutorials & Guides",
+        "items": [
+            {"title": "Standard CRUD Tutorial", "path": "crud"},
+            {"title": "Relational CRUD & UI Components", "path": "crud-relasi"},
+            {"title": "User Authentication", "path": "authentication"}
+        ]
+    }
+]
