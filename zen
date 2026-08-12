@@ -32,6 +32,7 @@ if ($argc < 2) {
     echo "  " . str_pad(CliColor::green("make:api-controller"), 25) . " Create a new RESTful API controller class\n";
     echo "  " . str_pad(CliColor::green("make:resource"), 25) . " Create a new API resource transformer\n";
     echo "  " . str_pad(CliColor::green("make:middleware"), 25) . " Create a new HTTP middleware class\n";
+    echo "  " . str_pad(CliColor::green("key:generate"), 25) . " Generate random 32-byte APP_KEY encryption key\n";
     echo "  " . str_pad(CliColor::green("make:model"), 25) . " Create a new Eloquent model class\n";
     echo "  " . str_pad(CliColor::green("make:migration"), 25) . " Create a new migration file\n";
     echo "  " . str_pad(CliColor::green("make:repository"), 25) . " Create a new Repository class\n";
@@ -75,6 +76,27 @@ switch ($command) {
         }
 
         echo CliColor::bold(CliColor::green("\n[SUCCESS] Zen Framework is setup and ready for development!\n\n"));
+        break;
+
+    case 'key:generate':
+        echo CliColor::cyan("Generating application encryption key...\n");
+        $key = 'base64:' . base64_encode(random_bytes(32));
+        $envPath = __DIR__ . '/.env';
+        if (!file_exists($envPath) && file_exists(__DIR__ . '/.env.example')) {
+            copy(__DIR__ . '/.env.example', $envPath);
+        }
+        if (file_exists($envPath)) {
+            $envContent = file_get_contents($envPath);
+            if (preg_match('/^APP_KEY=/m', $envContent)) {
+                $envContent = preg_replace('/^APP_KEY=.*$/m', 'APP_KEY=' . $key, $envContent);
+            } else {
+                $envContent .= "\nAPP_KEY=" . $key;
+            }
+            file_put_contents($envPath, $envContent);
+            echo CliColor::bold(CliColor::green("[SUCCESS] Application key [{$key}] set successfully.\n\n"));
+        } else {
+            echo CliColor::red("[ERROR] .env file not found.\n\n");
+        }
         break;
 
     case 'clear':

@@ -16,14 +16,64 @@ class Model
         $this->db->table($this->table);
     }
 
+    protected $casts = [];
+
     public function __set($name, $value)
     {
-        $this->attributes[$name] = $value;
+        $this->attributes[$name] = $this->castAttribute($name, $value);
     }
 
     public function __get($name)
     {
+        if (method_exists($this, $name)) {
+            return $this->$name();
+        }
         return $this->attributes[$name] ?? null;
+    }
+
+    protected function castAttribute($key, $value)
+    {
+        if (!isset($this->casts[$key]) || is_null($value)) {
+            return $value;
+        }
+
+        $type = strtolower($this->casts[$key]);
+        switch ($type) {
+            case 'int':
+            case 'integer':
+                return (int)$value;
+            case 'real':
+            case 'float':
+            case 'double':
+                return (float)$value;
+            case 'bool':
+            case 'boolean':
+                return (bool)$value;
+            case 'array':
+            case 'json':
+                return is_string($value) ? json_decode($value, true) : (array)$value;
+            default:
+                return $value;
+        }
+    }
+
+    // --- Relationship Helpers ---
+    public function hasOne(string $relatedModel, ?string $foreignKey = null, string $localKey = 'id')
+    {
+        $foreignKey = $foreignKey ?: strtolower(basename(str_replace('\\', '/', static::class))) . '_id';
+        return $relatedModel::where($foreignKey, $this->{$localKey})->first();
+    }
+
+    public function hasMany(string $relatedModel, ?string $foreignKey = null, string $localKey = 'id')
+    {
+        $foreignKey = $foreignKey ?: strtolower(basename(str_replace('\\', '/', static::class))) . '_id';
+        return $relatedModel::where($foreignKey, $this->{$localKey})->get();
+    }
+
+    public function belongsTo(string $relatedModel, ?string $foreignKey = null, string $ownerKey = 'id')
+    {
+        $foreignKey = $foreignKey ?: strtolower(basename(str_replace('\\', '/', $relatedModel))) . '_id';
+        return $relatedModel::where($ownerKey, $this->{$foreignKey})->first();
     }
 
     public static function all()
@@ -92,3 +142,4 @@ class Model
         return $instance;
     }
 }
+

@@ -53,3 +53,40 @@ function views($url = NULL)
 {
     return baseUrl('app/views/' . ($url ? ltrim($url, '/') . '.php' : ''));
 }
+
+function csrf_token(): string
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (empty($_SESSION['_csrf_token'])) {
+        $_SESSION['_csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['_csrf_token'];
+}
+
+function csrf_field(): string
+{
+    return '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+}
+
+function hash_make(string $value, array $options = []): string
+{
+    return \App\Core\Hash::make($value, $options);
+}
+
+function hash_check(string $value, string $hashedValue): bool
+{
+    return \App\Core\Hash::check($value, $hashedValue);
+}
+
+function crypt_encrypt(string $value): string
+{
+    return \App\Core\Crypt::encrypt($value);
+}
+
+function crypt_decrypt(string $payload): string
+{
+    return \App\Core\Crypt::decrypt($payload);
+}
+

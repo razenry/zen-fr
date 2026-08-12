@@ -11,6 +11,9 @@ $env->load();
 // Set Timezone
 date_default_timezone_set('Asia/Jakarta');
 
+// Register Interactive Error Handler
+\App\Core\ErrorHandler::register();
+
 // Include Config & i18n Translation Engine
 require_once 'core/Config.php';
 require_once 'core/Lang.php';

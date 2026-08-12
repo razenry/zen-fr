@@ -215,4 +215,110 @@ class Database
         
         return $this->execute();
     }
+
+    public function count(): int
+    {
+        $sql = "SELECT COUNT(*) as aggregate FROM {$this->qb_table}";
+        if (!empty($this->qb_where)) {
+            $sql .= " WHERE " . implode(' AND ', $this->qb_where);
+        }
+        $this->query($sql);
+        foreach ($this->qb_params as $index => $value) {
+            $this->bind($index + 1, $value);
+        }
+        $res = $this->single();
+        return (int)($res['aggregate'] ?? 0);
+    }
+
+    public function paginate($perPage = 15, $pageName = 'page', $page = null)
+    {
+        $page = $page ?: (int)($_GET[$pageName] ?? 1);
+        $page = max(1, $page);
+
+        $total = $this->count();
+        $offset = ($page - 1) * $perPage;
+        $this->limit($perPage, $offset);
+
+        $items = $this->get();
+
+        return new Paginator($items, $total, $perPage, $page, $pageName);
+    }
 }
+
+class Paginator implements \ArrayAccess, \IteratorAggregate, \Countable
+{
+    public $items;
+    public $total;
+    public $perPage;
+    public $currentPage;
+    public $lastPage;
+    public $pageName;
+
+    public function __construct($items, $total, $perPage = 15, $currentPage = 1, $pageName = 'page')
+    {
+        $this->items = $items;
+        $this->total = (int)$total;
+        $this->perPage = (int)$perPage;
+        $this->currentPage = (int)$currentPage;
+        $this->lastPage = (int)max(1, ceil($total / $perPage));
+        $this->pageName = $pageName;
+    }
+
+    public function links(): string
+    {
+        if ($this->lastPage <= 1) {
+            return '';
+        }
+
+        $html = '<nav aria-label="Page navigation"><ul class="pagination mb-0">';
+        
+        if ($this->currentPage <= 1) {
+            $html .= '<li class="page-item disabled"><span class="page-link">&laquo;</span></li>';
+        } else {
+            $html .= '<li class="page-item"><a class="page-link" href="' . $this->url($this->currentPage - 1) . '">&laquo;</a></li>';
+        }
+
+        for ($i = 1; $i <= $this->lastPage; $i++) {
+            if ($i === $this->currentPage) {
+                $html .= '<li class="page-item active"><span class="page-link">' . $i . '</span></li>';
+            } else {
+                $html .= '<li class="page-item"><a class="page-link" href="' . $this->url($i) . '">' . $i . '</a></li>';
+            }
+        }
+
+        if ($this->currentPage >= $this->lastPage) {
+            $html .= '<li class="page-item disabled"><span class="page-link">&raquo;</span></li>';
+        } else {
+            $html .= '<li class="page-item"><a class="page-link" href="' . $this->url($this->currentPage + 1) . '">&raquo;</a></li>';
+        }
+
+        $html .= '</ul></nav>';
+        return $html;
+    }
+
+    public function url($page): string
+    {
+        $params = $_GET;
+        $params[$this->pageName] = $page;
+        $baseUrl = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+        return $baseUrl . '?' . http_build_query($params);
+    }
+
+    public function getIterator(): \Traversable { return new \ArrayIterator($this->items); }
+    public function count(): int { return count($this->items); }
+    public function offsetExists($offset): bool { return isset($this->items[$offset]); }
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset) { return $this->items[$offset] ?? null; }
+    public function offsetSet($offset, $value): void { $this->items[$offset] = $value; }
+    public function offsetUnset($offset): void { unset($this->items[$offset]); }
+    public function toArray(): array {
+        return [
+            'data' => $this->items,
+            'total' => $this->total,
+            'per_page' => $this->perPage,
+            'current_page' => $this->currentPage,
+            'last_page' => $this->lastPage
+        ];
+    }
+}
+
