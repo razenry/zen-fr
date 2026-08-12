@@ -79,7 +79,7 @@ zen-fr/
 │   ├── js/zen-pulse.js   # Engine JS Zen Pulse
 │   └── uploads/          # Folder Upload Media
 ├── resources/
-│   └── docs/             # Dokumentasi Resmi Zen PHP (Markdown)
+│   └── lang/             # Lokalisasi (ID, EN, JA)
 ├── routes/
 │   └── web.php           # Pendefinisian Route Aplikasi
 ├── tests/                # Test Suite Pest PHP & PHPUnit
@@ -91,12 +91,19 @@ zen-fr/
 
 ---
 
-## Dokumentasi
+## Struktur Branch Repository
 
-Dokumentasi lengkap termasuk Tutorial CRUD Relasi, UI Components, dan Pest PHP Testing dapat diakses secara langsung melalui aplikasi pada rute `/docs` setelah server dinyalakan:
+Repository ini dipisahkan menjadi 2 branch utama untuk memudahkan pengembangan dan deployment:
+
+- **`main`** (Branch Saat Ini): **Clean Framework Starter**. Siap digunakan langsung untuk membangun aplikasi baru tanpa perlu menghapus file/konfigurasi dokumentasi.
+- **`docs`**: **Documentation & Reference Site**. Berisi seluruh file markdown dokumentasi beserta engine pembaca dokumentasi internal di rute `/docs`.
+
+### Mengakses Dokumentasi Lokal
+Jika Anda ingin menjalankan situs dokumentasi interaktif secara lokal:
 
 ```bash
+git checkout docs
 php -S localhost:8000
 ```
+Lalu buka `http://localhost:8000/docs` di browser Anda.
 
-Kunjungi `http://localhost:8000/docs` di browser Anda!

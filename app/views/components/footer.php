@@ -6,8 +6,8 @@
         </div>
         <p class="mb-0 small text-secondary">&copy; <?= date('Y') ?> Zen PHP Framework. MIT License.</p>
         <div class="d-flex gap-3 small">
-            <a href="<?= route('docs.index') ?>" class="text-secondary text-decoration-none hover-primary">Dokumentasi</a>
-            <a href="https://github.com/razenry/zen-framework" target="_blank" class="text-secondary text-decoration-none hover-primary">GitHub</a>
+            <a href="https://github.com/razenry/zen-fr/tree/docs" target="_blank" class="text-secondary text-decoration-none hover-primary">Dokumentasi (Branch Docs)</a>
+            <a href="https://github.com/razenry/zen-fr" target="_blank" class="text-secondary text-decoration-none hover-primary">GitHub</a>
         </div>
     </div>
 </footer>

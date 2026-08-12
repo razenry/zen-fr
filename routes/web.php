@@ -5,7 +5,6 @@ use App\Controllers\HomeController;
 use App\Controllers\AuthController;
 use App\Controllers\PulseController;
 use App\Controllers\RealtimeController;
-use App\Controllers\DocsController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -23,6 +22,3 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/_zen/pulse', [PulseController::class, 'handle'])->name('zen.pulse');
 Route::get('/_zen/sse', [RealtimeController::class, 'stream'])->name('zen.sse');
 
-// Documentation Routes
-Route::get('/docs', [DocsController::class, 'index'])->name('docs.index');
-Route::get('/docs/{page}', [DocsController::class, 'show'])->name('docs.show');

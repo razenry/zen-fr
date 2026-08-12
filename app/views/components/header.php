@@ -15,9 +15,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= route('about') ?>"><?= lang('about', 'Tentang') ?></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold text-primary" href="<?= route('docs.index') ?>"><i class="bi bi-book me-1"></i><?= lang('docs', 'Dokumentasi') ?></a>
-                </li>
             </ul>
             
             <ul class="navbar-nav align-items-center gap-2">

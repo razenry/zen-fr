@@ -17,7 +17,7 @@
         </p>
 
         <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a href="<?= route('docs.index') ?>" class="btn btn-primary btn-lg rounded-3 px-4 py-2.5 fw-bold shadow-sm">
+            <a href="https://github.com/razenry/zen-fr/tree/docs" target="_blank" class="btn btn-primary btn-lg rounded-3 px-4 py-2.5 fw-bold shadow-sm">
                 <i class="bi bi-book-half me-2"></i> <?= lang('btn_docs', 'Buka Dokumentasi') ?>
             </a>
             <a href="#demo-section" class="btn btn-outline-custom btn-lg rounded-3 px-4 py-2.5 fw-bold">
@@ -238,7 +238,7 @@
                             <h4 class="fw-extrabold text-dark m-0"><?= lang('patch_title') ?></h4>
                             <p class="text-secondary small mb-0 mt-1"><?= lang('patch_subtitle') ?></p>
                         </div>
-                        <a href="<?= route('docs.show', ['page' => 'patch-notes']) ?>" class="btn btn-primary rounded-3 px-3 py-2 font-monospace fw-semibold shadow-sm">
+                        <a href="https://github.com/razenry/zen-fr/blob/docs/resources/docs/patch-notes.md" target="_blank" class="btn btn-primary rounded-3 px-3 py-2 font-monospace fw-semibold shadow-sm">
                             Read Full Release Notes <i class="bi bi-arrow-right ms-1"></i>
                         </a>
                     </div>
