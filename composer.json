@@ -5,8 +5,7 @@
     "license": "MIT",
     "keywords": ["framework", "php", "mvc", "repository-pattern", "service-pattern", "zen-pulse", "realtime", "lightweight"],
     "require": {
-        "php": "^8.0",
-        "erusev/parsedown": "^1.8"
+        "php": "^8.0"
     },
     "require-dev": {
         "pestphp/pest": "^2.0"
