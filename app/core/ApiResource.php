@@ -8,7 +8,7 @@ abstract class ApiResource
 
     public function __construct($resource)
     {
-        $this->resource = $resource;
+        $this->resource = is_array($resource) ? (object) $resource : $resource;
     }
 
     /**
@@ -25,7 +25,7 @@ abstract class ApiResource
             return null;
         }
 
-        if (is_array($resource) && isset($resource[0]) && is_object($resource[0])) {
+        if (($resource instanceof Collection || is_array($resource)) && isset($resource[0]) && is_object($resource[0])) {
             return static::collection($resource);
         }
 
@@ -34,10 +34,18 @@ abstract class ApiResource
     }
 
     /**
-     * Transform array collection of resources
+     * Transform array or collection of resources
      */
-    public static function collection(array $resources): array
+    public static function collection($resources): array
     {
+        if ($resources instanceof Collection) {
+            $resources = $resources->all();
+        } elseif ($resources instanceof \Traversable) {
+            $resources = iterator_to_array($resources);
+        } elseif (!is_array($resources)) {
+            $resources = (array) $resources;
+        }
+
         return array_map(function ($item) {
             $instance = new static($item);
             return $instance->toArray();
