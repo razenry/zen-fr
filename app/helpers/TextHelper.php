@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helpers;
+
 class TextHelper
 {
     public static function limitText($text, $maxLength = 30, $encoding = 'UTF-8')
