@@ -160,4 +160,42 @@ class Route
         $error = new \App\Controllers\ErrorController();
         $error->notFound();
     }
+
+    // --- Route Caching Methods ---
+    public static function getCachePath(): string
+    {
+        return dirname(__DIR__, 2) . '/public/uploads/temp/routes.cache.php';
+    }
+
+    public static function isCached(): bool
+    {
+        return file_exists(self::getCachePath());
+    }
+
+    public static function cache(): bool
+    {
+        $path = self::getCachePath();
+        $dir = dirname($path);
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $exportData = [
+            'namedRoutes' => self::$namedRoutes,
+            'routesCount' => count(self::$routes)
+        ];
+
+        $content = "<?php\n\n// Zen PHP Compiled Route Cache\nreturn " . var_export($exportData, true) . ";\n";
+        return file_put_contents($path, $content) !== false;
+    }
+
+    public static function clearCache(): bool
+    {
+        $path = self::getCachePath();
+        if (file_exists($path)) {
+            return @unlink($path);
+        }
+        return true;
+    }
 }
+

@@ -90,3 +90,14 @@ function crypt_decrypt(string $payload): string
     return \App\Core\Crypt::decrypt($payload);
 }
 
+function execution_time(int $decimals = 4): float
+{
+    return \App\Core\Benchmark::elapsed($decimals);
+}
+
+function memory_peak(): string
+{
+    return \App\Core\Benchmark::memory();
+}
+
+

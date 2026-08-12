@@ -22,7 +22,10 @@ if ($argc < 2) {
     echo CliColor::yellow("Available commands:\n");
     echo "  " . str_pad(CliColor::green("setup"), 25) . " Setup clean environment and clear starter tutorial data\n";
     echo "  " . str_pad(CliColor::green("clear"), 25) . " Clear temporary files, session cache, and view buffers\n";
-    echo "  " . str_pad(CliColor::green("optimize"), 25) . " Optimize framework autoloading and performance\n";
+    echo "  " . str_pad(CliColor::green("optimize"), 25) . " Optimize framework autoloading and route performance\n";
+    echo "  " . str_pad(CliColor::green("optimize:clear"), 25) . " Clear all framework optimization caches\n";
+    echo "  " . str_pad(CliColor::green("route:cache"), 25) . " Create a route cache file for faster route execution\n";
+    echo "  " . str_pad(CliColor::green("route:clear"), 25) . " Remove the compiled route cache file\n";
     echo "  " . str_pad(CliColor::green("test"), 25) . " Run Pest PHP unit & feature test suite\n";
     echo "  " . str_pad(CliColor::green("migrate"), 25) . " Run database migrations\n";
     echo "  " . str_pad(CliColor::green("migrate:refresh"), 25) . " Drop all tables and re-run all migrations\n";
@@ -121,10 +124,40 @@ switch ($command) {
 
     case 'optimize':
         echo CliColor::cyan("Optimizing framework performance & configuration...\n");
-        echo CliColor::green("[OK] Autoloading maps checked.\n");
-        echo CliColor::green("[OK] Database connection pool configured.\n");
-        echo CliColor::green("[OK] Zen Pulse reactive routes pre-compiled.\n");
+        passthru('composer dump-autoload -o');
+        
+        require_once __DIR__ . '/routes/web.php';
+        if (file_exists(__DIR__ . '/routes/api.php')) {
+            require_once __DIR__ . '/routes/api.php';
+        }
+        
+        \App\Core\Route::cache();
+        echo CliColor::green("[OK] Autoloading PSR-4 classmaps compiled.\n");
+        echo CliColor::green("[OK] Application routes pre-compiled and cached.\n");
         echo CliColor::bold(CliColor::green("\n[SUCCESS] Zen Framework is optimized for peak production speed!\n\n"));
+        break;
+
+    case 'route:cache':
+        echo CliColor::cyan("Compiling application routes...\n");
+        require_once __DIR__ . '/routes/web.php';
+        if (file_exists(__DIR__ . '/routes/api.php')) {
+            require_once __DIR__ . '/routes/api.php';
+        }
+        \App\Core\Route::cache();
+        echo CliColor::bold(CliColor::green("[SUCCESS] Routes cached successfully.\n\n"));
+        break;
+
+    case 'route:clear':
+        echo CliColor::cyan("Clearing route cache...\n");
+        \App\Core\Route::clearCache();
+        echo CliColor::bold(CliColor::green("[SUCCESS] Route cache cleared successfully.\n\n"));
+        break;
+
+    case 'optimize:clear':
+        echo CliColor::cyan("Clearing optimization caches...\n");
+        \App\Core\Route::clearCache();
+        echo CliColor::green("[OK] Route cache cleared.\n");
+        echo CliColor::bold(CliColor::green("\n[SUCCESS] Optimization caches cleared successfully!\n\n"));
         break;
 
     case 'db:seed':
