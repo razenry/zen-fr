@@ -10,6 +10,10 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         
+        if (!function_exists('request')) {
+            require_once dirname(__DIR__) . '/app/init.php';
+        }
+        
         // Define base environment constants if needed
         if (!defined('DB_HOST')) {
             define('DB_HOST', 'localhost');

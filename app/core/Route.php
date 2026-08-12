@@ -134,12 +134,36 @@ class Route
                     }
                 }
 
+                $request = \App\Core\Request::capture();
+
                 if (is_array($route['callback'])) {
                     $controller = new $route['callback'][0]();
                     $action = $route['callback'][1];
-                    call_user_func_array([$controller, $action], $matches);
+                    $ref = new \ReflectionMethod($controller, $action);
+                    $args = [];
+                    $matchIndex = 0;
+                    foreach ($ref->getParameters() as $param) {
+                        $type = $param->getType();
+                        if ($type && ($type->getName() === \App\Core\Request::class || is_subclass_of($type->getName(), \App\Core\Request::class))) {
+                            $args[] = $request;
+                        } elseif (isset($matches[$matchIndex])) {
+                            $args[] = $matches[$matchIndex++];
+                        }
+                    }
+                    call_user_func_array([$controller, $action], !empty($args) ? $args : $matches);
                 } elseif (is_callable($route['callback'])) {
-                    call_user_func_array($route['callback'], $matches);
+                    $ref = new \ReflectionFunction($route['callback']);
+                    $args = [];
+                    $matchIndex = 0;
+                    foreach ($ref->getParameters() as $param) {
+                        $type = $param->getType();
+                        if ($type && ($type->getName() === \App\Core\Request::class || is_subclass_of($type->getName(), \App\Core\Request::class))) {
+                            $args[] = $request;
+                        } elseif (isset($matches[$matchIndex])) {
+                            $args[] = $matches[$matchIndex++];
+                        }
+                    }
+                    call_user_func_array($route['callback'], !empty($args) ? $args : $matches);
                 }
                 return;
             }

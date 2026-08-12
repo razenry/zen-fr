@@ -100,4 +100,14 @@ function memory_peak(): string
     return \App\Core\Benchmark::memory();
 }
 
+function request($key = null, $default = null)
+{
+    $req = \App\Core\Request::capture();
+    if ($key === null) {
+        return $req;
+    }
+    return $req->input($key, $default);
+}
+
+
 
