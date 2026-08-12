@@ -110,8 +110,18 @@ class Database
         return $this;
     }
 
-    public function where($column, $operator, $value = null)
+    public function getTable()
     {
+        return $this->qb_table;
+    }
+
+    public function where($column, $operator = null, $value = null)
+    {
+        if (func_num_args() === 1) {
+            $this->qb_where[] = $column;
+            return $this;
+        }
+
         if ($value === null) {
             $value = $operator;
             $operator = '=';
@@ -119,6 +129,73 @@ class Database
         
         $this->qb_where[] = "$column $operator ?";
         $this->qb_params[] = $value;
+        return $this;
+    }
+
+    public function orWhere($column, $operator = null, $value = null)
+    {
+        if ($value === null) {
+            $value = $operator;
+            $operator = '=';
+        }
+
+        $clause = "$column $operator ?";
+        if (empty($this->qb_where)) {
+            $this->qb_where[] = $clause;
+        } else {
+            $last = array_pop($this->qb_where);
+            $this->qb_where[] = "($last OR $clause)";
+        }
+        $this->qb_params[] = $value;
+        return $this;
+    }
+
+    public function whereIn($column, array $values)
+    {
+        if (empty($values)) {
+            $this->qb_where[] = "1 = 0";
+            return $this;
+        }
+        $placeholders = implode(', ', array_fill(0, count($values), '?'));
+        $this->qb_where[] = "$column IN ($placeholders)";
+        foreach ($values as $val) {
+            $this->qb_params[] = $val;
+        }
+        return $this;
+    }
+
+    public function whereNull($column)
+    {
+        $this->qb_where[] = "$column IS NULL";
+        return $this;
+    }
+
+    public function whereNotNull($column)
+    {
+        $this->qb_where[] = "$column IS NOT NULL";
+        return $this;
+    }
+
+    public function whereRaw($sql, array $params = [])
+    {
+        $this->qb_where[] = $sql;
+        foreach ($params as $param) {
+            $this->qb_params[] = $param;
+        }
+        return $this;
+    }
+
+    public function orWhereRaw($sql, array $params = [])
+    {
+        if (empty($this->qb_where)) {
+            $this->qb_where[] = $sql;
+        } else {
+            $last = array_pop($this->qb_where);
+            $this->qb_where[] = "($last OR $sql)";
+        }
+        foreach ($params as $param) {
+            $this->qb_params[] = $param;
+        }
         return $this;
     }
 
