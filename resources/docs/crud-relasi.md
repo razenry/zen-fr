@@ -1,6 +1,6 @@
-# Tutorial CRUD Relasi & Components
+# Tutorial CRUD Relasi, Relation Querying & Components
 
-Panduan ini membimbing Anda membuat aplikasi CRUD Relasional (One-to-Many) yang bersih, modular, dan modern menggunakan arsitektur Service & Repository Pattern, Reusable UI Components, serta Zen Pulse.
+Panduan ini membimbing Anda membuat aplikasi CRUD Relasional (One-to-Many / BelongsTo / HasOne) yang bersih, modular, dan modern menggunakan arsitektur Service & Repository Pattern, Laravel-like Relationship Querying (`whereHas`, `has`, `with`, relation chaining), Reusable UI Components, serta Zen Pulse.
 
 Dalam contoh ini, kita membuat sistem pengelolaan Kategori & Produk (Setiap Kategori memiliki banyak Produk).
 
@@ -30,6 +30,7 @@ class CreateCategoriesTable
             $table->string('name');
             $table->string('slug');
             $table->timestamps();
+            $table->softDeletes(); // Opsional Soft Delete
         });
     }
 
@@ -57,6 +58,7 @@ class CreateProductsTable
             $table->integer('price');
             $table->text('description');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -74,7 +76,7 @@ php zen migrate
 
 ---
 
-## 2. Membuat Model dengan Relasi
+## 2. Membuat Model dengan Relasi Ekspresif
 
 Buat model `Category` dan `Product` menggunakan Zen CLI:
 
@@ -96,7 +98,7 @@ class Category extends Model
 
     public function products()
     {
-        return Product::where('category_id', '=', $this->id)->get();
+        return $this->hasMany(Product::class, 'category_id', 'id');
     }
 }
 ```
@@ -114,14 +116,66 @@ class Product extends Model
 
     public function category()
     {
-        return Category::find($this->category_id);
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 }
 ```
 
 ---
 
-## 3. Membuat Repository & Service
+## 3. Sistem Query Relasi Seperti Laravel (v3.3.0)
+
+Zen PHP Framework v3.3.0 mendukung fitur **Query Relasi Gaya Laravel**:
+
+### A. Dynamic Relation Query Chaining
+
+Memanggil method relasi sebagai method `$category->products()` mengembalikan objek `Relation` yang dapat dirantai dengan metode query builder tambahan:
+
+```php
+$category = Category::find(1);
+
+// Filter produk milik kategori dengan kriteria tambahan
+$activeProducts = $category->products()->where('price', '>', 50000)->get();
+
+// Menghitung jumlah produk terelasi
+$productCount = $category->products()->count();
+```
+
+Mengakses relasi sebagai properti `$category->products` secara otomatis mengeksekusi query dan mengembalikan `Collection` / `Model` hasil relasi.
+
+### B. Eager Loading (`with`)
+
+Mencegah masalah N+1 Query dengan memuat relasi sekaligus dalam batch:
+
+```php
+// Memuat produk beserta informasi kategorinya
+$products = Product::with('category')->get();
+
+foreach ($products as $product) {
+    echo $product->title . ' - Kategori: ' . $product->category->name;
+}
+```
+
+### C. Filtering Keberadaan Relasi (`has` & `whereHas`)
+
+Mencari record induk berdasarkan ada/tidaknya record pada relasi:
+
+```php
+// Mengambil semua kategori yang memiliki setidaknya 1 produk
+$categoriesWithProducts = Category::has('products')->get();
+
+// Mengambil kategori yang memiliki produk dengan harga di atas 100.000
+$premiumCategories = Category::whereHas('products', function($query) {
+    $query->where('price', '>', 100000);
+})->get();
+
+// Mengambil kategori yang TIDAK memiliki produk
+$emptyCategories = Category::doesntHave('products')->get();
+```
+
+---
+
+## 4. Membuat Repository & Service
 
 Gunakan Zen CLI generator:
 
@@ -146,164 +200,26 @@ class ProductRepository extends BaseRepository
         return Product::class;
     }
 
-    public function getByCategory($categoryId)
+    public function getProductsWithCategory()
     {
-        return Product::where('category_id', '=', $categoryId)->get();
-    }
-}
-```
-
-### ProductService (`app/services/ProductService.php`)
-
-```php
-namespace App\Services;
-
-use App\Repositories\ProductRepository;
-use App\Repositories\CategoryRepository;
-
-class ProductService extends BaseService
-{
-    protected $productRepo;
-    protected $categoryRepo;
-
-    public function __construct(?ProductRepository $productRepo = null, ?CategoryRepository $categoryRepo = null)
-    {
-        $this->productRepo = $productRepo ?? new ProductRepository();
-        $this->categoryRepo = $categoryRepo ?? new CategoryRepository();
-    }
-
-    public function createProduct(array $data)
-    {
-        if (empty($data['title']) || empty($data['price']) || empty($data['category_id'])) {
-            return $this->error('Kategori, Judul, dan Harga wajib diisi.');
-        }
-
-        $product = $this->productRepo->create($data);
-        return $this->success($product, 'Produk berhasil ditambahkan.');
-    }
-
-    public function getProductsWithCategories()
-    {
-        $products = $this->productRepo->all();
-        foreach ($products as $prod) {
-            $cat = $prod->category();
-            $prod->category_name = $cat ? $cat->name : 'Uncategorized';
-        }
-        return $products;
+        return Product::with('category')->get();
     }
 }
 ```
 
 ---
 
-## 4. Membuat Reusable UI Components
+## 5. Reusable UI Components & Zen Pulse
 
-Zen PHP mendukung pemisahan UI menjadi komponen terisolasi di `app/views/components/`.
-
-### Komponen Badge Kategori (`app/views/components/category_badge.php`)
-
-```html
-<span class="inline-block px-3 py-1 text-xs font-semibold bg-indigo-100 text-indigo-700 rounded-full">
-    <?= htmlspecialchars($category_name) ?>
-</span>
-```
-
-### Komponen Card Produk (`app/views/components/product_card.php`)
-
-```html
-<div class="bg-white p-6 rounded-xl shadow border border-gray-100 flex flex-col justify-between">
-    <div>
-        <div class="flex justify-between items-center mb-2">
-            <!-- Memanggil Komponen Badge Kategori -->
-            <?php \App\Core\App::Component('category_badge', ['category_name' => $product->category_name]); ?>
-            <span class="text-sm font-bold text-emerald-600">Rp <?= number_format($product->price, 0, ',', '.') ?></span>
-        </div>
-        <h3 class="text-lg font-bold text-gray-800 mb-2"><?= htmlspecialchars($product->title) ?></h3>
-        <p class="text-gray-600 text-sm mb-4"><?= htmlspecialchars($product->description) ?></p>
-    </div>
-    <div class="flex gap-2 border-t pt-3">
-        <a href="<?= route('products.edit', ['id' => $product->id]) ?>" class="text-xs bg-amber-50 text-amber-600 px-3 py-1.5 rounded font-medium">Edit</a>
-        <form action="<?= route('products.delete', ['id' => $product->id]) ?>" method="POST" style="display:inline;">
-            <button type="submit" class="text-xs bg-rose-50 text-rose-600 px-3 py-1.5 rounded font-medium" onclick="return confirm('Hapus produk ini?')">Hapus</button>
-        </form>
-    </div>
-</div>
-```
-
----
-
-## 5. Komponen Filter Realtime Zen Pulse
-
-Buat komponen reaktif Zen Pulse untuk memfilter produk berdasarkan kategori secara instant tanpa reload halaman:
-
-```bash
-php zen make:pulse ProductFilter
-```
-
-### Komponen Logika (`app/pulse/ProductFilter.php`)
+Zen PHP mendukung pemisahan UI menjadi komponen terisolasi di `app/views/components/` serta reaktivitas realtime menggunakan Zen Pulse.
 
 ```php
-namespace App\Pulse;
-
-use App\Core\ZenPulseComponent;
-use App\Core\App;
-use App\Services\ProductService;
-use App\Repositories\CategoryRepository;
-
-class ProductFilter extends ZenPulseComponent
-{
-    public $selectedCategory = 'all';
-
-    public function render()
-    {
-        $productService = new ProductService();
-        $categoryRepo = new CategoryRepository();
-
-        $categories = $categoryRepo->all();
-        $products = $productService->getProductsWithCategories();
-
-        if ($this->selectedCategory !== 'all') {
-            $products = array_filter($products, function($p) {
-                return (string)$p->category_id === (string)$this->selectedCategory;
-            });
-        }
-
-        ob_start();
-        App::View('pulse/product_filter', [
-            'categories' => $categories,
-            'products'   => $products,
-            'selected'   => $this->selectedCategory
-        ]);
-        return ob_get_clean();
-    }
-}
-```
-
-### Komponen Tampilan (`app/views/pulse/product_filter.php`)
-
-```html
-<div>
-    <div class="flex items-center gap-3 mb-6">
-        <label class="font-bold text-gray-700">Filter Kategori (Zen Pulse):</label>
-        <select zen-model="selectedCategory" class="px-4 py-2 border rounded-lg bg-white">
-            <option value="all">Semua Kategori</option>
-            <?php foreach ($categories as $cat): ?>
-                <option value="<?= $cat->id ?>"><?= htmlspecialchars($cat->name) ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <?php foreach ($products as $product): ?>
-            <!-- Memanggil Reusable UI Component product_card -->
-            <?php \App\Core\App::Component('product_card', ['product' => $product]); ?>
-        <?php endforeach; ?>
-    </div>
-</div>
+// Contoh pemanggilan komponen
+\App\Core\App::Component('category_badge', ['category_name' => $product->category->name]);
 ```
 
 ---
 
 ## Kesimpulan
 
-Dengan mengombinasikan Service-Repository Pattern, Reusable UI Components, dan Zen Pulse Engine, aplikasi Anda memiliki struktur yang sangat bersih, mudah dirawat baik oleh pengembang solo maupun tim besar, serta memiliki performa yang sangat cepat.
+Dengan mengombinasikan Service-Repository Pattern, Eager Loading (`with`), Relation Querying (`whereHas`), Reusable UI Components, dan Zen Pulse Engine, aplikasi Anda memiliki struktur yang sangat bersih, kuat, dan performan tinggi.
