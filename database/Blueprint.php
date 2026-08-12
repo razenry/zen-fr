@@ -49,6 +49,12 @@ class Blueprint
         return $this;
     }
 
+    public function softDeletes($column = 'deleted_at')
+    {
+        $this->columns[] = "$column TIMESTAMP NULL DEFAULT NULL";
+        return $this;
+    }
+
     public function unique()
     {
         // Ambil definisi kolom terakhir yang ditambahkan dan tambahkan UNIQUE
