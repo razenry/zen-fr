@@ -11,7 +11,7 @@ define('DB_NAME', getenv('DB_NAME') ?: '');
 function baseUrl($url = NULL)
 {
     $envBase = getenv('BASE_URL');
-    if ($envBase && $envBase !== 'http://localhost' && $envBase !== 'http://localhost/') {
+    if ($envBase && trim($envBase) !== '') {
         $base_url = rtrim($envBase, '/');
     } else {
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
