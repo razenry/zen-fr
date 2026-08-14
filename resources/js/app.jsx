@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react{React.version ? '' : '/client'}';
+import { createRoot } from 'react-dom/client';
 import Dashboard from './Pages/Dashboard';
 
 const pages = {
