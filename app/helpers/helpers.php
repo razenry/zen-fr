@@ -182,3 +182,33 @@ if (!function_exists('request')) {
         return $req->input($key, $default);
     }
 }
+
+if (!function_exists('gate')) {
+    /**
+     * Access Gate authorization instance
+     */
+    function gate(mixed $user = null): \App\Core\Gate
+    {
+        return \App\Core\Gate::forUser($user);
+    }
+}
+
+if (!function_exists('authorize')) {
+    /**
+     * Authorize an ability or throw HTTP 403 Forbidden exception
+     */
+    function authorize(string $ability, mixed $params = null): bool
+    {
+        return \App\Core\Gate::authorize($ability, null, $params);
+    }
+}
+
+if (!function_exists('auth')) {
+    /**
+     * Access Auth manager instance
+     */
+    function auth(string $guard = 'web')
+    {
+        return \App\Core\Auth::guard($guard);
+    }
+}
