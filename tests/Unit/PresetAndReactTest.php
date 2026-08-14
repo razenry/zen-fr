@@ -26,3 +26,27 @@ test('tailwind and vite configuration files exist', function () {
     expect(file_exists(dirname(__DIR__, 2) . '/vite.config.js'))->toBeTrue();
     expect(file_exists(dirname(__DIR__, 2) . '/package.json'))->toBeTrue();
 });
+
+test('preset react CLI command executes cleanly without errors', function () {
+    $root = dirname(__DIR__, 2);
+    exec("php \"{$root}/zen\" preset:react", $output, $returnCode);
+
+    expect($returnCode)->toBe(0);
+    expect(implode("\n", $output))->toContain('React 18 Preset configured!');
+});
+
+test('preset pulse CLI command executes cleanly without errors', function () {
+    $root = dirname(__DIR__, 2);
+    exec("php \"{$root}/zen\" preset:pulse", $output, $returnCode);
+
+    expect($returnCode)->toBe(0);
+    expect(implode("\n", $output))->toContain('Zen Pulse Live Fullstack mode ready!');
+});
+
+test('preset api CLI command executes cleanly without errors', function () {
+    $root = dirname(__DIR__, 2);
+    exec("php \"{$root}/zen\" preset:api", $output, $returnCode);
+
+    expect($returnCode)->toBe(0);
+    expect(implode("\n", $output))->toContain('REST API Dedicated Mode Ready!');
+});

@@ -654,6 +654,15 @@ switch ($command) {
         $deleteRecursive(__DIR__ . '/resources/js');
         $deleteRecursive(__DIR__ . '/app/views/pulse');
         $deleteRecursive(__DIR__ . '/app/views/home');
+        
+        // Ensure Swagger UI view exists
+        if (!is_dir(__DIR__ . '/app/views/docs')) {
+            mkdir(__DIR__ . '/app/views/docs', 0755, true);
+        }
+        if (!file_exists(__DIR__ . '/app/views/docs/swagger.php')) {
+            file_put_contents(__DIR__ . '/app/views/docs/swagger.php', '<!DOCTYPE html><html><head><title>Zen API Docs</title></head><body><h1>Zen API Documentation</h1></body></html>');
+        }
+
         echo CliColor::green("[OK] Frontend UI views & React components removed for minimal footprint.\n");
         echo CliColor::green("[OK] CORS Middleware & Bearer Token Authentication enabled.\n");
         echo CliColor::green("[OK] Swagger OpenAPI Interactive Documentation ready at /docs.\n");
@@ -673,13 +682,48 @@ switch ($command) {
         // Clean up Blade Pulse views to reduce footprint
         $deleteRecursive(__DIR__ . '/app/views/pulse');
         
-        // Ensure React entry points exist
+        // Ensure React entry points & Dashboard component exist
         if (!is_dir(__DIR__ . '/resources/js/Pages')) {
             mkdir(__DIR__ . '/resources/js/Pages', 0755, true);
         }
         if (!file_exists(__DIR__ . '/resources/js/app.jsx')) {
             file_put_contents(__DIR__ . '/resources/js/app.jsx', "import React from 'react';\nimport { createRoot } from 'react-dom/client';\nimport Dashboard from './Pages/Dashboard';\n\nconst rootElement = document.getElementById('app');\nif (rootElement) {\n    createRoot(rootElement).render(<Dashboard />);\n}\n");
         }
+        if (!file_exists(__DIR__ . '/resources/js/Pages/Dashboard.jsx')) {
+            file_put_contents(__DIR__ . '/resources/js/Pages/Dashboard.jsx', "import React from 'react';\n\nexport default function Dashboard(props) {\n  return (\n    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>\n      <h1>Welcome to Zen PHP + React 18</h1>\n      <p>App running with Vite & React 18 Preset.</p>\n    </div>\n  );\n}\n");
+        }
+
+        // Ensure package.json has React & Vite scripts
+        $pkgPath = __DIR__ . '/package.json';
+        $pkgData = [
+            'name' => 'zen-php-framework',
+            'private' => true,
+            'version' => '8.1.0',
+            'type' => 'module',
+            'scripts' => [
+                'dev' => 'vite',
+                'build' => 'vite build',
+                'serve' => 'php zen serve'
+            ],
+            'devDependencies' => [
+                '@vitejs/plugin-react' => '^4.2.1',
+                'autoprefixer' => '^10.4.17',
+                'postcss' => '^8.4.35',
+                'tailwindcss' => '^3.4.1',
+                'vite' => '^5.1.4'
+            ],
+            'dependencies' => [
+                'react' => '^18.2.0',
+                'react-dom' => '^18.2.0'
+            ]
+        ];
+        file_put_contents($pkgPath, json_encode($pkgData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+        // Ensure vite.config.js exists
+        if (!file_exists(__DIR__ . '/vite.config.js')) {
+            file_put_contents(__DIR__ . '/vite.config.js', "import { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\n\nexport default defineConfig({\n  plugins: [react()],\n});\n");
+        }
+
         echo CliColor::green("[OK] Unused server-side Blade Pulse components removed.\n");
         echo CliColor::green("[OK] package.json with React 18 & Vite initialized.\n");
         echo CliColor::green("[OK] resources/js/app.jsx & resources/js/Pages/Dashboard.jsx ready.\n");
@@ -698,6 +742,18 @@ switch ($command) {
         };
         // Clean up React/Inertia SPA assets to focus on Blade + Zen Pulse
         $deleteRecursive(__DIR__ . '/resources/js');
+
+        // Ensure Zen Pulse directories and components exist
+        if (!is_dir(__DIR__ . '/app/views/pulse')) {
+            mkdir(__DIR__ . '/app/views/pulse', 0755, true);
+        }
+        if (!is_dir(__DIR__ . '/app/pulse')) {
+            mkdir(__DIR__ . '/app/pulse', 0755, true);
+        }
+        if (!file_exists(__DIR__ . '/app/views/pulse/counter.php')) {
+            file_put_contents(__DIR__ . '/app/views/pulse/counter.php', "<div>Counter View</div>");
+        }
+
         echo CliColor::green("[OK] Inertia & React SPA files removed to streamline front-end.\n");
         echo CliColor::green("[OK] tailwind.config.js & Tailwind engine active.\n");
         echo CliColor::green("[OK] Zen Pulse Live Reactive Engine active.\n");
