@@ -1,6 +1,5 @@
 /vendor
 /node_modules
 /.env
-/.next
-/out
+/hot
 .phpunit.result.cache
