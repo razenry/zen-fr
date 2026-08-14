@@ -5,50 +5,64 @@ import { Check, Copy, Code2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { uiTranslations } from '../data/documentationData';
 
-// Simple lightweight syntax tokenizer for PHP, JSX, HTML, Bash, and JSON
+// Safe syntax tokenizer using non-conflicting placeholder tokens
 function highlightCode(code, lang) {
   if (!code) return '';
 
   const esc = (str) =>
     str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-  let html = esc(code);
+  let text = esc(code);
+  const tokens = [];
+
+  const storeToken = (cls, content) => {
+    const key = `___ZEN_TOKEN_${tokens.length}___`;
+    tokens.push({ key, html: `<span class="${cls}">${content}</span>` });
+    return key;
+  };
+
+  const l = (lang || '').toLowerCase();
 
   // 1. Comments
-  html = html.replace(/(\/\/[^\n]*|\/\*[\s\S]*?\*\/|#[^\n]*)/g, '<span class="text-slate-500 italic">$1</span>');
+  text = text.replace(/(\/\/[^\n]*|\/\*[\s\S]*?\*\/|#[^\n]*)/g, (m) => storeToken('text-slate-500 italic', m));
 
-  // 2. Strings (double quotes and single quotes)
-  html = html.replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, '<span class="text-emerald-400">$1</span>');
+  // 2. Strings
+  text = text.replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, (m) => storeToken('text-emerald-400 font-medium', m));
 
-  // 3. Keywords
-  if (['php', 'jsx', 'js', 'javascript'].includes(lang)) {
+  // 3. Variables ($variable)
+  if (['php', 'jsx', 'js'].includes(l)) {
+    text = text.replace(/(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/g, (m) => storeToken('text-amber-300 font-semibold', m));
+  }
+
+  // 4. Keywords
+  if (['php', 'jsx', 'js', 'javascript'].includes(l)) {
     const keywords = [
       'namespace', 'use', 'class', 'extends', 'implements', 'function', 'public', 'private', 'protected',
       'static', 'return', 'if', 'else', 'foreach', 'for', 'while', 'as', 'new', 'try', 'catch',
       'import', 'export', 'default', 'const', 'let', 'var', 'await', 'async', 'from', 'true', 'false', 'null'
     ];
     const kwRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
-    html = html.replace(kwRegex, '<span class="text-sky-400 font-bold">$1</span>');
-
-    // PHP Variables ($variable)
-    html = html.replace(/(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/g, '<span class="text-amber-300">$1</span>');
-  }
-
-  if (['bash', 'sh'].includes(lang)) {
+    text = text.replace(kwRegex, (m) => storeToken('text-sky-400 font-bold', m));
+  } else if (['bash', 'sh'].includes(l)) {
     const bashKw = ['composer', 'php', 'zen', 'npm', 'run', 'dev', 'install', 'create-project', 'git', 'clone', 'cd', 'make'];
     const bashRegex = new RegExp(`\\b(${bashKw.join('|')})\\b`, 'g');
-    html = html.replace(bashRegex, '<span class="text-sky-400 font-bold">$1</span>');
+    text = text.replace(bashRegex, (m) => storeToken('text-sky-400 font-bold', m));
   }
 
-  // 4. Numbers
-  html = html.replace(/\b(\d+)\b/g, '<span class="text-purple-400 font-bold">$1</span>');
+  // 5. Numbers
+  text = text.replace(/\b(\d+)\b/g, (m) => storeToken('text-purple-400 font-bold', m));
 
-  // 5. JSX / HTML Tags
-  if (['jsx', 'html'].includes(lang)) {
-    html = html.replace(/(&lt;\/?[a-zA-Z0-9]+(?:\s+[^&]*)?\/?&gt;)/g, '<span class="text-rose-400">$1</span>');
+  // 6. JSX/HTML Tags
+  if (['jsx', 'html'].includes(l)) {
+    text = text.replace(/(&lt;\/?[a-zA-Z0-9]+(?:\s+[^&]*)?\/?&gt;)/g, (m) => storeToken('text-rose-400 font-semibold', m));
   }
 
-  return html;
+  // Final Pass: Substitute placeholder tokens with styled HTML
+  tokens.forEach(({ key, html }) => {
+    text = text.replace(key, html);
+  });
+
+  return text;
 }
 
 export default function CodeBlock({ code, language = 'bash', showLineNumbers = true }) {
@@ -65,7 +79,7 @@ export default function CodeBlock({ code, language = 'bash', showLineNumbers = t
   };
 
   const lines = code.trim().split('\n');
-  const highlighted = highlightCode(code, language.toLowerCase());
+  const highlighted = highlightCode(code, language);
 
   return (
     <div className="relative my-6 overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 font-mono text-xs shadow-2xl transition hover:border-slate-700">
