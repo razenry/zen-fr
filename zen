@@ -854,8 +854,12 @@ switch ($command) {
             file_put_contents(__DIR__ . '/app/views/pulse/counter.php', "<div>Counter View</div>");
         }
 
+        // Update routes/web.php for Pulse mode
+        $pulseWebRoutes = "<?php\n\nuse App\\Core\\Route;\nuse App\\Controllers\\HomeController;\nuse App\\Controllers\\AuthController;\nuse App\\Controllers\\PulseController;\n\nRoute::get('/', [HomeController::class, 'index'])->name('home');\nRoute::get('/docs', function () {\n    view('docs.swagger');\n})->name('docs');\nRoute::get('/about', [HomeController::class, 'about'])->name('about');\nRoute::get('/login', [AuthController::class, 'login'])->name('login');\nRoute::get('/register', [AuthController::class, 'register'])->name('register');\nRoute::post('/_zen/pulse', [PulseController::class, 'handle'])->name('zen.pulse');\n";
+        file_put_contents(__DIR__ . '/routes/web.php', $pulseWebRoutes);
+
         echo CliColor::green("[OK] Inertia & React SPA files removed to streamline front-end.\n");
-        echo CliColor::green("[OK] tailwind.config.js & Tailwind engine active.\n");
+        echo CliColor::green("[OK] TailwindCSS v4 & Vite engine active.\n");
         echo CliColor::green("[OK] Zen Pulse Live Reactive Engine active.\n");
         echo CliColor::bold(CliColor::green("[SUCCESS] Zen Pulse Live Fullstack mode ready!\n"));
         break;
