@@ -18,9 +18,16 @@ class HomeController extends Controller
 
     public function index()
     {
-        $products = $this->productService->getAllProducts();
+        $data['title'] = Lang::get('hero_title', 'Zen PHP Framework') . ' - Starter Kit';
+        $data['user'] = ['name' => 'Developer'];
 
-        $data['title'] = Lang::get('hero_title', 'Zen PHP Framework') . ' - Modern Enterprise Backend';
+        // Automatically render React 18 SPA Dashboard if React preset is active
+        if (file_exists(dirname(__DIR__, 2) . '/resources/js/Pages/Dashboard.jsx')) {
+            App::React('Pages/Dashboard', $data);
+            return;
+        }
+
+        $products = $this->productService->getAllProducts();
         $data['products'] = $products;
 
         App::Layout('main', 'home/index', $data);
