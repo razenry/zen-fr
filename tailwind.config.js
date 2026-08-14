@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
     "./app/views/**/*.php",
     "./app/pulse/**/*.php",
@@ -19,4 +19,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
