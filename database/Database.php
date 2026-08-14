@@ -35,6 +35,63 @@ class Database
         }
     }
 
+    protected static bool $loggingQueries = false;
+    protected static array $queryLog = [];
+
+    public static function enableQueryLog(): void
+    {
+        static::$loggingQueries = true;
+    }
+
+    public static function disableQueryLog(): void
+    {
+        static::$loggingQueries = false;
+    }
+
+    public static function getQueryLog(): array
+    {
+        return static::$queryLog;
+    }
+
+    public static function flushQueryLog(): void
+    {
+        static::$queryLog = [];
+    }
+
+    public function beginTransaction(): bool
+    {
+        return $this->dbh->beginTransaction();
+    }
+
+    public function commit(): bool
+    {
+        return $this->dbh->commit();
+    }
+
+    public function rollBack(): bool
+    {
+        return $this->dbh->rollBack();
+    }
+
+    public function inTransaction(): bool
+    {
+        return $this->dbh->inTransaction();
+    }
+
+    public static function transaction(callable $callback): mixed
+    {
+        $db = new static();
+        $db->beginTransaction();
+        try {
+            $result = $callback($db);
+            $db->commit();
+            return $result;
+        } catch (\Throwable $e) {
+            $db->rollBack();
+            throw $e;
+        }
+    }
+
 
     public function query($query)
     {

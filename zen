@@ -223,75 +223,74 @@ switch ($command) {
 
     case 'migrate':
         echo CliColor::cyan("Running Migrations...\n");
-        $migrationsDir = __DIR__ . '/database/migrations';
-        if (!file_exists($migrationsDir)) {
-            die(CliColor::red("Error: Migrations directory not found.\n"));
-        }
-        $files = scandir($migrationsDir);
-
-        foreach ($files as $file) {
-            if ($file === '.' || $file === '..') continue;
-
-            if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
-                require_once $migrationsDir . '/' . $file;
-                
-                $filenameWithoutExt = preg_replace('/^(\d{4}_\d{2}_\d{2}_\d{6}_|\d+_)/', '', pathinfo($file, PATHINFO_FILENAME));
-                $className = str_replace(' ', '', ucwords(str_replace('_', ' ', $filenameWithoutExt)));
-
-                if (class_exists($className)) {
-                    echo "Migrating: {$file}... ";
-                    $migration = new $className();
-                    $migration->up();
-                    echo CliColor::green("DONE\n");
-                }
+        $runner = new \Database\MigrationRunner();
+        $ran = $runner->run();
+        if (empty($ran)) {
+            echo CliColor::yellow("Nothing to migrate.\n");
+        } else {
+            foreach ($ran as $m) {
+                echo "Migrated: " . CliColor::green($m) . "\n";
             }
+            echo CliColor::bold(CliColor::green("All pending migrations executed successfully!\n"));
         }
-        echo CliColor::bold(CliColor::green("All migrations completed successfully!\n"));
         break;
 
-    case 'migrate:refresh':
-        echo CliColor::yellow("Rolling back all migrations...\n");
-        $migrationsDir = __DIR__ . '/database/migrations';
-        $files = scandir($migrationsDir);
-
-        foreach (array_reverse($files) as $file) {
-            if ($file === '.' || $file === '..') continue;
-
-            if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
-                require_once $migrationsDir . '/' . $file;
-                
-                $filenameWithoutExt = preg_replace('/^(\d{4}_\d{2}_\d{2}_\d{6}_|\d+_)/', '', pathinfo($file, PATHINFO_FILENAME));
-                $className = str_replace(' ', '', ucwords(str_replace('_', ' ', $filenameWithoutExt)));
-
-                if (class_exists($className)) {
-                    $migration = new $className();
-                    if (method_exists($migration, 'down')) {
-                        $migration->down();
-                        echo "Dropped: {$file}\n";
-                    }
-                }
+    case 'migrate:rollback':
+        echo CliColor::yellow("Rolling back last migration batch...\n");
+        $runner = new \Database\MigrationRunner();
+        $rolledBack = $runner->rollback();
+        if (empty($rolledBack)) {
+            echo CliColor::yellow("Nothing to rollback.\n");
+        } else {
+            foreach ($rolledBack as $m) {
+                echo "Rolled back: " . CliColor::red($m) . "\n";
             }
+            echo CliColor::bold(CliColor::green("Rollback completed successfully!\n"));
         }
-        echo CliColor::cyan("Running migrations again...\n");
-        
-        foreach ($files as $file) {
-            if ($file === '.' || $file === '..') continue;
+        break;
 
-            if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
-                require_once $migrationsDir . '/' . $file;
-                
-                $filenameWithoutExt = preg_replace('/^(\d{4}_\d{2}_\d{2}_\d{6}_|\d+_)/', '', pathinfo($file, PATHINFO_FILENAME));
-                $className = str_replace(' ', '', ucwords(str_replace('_', ' ', $filenameWithoutExt)));
-
-                if (class_exists($className)) {
-                    echo "Migrating: {$file}... ";
-                    $migration = new $className();
-                    $migration->up();
-                    echo CliColor::green("DONE\n");
-                }
+    case 'migrate:reset':
+        echo CliColor::yellow("Resetting all migrations...\n");
+        $runner = new \Database\MigrationRunner();
+        $rolledBack = $runner->reset();
+        if (empty($rolledBack)) {
+            echo CliColor::yellow("Nothing to reset.\n");
+        } else {
+            foreach ($rolledBack as $m) {
+                echo "Rolled back: " . CliColor::red($m) . "\n";
             }
+            echo CliColor::bold(CliColor::green("Reset completed successfully!\n"));
         }
-        echo CliColor::bold(CliColor::green("Migration refresh completed successfully!\n"));
+        break;
+
+    case 'migrate:status':
+        $runner = new \Database\MigrationRunner();
+        $status = $runner->status();
+        echo CliColor::cyan("Migration Status:\n");
+        echo str_repeat('-', 70) . "\n";
+        foreach ($status as $item) {
+            echo sprintf("%-40s | %-10s | %-10s\n", $item['migration'], $item['ran'] ? CliColor::green('Yes') : CliColor::red('No'), $item['batch'] ?? '-');
+        }
+        echo str_repeat('-', 70) . "\n";
+        break;
+
+    case 'make:factory':
+        if (!isset($argv[2])) {
+            die(CliColor::red("Error: Factory name is required. Usage: php zen make:factory UserFactory\n"));
+        }
+        $rawName = ucfirst($argv[2]);
+        $name = str_ends_with($rawName, 'Factory') ? $rawName : $rawName . 'Factory';
+        $modelName = str_replace('Factory', '', $name);
+
+        $dir = __DIR__ . '/database/factories';
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
+
+        $file = "{$dir}/{$name}.php";
+        if (file_exists($file)) die(CliColor::red("Error: Factory file already exists!\n"));
+
+        $content = "<?php\n\nnamespace Database\\Factories;\n\nuse App\\Core\\Factory;\nuse App\\Models\\{$modelName};\n\nclass {$name} extends Factory\n{\n    protected string \$model = {$modelName}::class;\n\n    public function definition(): array\n    {\n        return [\n            'name' => \$this->fakeName(),\n            'email' => \$this->fakeEmail(),\n            'created_at' => \$this->fakeDate(),\n        ];\n    }\n}\n";
+        file_put_contents($file, $content);
+        echo CliColor::green("[OK] Factory created successfully: database/factories/{$name}.php\n");
         break;
 
     case 'make:controller':

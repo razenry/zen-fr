@@ -10,11 +10,12 @@
             <!-- Version Switcher Dropdown (Bootstrap-style) -->
             <div class="dropdown ms-2">
                 <button class="btn btn-outline-primary btn-sm dropdown-toggle rounded-pill px-3 fw-bold shadow-sm" type="button" id="versionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-tag-fill me-1"></i> Version: v4.1.0 (Latest)
+                    <i class="bi bi-tag-fill me-1"></i> Version: v5.0.0 (Latest Major)
                 </button>
                 <ul class="dropdown-menu shadow border-0 rounded-3" aria-labelledby="versionDropdown">
                     <li><h6 class="dropdown-header text-uppercase small fw-bold text-muted">Framework Versions</h6></li>
-                    <li><a class="dropdown-item active fw-bold" href="#"><i class="bi bi-check2 me-2 text-success"></i> v4.1.0 (Latest - Branch: v4.1.0)</a></li>
+                    <li><a class="dropdown-item active fw-bold" href="#"><i class="bi bi-check2 me-2 text-success"></i> v5.0.0 (Latest Major - Branch: v5.0.0)</a></li>
+                    <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v4.1.0" target="_blank"><i class="bi bi-git me-2"></i> v4.1.0 (Patch Release)</a></li>
                     <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v4.0.0" target="_blank"><i class="bi bi-git me-2"></i> v4.0.0 (Release)</a></li>
                     <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v3.4.0" target="_blank"><i class="bi bi-git me-2"></i> v3.4.0</a></li>
                     <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v3.3.0" target="_blank"><i class="bi bi-git me-2"></i> v3.3.0</a></li>
