@@ -6,7 +6,7 @@ const pages = {
   'Pages/Dashboard': Dashboard,
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   const rootElement = document.getElementById('app');
   if (!rootElement) return;
 
@@ -28,4 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
       <Component {...props} />
     </React.StrictMode>
   );
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
