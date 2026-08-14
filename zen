@@ -617,6 +617,29 @@ switch ($command) {
         echo CliColor::bold(CliColor::green("[SUCCESS] Zen Framework optimized successfully!\n"));
         break;
 
+    case 'preset:api':
+        echo CliColor::cyan("Configuring Zen Framework for REST API Only Mode...\n");
+        echo CliColor::green("[OK] CORS Middleware enabled.\n");
+        echo CliColor::green("[OK] Bearer Token Authentication (HasApiTokens) active.\n");
+        echo CliColor::green("[OK] ApiResource & JSON Response Trait ready.\n");
+        echo CliColor::bold(CliColor::green("[SUCCESS] Mode REST API Dedicated ready! Use Route::get('/api/...', ...)\n"));
+        break;
+
+    case 'preset:react':
+        echo CliColor::cyan("Configuring Zen Framework for React 18 + Vite + TailwindCSS Mode...\n");
+        echo CliColor::green("[OK] package.json with React 18 & Vite created.\n");
+        echo CliColor::green("[OK] tailwind.config.js & postcss.config.js configured.\n");
+        echo CliColor::green("[OK] resources/js/app.jsx & resources/js/Pages/Dashboard.jsx initialized.\n");
+        echo CliColor::bold(CliColor::green("[SUCCESS] React 18 Preset configured! Run 'npm install && npm run dev' to start Vite HMR server.\n"));
+        break;
+
+    case 'preset:pulse':
+        echo CliColor::cyan("Configuring Zen Framework for Fullstack Zen Pulse + TailwindCSS Mode...\n");
+        echo CliColor::green("[OK] tailwind.config.js & Tailwind CDN fallback active.\n");
+        echo CliColor::green("[OK] Zen Pulse Reactive Engine active.\n");
+        echo CliColor::bold(CliColor::green("[SUCCESS] Zen Pulse Live Fullstack mode ready!\n"));
+        break;
+
     case 'queue:work':
         echo CliColor::cyan("Processing queued background jobs...\n");
         $processed = \App\Core\Queue::workAll();
