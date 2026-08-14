@@ -6,6 +6,20 @@ class Gate
 {
     protected static array $abilities = [];
     protected static array $policies = [];
+    protected mixed $userOverride = null;
+
+    public function __construct(mixed $user = null)
+    {
+        $this->userOverride = $user;
+    }
+
+    /**
+     * Create Gate instance bound to a specific user.
+     */
+    public static function forUser(mixed $user): static
+    {
+        return new static($user);
+    }
 
     /**
      * Define an ability.
@@ -28,20 +42,28 @@ class Gate
      */
     public static function allows(string $ability, mixed $user = null, mixed $params = null): bool
     {
-        $user = $user ?? Auth::user();
+        $instance = new static();
+        $user = $user ?? $instance->userOverride ?? Auth::user();
 
         if (isset(static::$abilities[$ability])) {
             return (bool) call_user_func(static::$abilities[$ability], $user, $params);
         }
 
-        // Check Policy if params is object/class
-        if (is_object($params)) {
-            $modelClass = get_class($params);
-            if (isset(static::$policies[$modelClass])) {
-                $policy = new static::$policies[$modelClass]();
-                if (method_exists($policy, $ability)) {
-                    return (bool) $policy->$ability($user, $params);
+        // Check Policy if params is object or class string
+        $targetClass = is_object($params) ? get_class($params) : (is_string($params) ? $params : null);
+        if ($targetClass && isset(static::$policies[$targetClass])) {
+            $policyClass = static::$policies[$targetClass];
+            $policy = new $policyClass();
+
+            if (method_exists($policy, 'before')) {
+                $before = $policy->before($user, $ability, $params);
+                if (!is_null($before)) {
+                    return (bool) $before;
                 }
+            }
+
+            if (method_exists($policy, $ability)) {
+                return (bool) $policy->$ability($user, $params);
             }
         }
 
@@ -57,7 +79,7 @@ class Gate
     }
 
     /**
-     * Authorize action or throw Exception / 403 response.
+     * Authorize action or throw 403 Exception.
      */
     public static function authorize(string $ability, mixed $user = null, mixed $params = null): bool
     {

@@ -1,181 +1,146 @@
-# Zen PHP Framework (v4.0.0 Major Release)
+# Zen PHP Framework (v4.1.0 Release)
 
-Zen PHP Framework adalah framework PHP modern, ultra-ringan, dan cepat yang mengombinasikan kesederhanaan arsitektur MVC dengan keandalan Service & Repository Pattern, Zen Pulse Reactive Engine, Multi-Disk File Storage System, Cache Engine, Queue Jobs, Gate Authorization, serta Pengujian Otomatis Pest PHP.
-
----
-
-## Fitur Utama & Modul v4.0
-
-1. **Service & Repository Pattern Standard**: Pemisahan tegas antara Controller, Logika Bisnis (Services), dan Akses Data (Repositories) untuk skala solo maupun tim.
-2. **Enhanced Multi-Disk File Storage System**: Abstraksi penyimpanan terpadu (`public`, `local`, `s3`/cloud) dengan fitur Temporary Signed URLs, Streaming Download, dan Upload Helper fluen (`$request->file('avatar')->store('avatars', 's3')`).
-3. **Cache Engine**: Caching tingkat tinggi berbasis file & memory (`Cache::remember()`, `Cache::put()`, `Cache::flush()`, `php zen cache:clear`).
-4. **Queue & Background Jobs**: Penanganan tugas latar belakang secara asinkron (`ProcessJob::dispatch()`, `php zen make:job`, `php zen queue:work`).
-5. **Authorization (Gates & Policies)**: Sistem keamanan dan hak akses berbasis peran & kebijakan (`Gate::define()`, `Gate::allows()`, `php zen make:policy`).
-6. **Task Scheduling & Rate Limiting**: Penjadwalan task terpusat (`php zen schedule:run`) dan pembatasan request API (`RateLimitMiddleware`).
-7. **Zen Pulse Reactive Engine**: Komponen reaktif zero-dependency untuk mengikat state dan action (`zen-model`, `zen-click`, `zen-submit`, `zen-poll`) tanpa javascript eksternal yang rumit.
-8. **ORM Casts & Mutators**: Pembacaan otomatis tipe data (`json`, `array`, `boolean`, `datetime`) serta method Accessor (`get...Attribute`) & Mutator (`set...Attribute`).
-9. **Pest PHP Testing Integration**: Dukungan pengujian otomatis terintegrasi via `php zen test` dan `php zen make:test`.
-10. **Interactive Zen CLI Tool**: Perkakas CLI berwarna untuk setup, migrasi database, clearing cache, queue worker, dan generator scaffolding lengkap.
+Zen PHP Framework adalah framework PHP modern, ultra-ringan, dan cepat yang mengombinasikan kesederhanaan arsitektur MVC dengan keandalan Service & Repository Pattern, Zen Pulse Reactive Engine, Multi-Disk File Storage System, Cache Engine, Queue Jobs, Gate Authorization & Policies, API Resources, serta Pengujian Otomatis Pest PHP.
 
 ---
 
-## Persyaratan Sistem & Instalasi
+## 📦 Pilihan Versi & Cara Download (Version Switcher)
 
-- **PHP** 8.0+ (PHP 8.3 / 8.4 kompatibel)
-- **MySQL / MariaDB**
-- **Composer**
+Zen PHP menggunakan **Git Release Branching System** (seperti Bootstrap) di mana setiap versi utama/patch memiliki branch dan tag terpisah. Anda dapat memilih dan men-download versi framework yang sesuai kebutuhan project Anda.
 
-### Instalasi via Composer (Rekomendasi)
+| Versi | Status | Git Branch / Tag | Perintah Install / Checkout |
+| :--- | :--- | :--- | :--- |
+| **v4.1.0** | **Latest (Recommended)** | `v4.1.0` | `git clone -b v4.1.0 https://github.com/razenry/zen-fr.git` |
+| **v4.0.0** | Release Stable | `v4.0.0` | `git clone -b v4.0.0 https://github.com/razenry/zen-fr.git` |
+| **v3.4.0** | Stable Release | `v3.4.0` | `git clone -b v3.4.0 https://github.com/razenry/zen-fr.git` |
+| **v3.3.0** | Stable Release | `v3.3.0` | `git clone -b v3.3.0 https://github.com/razenry/zen-fr.git` |
+| **v3.0.0** | Legacy Release | `v3.0.0` | `git clone -b v3.0.0 https://github.com/razenry/zen-fr.git` |
 
+### 🚀 Cara Install & Switch Versi
+
+#### Option 1: Download / Clone Versi Tertentu Secara Langsung
 ```bash
-composer create-project razenry/zen-php my-app
-cd my-app
-php zen setup
+# Clone versi terbaru v4.1.0
+git clone -b v4.1.0 https://github.com/razenry/zen-fr.git my-project
+
+# Atau clone versi v4.0.0 / v3.4.0
+git clone -b v4.0.0 https://github.com/razenry/zen-fr.git my-project
+```
+
+#### Option 2: Switch Versi Pada Repository Yang Sudah Ada
+```bash
+# Ambil semua branch dan tag terbaru dari GitHub
+git fetch --all --tags
+
+# Pindah ke versi tertentu (misal v4.1.0 atau v4.0.0)
+git checkout v4.1.0
+```
+
+#### Option 3: Install Via Composer
+```bash
+# Install versi 4.1.*
+composer create-project razenry/zen-php my-app "4.1.*"
 ```
 
 ---
 
-## Panduan Fitur Utama
+## 🔥 Fitur Terbaru di v4.1.0
 
-### 💾 1. Enhanced File Storage
+1. **API Resource Conditional Attributes & Pagination Wrapper**:
+   - Helper `$this->when()`, `$this->whenLoaded()`, `$this->mergeWhen()`.
+   - `ApiResource::paginated($paginator)` otomatis membungkus data dengan `links` & `meta`.
+2. **Eloquent Relationships (`BelongsToMany` & Eager Loading)**:
+   - Relasi Many-to-Many via Pivot Table dengan `BelongsToMany`.
+   - Eager Loading `Model::with(['posts', 'comments'])` untuk mencegah masalah *N+1 Query*.
+3. **Fluent Collection Methods**:
+   - `groupBy()`, `sortBy()`, `sortByDesc()`, `keyBy()`, `flatten()`, `chunk()`, `unique()`, `firstWhere()`.
+4. **Multi-Guard Authentication & `HasApiTokens` Trait**:
+   - Support `Auth::guard('web')` dan `Auth::guard('api')`.
+   - Trait `HasApiTokens` untuk membuat dan memverifikasi token API ala Laravel Sanctum.
+5. **Policy Authorization System & `HasAuthorization` Trait**:
+   - Pemetaan Policy Class `Gate::policy(Post::class, PostPolicy::class)`.
+   - Helper `$user->can('update', $post)` dan `$user->cannot('delete', $post)`.
+
+---
+
+## ⚡ Panduan Ringkas Penggunaan Feature v4.1.0
+
+### 1. API Resource Conditional Attributes
 ```php
-use App\Core\Storage;
+use App\Core\ApiResource;
 
-// Simpan & Ambil File dari Disk Public atau Private/S3
-Storage::disk('public')->put('documents/report.pdf', $content);
-$fileContent = Storage::disk('s3')->get('documents/report.pdf');
-
-// Generate Temporary Signed URL (Valid selama 30 menit)
-$tempUrl = Storage::disk('private')->temporaryUrl('private-doc.pdf', 1800);
-
-// Fluent Upload di Controller via Request
-$path = $request->file('avatar')->store('avatars', 'public');
-$path = $request->file('document')->storeAs('docs', 'invoice.pdf', 's3');
+class UserResource extends ApiResource
+{
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->resource->id,
+            'name' => $this->resource->name,
+            'email' => $this->when(Auth::check(), $this->resource->email),
+            'posts' => $this->whenLoaded('posts'),
+        ];
+    }
+}
 ```
 
-### ⚡ 2. Cache Engine
+### 2. BelongsToMany & Eager Loading
 ```php
-use App\Core\Cache;
+use App\Models\Role;
 
-// Simpan atau Ambil dari Cache
-$users = Cache::remember('all_users', 3600, function() {
-    return UserRepository::all();
-});
+class User extends Model
+{
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles');
+    }
+}
 
-// Cache Clearing via CLI
-// php zen cache:clear
+// Eager Loading mencegah N+1 Query Problem
+$users = User::with(['roles'])->get();
 ```
 
-### ⚙️ 3. Queue Jobs & Dispatching
+### 3. Collection Fluent Operations
 ```php
-use App\Jobs\ProcessOrderJob;
+$collection = collect([
+    ['id' => 1, 'category' => 'tech', 'price' => 100],
+    ['id' => 2, 'category' => 'tech', 'price' => 200],
+]);
 
-// Dispatch Job ke Queue
-ProcessOrderJob::dispatch($orderId);
-
-// Jalankan Worker melalui Terminal CLI
-// php zen queue:work
+$grouped = $collection->groupBy('category');
+$sorted  = $collection->sortByDesc('price');
+$tech    = $collection->firstWhere('category', 'tech');
 ```
 
-### 🛡️ 4. Gate Authorization
+### 4. Multi-Guard Auth & API Tokens
 ```php
-use App\Core\Gate;
+// Multi-Guard
+Auth::guard('api')->check();
 
-Gate::define('update-product', function ($user, $product) {
-    return $user->id === $product->user_id;
-});
+// HasApiTokens Trait pada Model User
+$token = $user->createToken('mobile-app', ['read', 'write']);
+if ($user->tokenCan('write')) {
+    // Diizinkan melakukan aksi write
+}
+```
 
-if (Gate::allows('update-product', $currentUser, $product)) {
-    // Diizinkan memperbarui produk
+### 5. Policy Authorization System
+```php
+// Registrasi Policy
+Gate::policy(Post::class, PostPolicy::class);
+
+// Memeriksa Hak Akses via Trait HasAuthorization pada Model User
+if ($user->can('update', $post)) {
+    // Diizinkan memperbarui postingan
 }
 ```
 
 ---
 
-## Penggunaan Zen CLI
+## 🧪 Pengujian Otomatis
 
+Jalankan pengujian unit berbasis Pest PHP:
 ```bash
-# Menampilkan semua perintah
-php zen
-
-# Setup proyek bersih & clear cache
-php zen setup
-php zen cache:clear
-
-# Jalankan pengujian otomatis (Pest PHP)
 php zen test
-
-# Background Workers & Task Scheduler
-php zen queue:work
-php zen schedule:run
-
-# Database Migrations & Seeders
-php zen migrate
-php zen migrate:refresh
-php zen db:seed
-
-# Generators (Scaffolding)
-php zen make:repository UserRepository
-php zen make:service UserService
-php zen make:job ProcessPodcastJob
-php zen make:policy UserPolicy
-php zen make:pulse Counter
-php zen make:test UserServiceTest
-php zen make:controller ProductController
-php zen make:model Product
-php zen make:migration create_products_table
+# atau
+vendor/bin/pest
 ```
-
----
-
-## Struktur Direktori Project
-
-```text
-zen-fr/
-├── app/
-│   ├── controllers/      # Controller Layer (Slim Controllers)
-│   ├── core/             # Core Engine (Storage, Cache, Queue, Gate, Route, Model)
-│   ├── helpers/          # Helper Functions (DateHelper, TextHelper)
-│   ├── jobs/             # Queue Background Jobs
-│   ├── middleware/       # HTTP Middleware (Auth, RateLimit)
-│   ├── models/           # ORM & Database Models
-│   ├── policies/         # Authorization Policies
-│   ├── pulse/            # Zen Pulse Reactive Components
-│   ├── repositories/     # Data Access Layer (Repository Pattern)
-│   ├── services/         # Business Logic Layer (Service Pattern)
-│   └── views/            # View Templates, Layouts & Components
-├── database/
-│   └── migrations/       # File Skrip Migrasi Database
-├── public/
-│   ├── js/zen-pulse.js   # Engine JS Zen Pulse
-│   └── uploads/          # Folder Upload Media Disk Public
-├── resources/
-│   └── lang/             # Lokalisasi i18n (ID, EN, JA)
-├── routes/
-│   └── web.php           # Pendefinisian Route Aplikasi
-├── storage/
-│   └── app/              # Storage Disk Private & Local Files
-├── tests/                # Test Suite Pest PHP & PHPUnit
-│   ├── Feature/          # Feature / Integration Tests
-│   └── Unit/             # Unit Tests
-├── .env                  # Konfigurasi Environment & Database
-└── zen                   # Interactive CLI Executable
-```
-
----
-
-## Struktur Branch Repository
-
-- **`main`** (Branch Saat Ini): **Clean Framework Starter v4.0.0**. Siap digunakan langsung untuk membangun aplikasi baru tanpa perlu menghapus file/konfigurasi dokumentasi.
-- **`docs`**: **Documentation & Reference Site**. Berisi seluruh file markdown dokumentasi beserta engine pembaca dokumentasi internal di rute `/docs`.
-
-### Mengakses Dokumentasi Lokal
-Jika Anda ingin menjalankan situs dokumentasi interaktif secara lokal:
-
-```bash
-git checkout docs
-php -S localhost:8000
-```
-Lalu buka `http://localhost:8000/docs` di browser Anda.
-
-

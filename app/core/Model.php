@@ -178,6 +178,20 @@ class Model
         return new BelongsTo($this, $relatedModel, $foreignKey, $ownerKey);
     }
 
+    public function belongsToMany(
+        string $relatedModel,
+        ?string $table = null,
+        ?string $foreignPivotKey = null,
+        ?string $relatedPivotKey = null
+    ): Relations\BelongsToMany {
+        return new Relations\BelongsToMany($this, $relatedModel, $table, $foreignPivotKey, $relatedPivotKey);
+    }
+
+    public function relationLoaded(string $relation): bool
+    {
+        return array_key_exists($relation, $this->relations);
+    }
+
     // --- Relationship Querying & Eager Loading ---
 
     public static function with($relations): static
@@ -388,7 +402,39 @@ class Model
             $foreignKey = $relation->getForeignKey();
             $localKey = $relation->getLocalKey();
 
-            if ($relation instanceof BelongsTo) {
+            if ($relation instanceof Relations\BelongsToMany) {
+                $keys = array_filter(array_unique($models->pluck($localKey)->all()));
+                if (empty($keys)) continue;
+
+                $pivotTable = $relation->getPivotTable();
+                $foreignPivotKey = $relation->getForeignPivotKey();
+                $relatedPivotKey = $relation->getRelatedPivotKey();
+
+                $relatedInstance = new $relatedModelClass();
+                $relatedTable = $relatedInstance->getTable();
+                $relatedKey = $relatedInstance->getPrimaryKey();
+
+                $db = new \Database\Database();
+                $db->table($relatedTable)
+                    ->select("{$relatedTable}.*, {$pivotTable}.{$foreignPivotKey} as _pivot_foreign_key")
+                    ->join($pivotTable, "{$pivotTable}.{$relatedPivotKey}", '=', "{$relatedTable}.{$relatedKey}")
+                    ->whereIn("{$pivotTable}.{$foreignPivotKey}", $keys);
+
+                $results = $db->get();
+                $dictionary = [];
+                foreach ($results as $row) {
+                    $fk = $row['_pivot_foreign_key'];
+                    unset($row['_pivot_foreign_key']);
+                    $relatedObj = $relatedModelClass::hydrate($row);
+                    $dictionary[$fk][] = $relatedObj;
+                }
+
+                foreach ($models as $model) {
+                    $pkVal = $model->{$localKey};
+                    $items = $dictionary[$pkVal] ?? [];
+                    $model->setRelation($relationName, new Collection($items));
+                }
+            } elseif ($relation instanceof BelongsTo) {
                 $keys = array_filter(array_unique($models->pluck($foreignKey)->all()));
                 if (empty($keys)) continue;
 

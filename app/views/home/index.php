@@ -1,12 +1,29 @@
 <div class="container py-4">
     <!-- Hero Banner (Docs Theme Cohesive & Dynamic i18n) -->
     <div class="card border-0 shadow-sm rounded-4 p-5 text-center mb-5" style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border: 1px solid #e5e7eb !important;">
-        <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 mb-3">
             <?php App\Core\App::Component('feature_badge', ['text' => 'PHP 8.0+ Ready', 'icon' => 'bi bi-lightning-charge-fill']); ?>
             <?php App\Core\App::Component('feature_badge', ['text' => 'Service & Repository Pattern', 'icon' => 'bi bi-diagram-3-fill']); ?>
             <?php App\Core\App::Component('feature_badge', ['text' => 'Zen Pulse Reactive Engine', 'icon' => 'bi bi-activity']); ?>
             <?php App\Core\App::Component('feature_badge', ['text' => 'RESTful API Suite', 'icon' => 'bi bi-code-slash']); ?>
-            <?php App\Core\App::Component('feature_badge', ['text' => 'Pest PHP Tested', 'icon' => 'bi bi-shield-check']); ?>
+            
+            <!-- Version Switcher Dropdown (Bootstrap-style) -->
+            <div class="dropdown ms-2">
+                <button class="btn btn-outline-primary btn-sm dropdown-toggle rounded-pill px-3 fw-bold shadow-sm" type="button" id="versionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-tag-fill me-1"></i> Version: v4.1.0 (Latest)
+                </button>
+                <ul class="dropdown-menu shadow border-0 rounded-3" aria-labelledby="versionDropdown">
+                    <li><h6 class="dropdown-header text-uppercase small fw-bold text-muted">Framework Versions</h6></li>
+                    <li><a class="dropdown-item active fw-bold" href="#"><i class="bi bi-check2 me-2 text-success"></i> v4.1.0 (Latest - Branch: v4.1.0)</a></li>
+                    <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v4.0.0" target="_blank"><i class="bi bi-git me-2"></i> v4.0.0 (Release)</a></li>
+                    <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v3.4.0" target="_blank"><i class="bi bi-git me-2"></i> v3.4.0</a></li>
+                    <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v3.3.0" target="_blank"><i class="bi bi-git me-2"></i> v3.3.0</a></li>
+                    <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v3.2.0" target="_blank"><i class="bi bi-git me-2"></i> v3.2.0</a></li>
+                    <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v3.0.0" target="_blank"><i class="bi bi-git me-2"></i> v3.0.0</a></li>
+                    <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v2.0.4" target="_blank"><i class="bi bi-git me-2"></i> v2.0.4</a></li>
+                    <li><a class="dropdown-item" href="https://github.com/razenry/zen-fr/tree/v1.0.0" target="_blank"><i class="bi bi-git me-2"></i> v1.0.0</a></li>
+                </ul>
+            </div>
         </div>
         
         <h1 class="display-4 fw-extrabold mb-3 tracking-tight text-dark" style="font-weight: 800; letter-spacing: -0.03em; color: #0f172a;">

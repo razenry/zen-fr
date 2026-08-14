@@ -151,6 +151,120 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
         });
     }
 
+    public function firstWhere($key, $operator = null, $value = null)
+    {
+        return $this->where(...func_get_args())->first();
+    }
+
+    public function groupBy($groupBy): static
+    {
+        $results = [];
+        foreach ($this->items as $key => $value) {
+            $groupKey = is_callable($groupBy)
+                ? $groupBy($value, $key)
+                : (is_object($value) ? ($value->{$groupBy} ?? null) : ($value[$groupBy] ?? null));
+
+            $results[$groupKey][] = $value;
+        }
+
+        $grouped = [];
+        foreach ($results as $groupKey => $items) {
+            $grouped[$groupKey] = new static($items);
+        }
+
+        return new static($grouped);
+    }
+
+    public function keyBy($keyBy): static
+    {
+        $results = [];
+        foreach ($this->items as $item) {
+            $key = is_callable($keyBy)
+                ? $keyBy($item)
+                : (is_object($item) ? ($item->{$keyBy} ?? null) : ($item[$keyBy] ?? null));
+            $results[$key] = $item;
+        }
+        return new static($results);
+    }
+
+    public function sortBy($callback, int $options = SORT_REGULAR, bool $descending = false): static
+    {
+        $results = $this->items;
+        $callback = is_callable($callback)
+            ? $callback
+            : function ($item) use ($callback) {
+                return is_object($item) ? ($item->{$callback} ?? null) : ($item[$callback] ?? null);
+            };
+
+        uasort($results, function ($a, $b) use ($callback, $descending) {
+            $valueA = $callback($a);
+            $valueB = $callback($b);
+
+            if ($valueA == $valueB) return 0;
+            $result = ($valueA < $valueB) ? -1 : 1;
+            return $descending ? -$result : $result;
+        });
+
+        return new static($results);
+    }
+
+    public function sortByDesc($callback, int $options = SORT_REGULAR): static
+    {
+        return $this->sortBy($callback, $options, true);
+    }
+
+    public function chunk(int $size): static
+    {
+        if ($size <= 0) return new static();
+        $chunks = [];
+        foreach (array_chunk($this->items, $size, true) as $chunk) {
+            $chunks[] = new static($chunk);
+        }
+        return new static($chunks);
+    }
+
+    public function unique($key = null): static
+    {
+        if (is_null($key)) {
+            return new static(array_unique($this->items, SORT_REGULAR));
+        }
+
+        $exists = [];
+        return $this->filter(function ($item) use ($key, &$exists) {
+            $id = is_callable($key)
+                ? $key($item)
+                : (is_object($item) ? ($item->{$key} ?? null) : ($item[$key] ?? null));
+
+            if (in_array($id, $exists, true)) {
+                return false;
+            }
+
+            $exists[] = $id;
+            return true;
+        });
+    }
+
+    public function flatten($depth = INF): static
+    {
+        $result = [];
+        foreach ($this->items as $item) {
+            if ($item instanceof self) {
+                $item = $item->all();
+            }
+
+            if (is_array($item)) {
+                if ($depth === 1) {
+                    $result = array_merge($result, array_values($item));
+                } else {
+                    $result = array_merge($result, (new static($item))->flatten($depth - 1)->all());
+                }
+            } else {
+                $result[] = $item;
+            }
+        }
+        return new static($result);
+    }
+
     public function onlyTrashed(): static
     {
         return $this->filter(function ($item) {

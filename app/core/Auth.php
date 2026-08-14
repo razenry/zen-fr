@@ -4,54 +4,111 @@ namespace App\Core;
 
 class Auth
 {
+    protected static string $defaultGuard = 'web';
+    protected static array $userResolver = [];
+    protected static array $activeUsers = [];
+
     /**
-     * Cek apakah user sudah login
-     *
-     * @return bool
+     * Set default or specific guard instance.
      */
-    public static function check()
+    public static function guard(?string $name = null): static
     {
-        return isset($_SESSION['user_id']);
+        if ($name) {
+            static::$defaultGuard = $name;
+        }
+        return new static();
     }
 
     /**
-     * Dapatkan ID user yang sedang login
-     *
-     * @return int|null
+     * Check if current guard is authenticated.
      */
-    public static function id()
+    public static function check(?string $guard = null): bool
     {
+        return static::user($guard) !== null;
+    }
+
+    /**
+     * Get authenticated user ID.
+     */
+    public static function id(?string $guard = null): mixed
+    {
+        $user = static::user($guard);
+        if (is_object($user)) {
+            return $user->id ?? $user->user_id ?? null;
+        }
+        if (is_array($user)) {
+            return $user['id'] ?? $user['user_id'] ?? null;
+        }
         return $_SESSION['user_id'] ?? null;
     }
 
     /**
-     * Dapatkan data user (nama dll) dari session
-     *
-     * @return array|string|null
+     * Get authenticated user instance.
      */
-    public static function user()
+    public static function user(?string $guard = null): mixed
     {
-        // Secara default ini hanya mengembalikan nama, 
-        // tapi di dunia nyata ini bisa mengembalikan object User dari database
-        return $_SESSION['user_name'] ?? null;
+        $guard = $guard ?? static::$defaultGuard;
+        if (isset(static::$activeUsers[$guard])) {
+            return static::$activeUsers[$guard];
+        }
+
+        if ($guard === 'api') {
+            $token = TokenAuth::getToken();
+            if ($token) {
+                $userData = TokenAuth::validateToken($token);
+                if ($userData) {
+                    static::$activeUsers['api'] = is_array($userData) ? (object)$userData : $userData;
+                    return static::$activeUsers['api'];
+                }
+            }
+            return null;
+        }
+
+        if (isset($_SESSION['user'])) {
+            return $_SESSION['user'];
+        }
+
+        if (isset($_SESSION['user_name'])) {
+            return (object) ['id' => $_SESSION['user_id'] ?? 1, 'name' => $_SESSION['user_name']];
+        }
+
+        return null;
     }
 
     /**
-     * Login user secara manual (set session)
+     * Set user manually into guard.
      */
-    public static function login($id, $name = '')
+    public static function setUser($user, ?string $guard = null): void
+    {
+        $guard = $guard ?? static::$defaultGuard;
+        static::$activeUsers[$guard] = $user;
+        if (is_object($user)) {
+            $_SESSION['user_id'] = $user->id ?? 1;
+            $_SESSION['user_name'] = $user->name ?? 'User';
+        }
+    }
+
+    /**
+     * Login user session.
+     */
+    public static function login($id, $name = '', ?string $guard = 'web'): void
     {
         $_SESSION['user_id'] = $id;
         $_SESSION['user_name'] = $name;
+        static::$activeUsers[$guard] = (object) ['id' => $id, 'name' => $name];
     }
 
     /**
-     * Logout user
+     * Logout user session.
      */
-    public static function logout()
+    public static function logout(?string $guard = null): void
     {
-        session_destroy();
-        unset($_SESSION['user_id']);
-        unset($_SESSION['user_name']);
+        $guard = $guard ?? static::$defaultGuard;
+        unset(static::$activeUsers[$guard]);
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            unset($_SESSION['user_id']);
+            unset($_SESSION['user_name']);
+            unset($_SESSION['user']);
+        }
     }
 }
