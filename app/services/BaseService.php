@@ -7,21 +7,30 @@ abstract class BaseService
     /**
      * Response helper for service operations
      */
-    protected function success($data = null, string $message = 'Operation successful')
+    protected function success($data = null, string $message = 'Operation successful', array $meta = []): array
     {
-        return [
+        $response = [
             'status'  => true,
+            'success' => true,
             'message' => $message,
             'data'    => $data
         ];
+
+        if (!empty($meta)) {
+            $response['meta'] = $meta;
+        }
+
+        return $response;
     }
 
-    protected function error(string $message = 'Operation failed', $data = null)
+    protected function error(string $message = 'Operation failed', mixed $errors = null, int $code = 400): array
     {
         return [
             'status'  => false,
+            'success' => false,
             'message' => $message,
-            'data'    => $data
+            'errors'  => $errors,
+            'code'    => $code
         ];
     }
 }

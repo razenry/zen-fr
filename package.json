@@ -1,7 +1,7 @@
 {
     "name": "zen-php-framework",
     "private": true,
-    "version": "8.3.1",
+    "version": "9.0.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
