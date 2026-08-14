@@ -549,6 +549,74 @@ switch ($command) {
         echo CliColor::green("[OK] Notification created successfully: app/notifications/{$name}.php\n");
         break;
 
+    case 'make:event':
+        if (!isset($argv[2])) {
+            die(CliColor::red("Error: Event name is required. Usage: php zen make:event OrderProcessed\n"));
+        }
+        $name = ucfirst($argv[2]);
+        $dir = __DIR__ . '/app/events';
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
+
+        $file = "{$dir}/{$name}.php";
+        if (file_exists($file)) die(CliColor::red("Error: Event file already exists!\n"));
+
+        $content = "<?php\n\nnamespace App\\Events;\n\nclass {$name}\n{\n    public function __construct(public mixed \$payload = null) {}\n}\n";
+        file_put_contents($file, $content);
+        echo CliColor::green("[OK] Event created successfully: app/events/{$name}.php\n");
+        break;
+
+    case 'make:listener':
+        if (!isset($argv[2])) {
+            die(CliColor::red("Error: Listener name is required. Usage: php zen make:listener SendInvoiceListener\n"));
+        }
+        $rawName = ucfirst($argv[2]);
+        $name = str_ends_with($rawName, 'Listener') ? $rawName : $rawName . 'Listener';
+        $dir = __DIR__ . '/app/listeners';
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
+
+        $file = "{$dir}/{$name}.php";
+        if (file_exists($file)) die(CliColor::red("Error: Listener file already exists!\n"));
+
+        $content = "<?php\n\nnamespace App\\Listeners;\n\nclass {$name}\n{\n    public function handle(\$event, \$payload = null): void\n    {\n        // Handle event logic\n    }\n}\n";
+        file_put_contents($file, $content);
+        echo CliColor::green("[OK] Listener created successfully: app/listeners/{$name}.php\n");
+        break;
+
+    case 'make:component':
+        if (!isset($argv[2])) {
+            die(CliColor::red("Error: Component name is required. Usage: php zen make:component Alert\n"));
+        }
+        $name = ucfirst($argv[2]);
+        $dir = __DIR__ . '/app/components';
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
+
+        $file = "{$dir}/{$name}.php";
+        if (file_exists($file)) die(CliColor::red("Error: Component file already exists!\n"));
+
+        $content = "<?php\n\nnamespace App\\Components;\n\nuse App\\Core\\ViewComponent;\n\nclass {$name} extends ViewComponent\n{\n    public function render(): string\n    {\n        return '<div class=\"component\">' . htmlspecialchars(\$this->data['title'] ?? '') . '</div>';\n    }\n}\n";
+        file_put_contents($file, $content);
+        echo CliColor::green("[OK] Component created successfully: app/components/{$name}.php\n");
+        break;
+
+    case 'config:cache':
+        echo CliColor::cyan("Caching framework configuration...\n");
+        \App\Core\Config::cache();
+        echo CliColor::bold(CliColor::green("[SUCCESS] Configuration cached successfully: storage/framework/config.php\n"));
+        break;
+
+    case 'config:clear':
+        echo CliColor::cyan("Clearing cached configuration...\n");
+        \App\Core\Config::clearCache();
+        echo CliColor::bold(CliColor::green("[SUCCESS] Configuration cache cleared successfully.\n"));
+        break;
+
+    case 'optimize':
+        echo CliColor::cyan("Optimizing framework bootstrapping & caching...\n");
+        \App\Core\Config::cache();
+        \App\Core\Route::cacheRoutes();
+        echo CliColor::bold(CliColor::green("[SUCCESS] Zen Framework optimized successfully!\n"));
+        break;
+
     case 'queue:work':
         echo CliColor::cyan("Processing queued background jobs...\n");
         $processed = \App\Core\Queue::workAll();
