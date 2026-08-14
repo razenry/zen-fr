@@ -1,6 +1,6 @@
 {
     "name": "razenry/zen-php",
-    "version": "9.1.0",
+    "version": "9.1.1",
     "description": "A lightweight, modern, and reactive MVC framework for PHP with Service-Repository pattern and Zen Pulse",
     "type": "project",
     "license": "MIT",
