@@ -80,13 +80,23 @@ if (!function_exists('view')) {
     }
 }
 
+// Register Inertia class aliases for Laravel compatibility
+if (class_exists('App\Core\Inertia')) {
+    if (!class_exists('Inertia\Inertia', false)) {
+        class_alias(\App\Core\Inertia::class, 'Inertia\Inertia');
+    }
+    if (!class_exists('Inertia', false)) {
+        class_alias(\App\Core\Inertia::class, 'Inertia');
+    }
+}
+
 if (!function_exists('react')) {
     /**
      * Render a React 18 / Inertia SPA component
      */
     function react(string $component, array $props = [], string $layout = 'app'): void
     {
-        Inertia::render($component, $props, $layout);
+        \App\Core\Inertia::render($component, $props, $layout);
     }
 }
 
@@ -97,9 +107,9 @@ if (!function_exists('inertia')) {
     function inertia(?string $component = null, array $props = [], string $layout = 'app')
     {
         if ($component === null) {
-            return new Inertia();
+            return new \App\Core\Inertia();
         }
-        return Inertia::render($component, $props, $layout);
+        return \App\Core\Inertia::render($component, $props, $layout);
     }
 }
 
