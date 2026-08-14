@@ -7,49 +7,79 @@ require_once __DIR__ . '/app/init.php';
 use Database\Schema;
 use Database\Blueprint;
 
-// Terminal Colors Helper
+// Terminal Colors & Styling Helper
 class CliColor {
     public static function green($str) { return "\033[32m{$str}\033[0m"; }
+    public static function brightGreen($str) { return "\033[92m{$str}\033[0m"; }
     public static function yellow($str) { return "\033[33m{$str}\033[0m"; }
     public static function cyan($str) { return "\033[36m{$str}\033[0m"; }
+    public static function brightCyan($str) { return "\033[96m{$str}\033[0m"; }
     public static function red($str) { return "\033[31m{$str}\033[0m"; }
+    public static function magenta($str) { return "\033[35m{$str}\033[0m"; }
+    public static function dim($str) { return "\033[2m{$str}\033[0m"; }
     public static function bold($str) { return "\033[1m{$str}\033[0m"; }
+
+    public static function badge($text, $bg = '36', $fg = '37') {
+        return "\033[1;{$fg};4{$bg}m {$text} \033[0m";
+    }
+
+    public static function banner($title, $subtitle = '') {
+        $width = 60;
+        $border = str_repeat('─', $width - 2);
+        $out = "\n" . self::cyan("┌{$border}┐") . "\n";
+        $out .= self::cyan("│ ") . self::bold(self::brightCyan(str_pad($title, $width - 4))) . self::cyan(" │") . "\n";
+        if ($subtitle) {
+            $out .= self::cyan("│ ") . self::dim(str_pad($subtitle, $width - 4)) . self::cyan(" │") . "\n";
+        }
+        $out .= self::cyan("└{$border}┘") . "\n";
+        return $out;
+    }
 }
 
 if ($argc < 2) {
-    echo CliColor::bold(CliColor::cyan("Zen PHP Framework CLI Tool\n"));
-    echo "Usage: php zen <command> [options]\n\n";
-    echo CliColor::yellow("Available commands:\n");
-    echo "  " . str_pad(CliColor::green("dev"), 25) . " Start PHP & Node/Vite dev servers concurrently\n";
-    echo "  " . str_pad(CliColor::green("serve"), 25) . " Start local PHP development server (Laravel serve style)\n";
-    echo "  " . str_pad(CliColor::green("setup"), 25) . " Setup clean environment and clear starter tutorial data\n";
-    echo "  " . str_pad(CliColor::green("clear"), 25) . " Clear temporary files, session cache, and view buffers\n";
-    echo "  " . str_pad(CliColor::green("optimize"), 25) . " Optimize framework autoloading and route performance\n";
-    echo "  " . str_pad(CliColor::green("optimize:clear"), 25) . " Clear all framework optimization caches\n";
-    echo "  " . str_pad(CliColor::green("route:cache"), 25) . " Create a route cache file for faster route execution\n";
-    echo "  " . str_pad(CliColor::green("route:clear"), 25) . " Remove the compiled route cache file\n";
-    echo "  " . str_pad(CliColor::green("test"), 25) . " Run Pest PHP unit & feature test suite\n";
-    echo "  " . str_pad(CliColor::green("migrate"), 25) . " Run database migrations\n";
-    echo "  " . str_pad(CliColor::green("migrate:refresh"), 25) . " Drop all tables and re-run all migrations\n";
-    echo "  " . str_pad(CliColor::green("db:seed"), 25) . " Run database seeders\n";
-    echo "  " . str_pad(CliColor::green("make:seeder"), 25) . " Create a new Database Seeder class\n";
-    echo "  " . str_pad(CliColor::green("make:controller"), 25) . " Create a new web controller class\n";
-    echo "  " . str_pad(CliColor::green("make:api-controller"), 25) . " Create a new RESTful API controller class\n";
-    echo "  " . str_pad(CliColor::green("make:resource"), 25) . " Create a new API resource transformer\n";
-    echo "  " . str_pad(CliColor::green("make:middleware"), 25) . " Create a new HTTP middleware class\n";
-    echo "  " . str_pad(CliColor::green("key:generate"), 25) . " Generate random 32-byte APP_KEY encryption key\n";
-    echo "  " . str_pad(CliColor::green("make:model"), 25) . " Create a new Eloquent model class\n";
-    echo "  " . str_pad(CliColor::green("make:migration"), 25) . " Create a new migration file\n";
-    echo "  " . str_pad(CliColor::green("make:repository"), 25) . " Create a new Repository class\n";
-    echo "  " . str_pad(CliColor::green("make:service"), 25) . " Create a new Service class\n";
-    echo "  " . str_pad(CliColor::green("make:pulse"), 25) . " Create a new Zen Pulse reactive component\n";
-    echo "  " . str_pad(CliColor::green("make:job"), 25) . " Create a new Queue Job class\n";
-    echo "  " . str_pad(CliColor::green("make:policy"), 25) . " Create a new Policy authorization class\n";
-    echo "  " . str_pad(CliColor::green("make:test"), 25) . " Create a new Pest PHP test file\n";
-    echo "  " . str_pad(CliColor::green("queue:work"), 25) . " Process queued jobs in background\n";
-    echo "  " . str_pad(CliColor::green("schedule:run"), 25) . " Run scheduled cron and job tasks\n";
-    echo "  " . str_pad(CliColor::green("cache:clear"), 25) . " Flush all application framework caches\n";
-    exit(1);
+    echo CliColor::banner("⚡ ZEN PHP FRAMEWORK (v8.1.0)", "Ultra-lightweight, High-Performance MVC Engine");
+    echo "  " . CliColor::bold("Usage:") . " php zen " . CliColor::cyan("<command>") . " [options]\n\n";
+
+    echo CliColor::bold(CliColor::yellow("  🚀 SERVER & DEVELOPMENT:\n"));
+    echo "    " . str_pad(CliColor::green("dev"), 24) . " Start PHP & Node/Vite dev servers concurrently\n";
+    echo "    " . str_pad(CliColor::green("serve"), 24) . " Start local PHP development server\n";
+    echo "    " . str_pad(CliColor::green("test"), 24) . " Run Pest PHP unit & feature test suite\n\n";
+
+    echo CliColor::bold(CliColor::yellow("  ⚡ STARTER PRESETS (php zen preset:<mode>):\n"));
+    echo "    " . str_pad(CliColor::green("preset:api"), 24) . " REST API Dedicated Mode (+ Swagger UI at /docs)\n";
+    echo "    " . str_pad(CliColor::green("preset:react"), 24) . " Fullstack React 18 + Vite + TailwindCSS Engine\n";
+    echo "    " . str_pad(CliColor::green("preset:pulse"), 24) . " Fullstack Zen Pulse Live + TailwindCSS Engine\n\n";
+
+    echo CliColor::bold(CliColor::yellow("  ⚙ FRAMEWORK & MAINTENANCE:\n"));
+    echo "    " . str_pad(CliColor::green("setup"), 24) . " Setup clean environment & fresh workspace\n";
+    echo "    " . str_pad(CliColor::green("clear"), 24) . " Clear temporary files, session cache, & view buffers\n";
+    echo "    " . str_pad(CliColor::green("optimize"), 24) . " Optimize framework bootstrapping & route performance\n";
+    echo "    " . str_pad(CliColor::green("optimize:clear"), 24) . " Clear all framework optimization caches\n";
+    echo "    " . str_pad(CliColor::green("route:cache"), 24) . " Compile routes into cache file\n";
+    echo "    " . str_pad(CliColor::green("route:clear"), 24) . " Remove compiled route cache file\n";
+    echo "    " . str_pad(CliColor::green("key:generate"), 24) . " Generate 32-byte APP_KEY encryption key\n";
+    echo "    " . str_pad(CliColor::green("cache:clear"), 24) . " Flush application framework caches\n\n";
+
+    echo CliColor::bold(CliColor::yellow("  🗄️ DATABASE & MIGRATIONS:\n"));
+    echo "    " . str_pad(CliColor::green("migrate"), 24) . " Run pending database migrations\n";
+    echo "    " . str_pad(CliColor::green("migrate:refresh"), 24) . " Drop all tables & re-run all migrations\n";
+    echo "    " . str_pad(CliColor::green("db:seed"), 24) . " Run database seeders\n\n";
+
+    echo CliColor::bold(CliColor::yellow("  🛠️ GENERATORS & SCAFFOLDING:\n"));
+    echo "    " . str_pad(CliColor::green("make:controller"), 24) . " Create a web controller class\n";
+    echo "    " . str_pad(CliColor::green("make:api-controller"), 24) . " Create a RESTful API controller class\n";
+    echo "    " . str_pad(CliColor::green("make:model"), 24) . " Create an Eloquent model class\n";
+    echo "    " . str_pad(CliColor::green("make:repository"), 24) . " Create a Repository class\n";
+    echo "    " . str_pad(CliColor::green("make:service"), 24) . " Create a Service class\n";
+    echo "    " . str_pad(CliColor::green("make:pulse"), 24) . " Create a Zen Pulse reactive component\n";
+    echo "    " . str_pad(CliColor::green("make:migration"), 24) . " Create a database migration file\n";
+    echo "    " . str_pad(CliColor::green("make:seeder"), 24) . " Create a database seeder class\n";
+    echo "    " . str_pad(CliColor::green("make:resource"), 24) . " Create an API resource transformer\n";
+    echo "    " . str_pad(CliColor::green("make:middleware"), 24) . " Create an HTTP middleware class\n";
+    echo "    " . str_pad(CliColor::green("make:job"), 24) . " Create a Queue Job class\n";
+    echo "    " . str_pad(CliColor::green("make:policy"), 24) . " Create a Policy authorization class\n";
+    echo "    " . str_pad(CliColor::green("make:test"), 24) . " Create a Pest PHP test file\n\n";
+    exit(0);
 }
 
 $command = $argv[1];
@@ -756,10 +786,11 @@ switch ($command) {
                 'serve' => 'php zen serve'
             ],
             'devDependencies' => [
+                '@tailwindcss/vite' => '^4.0.0',
                 '@vitejs/plugin-react' => '^4.2.1',
                 'autoprefixer' => '^10.4.17',
                 'postcss' => '^8.4.35',
-                'tailwindcss' => '^3.4.1',
+                'tailwindcss' => '^4.0.0',
                 'vite' => '^5.1.4'
             ],
             'dependencies' => [
@@ -771,7 +802,7 @@ switch ($command) {
 
         // Ensure vite.config.js exists
         if (!file_exists(__DIR__ . '/vite.config.js')) {
-            file_put_contents(__DIR__ . '/vite.config.js', "import { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\n\nexport default defineConfig({\n  plugins: [react()],\n});\n");
+            file_put_contents(__DIR__ . '/vite.config.js', "import { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport tailwindcss from '@tailwindcss/vite';\n\nexport default defineConfig({\n  plugins: [react(), tailwindcss()],\n});\n");
         }
 
         echo CliColor::green("[OK] Unused server-side Blade Pulse components removed.\n");
