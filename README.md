@@ -55,10 +55,30 @@ Zen PHP v8.0.1 menyediakan 3 mode siap pakai dengan **pembersihan footprint otom
 
 ---
 
-## 🎨 Integrasi Bawaan TailwindCSS
+## 🚀 Development Server (`php zen serve`)
 
-TailwindCSS diinstall & dikonfigurasi secara default pada semua preset Fullstack (`tailwind.config.js`, `postcss.config.js`, `resources/css/app.css`):
-- **Vite Bundling**: `npm run dev` / `npm run build`
+Jalankan local PHP development server (gaya Laravel `php artisan serve`):
+
+```bash
+# Jalankan server lokal default (http://127.0.0.1:8000)
+php zen serve
+
+# Atau via composer script
+composer run dev
+# atau
+composer run serve
+
+# Kustomisasi host dan port
+php zen serve --host=localhost --port=8080
+```
+
+---
+
+## 🎨 Integrasi Bawaan TailwindCSS & React Vite
+
+TailwindCSS & Vite HMR dikonfigurasi secara default (`tailwind.config.js`, `postcss.config.js`, `resources/css/app.css`):
+- **Vite Dev Server (React HMR)**: `npm run dev`
+- **Vite Production Build**: `npm run build`
 - **Zero-Config CDN Fallback**: Terintegrasi otomatis via `App::Vite()`
 
 ---

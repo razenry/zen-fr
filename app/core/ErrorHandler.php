@@ -22,8 +22,18 @@ class ErrorHandler
 
     public static function handleException(Throwable $e): void
     {
+        if (php_sapi_name() === 'cli') {
+            echo "\n\033[31m[FATAL ERROR] " . get_class($e) . ": " . $e->getMessage() . "\033[0m\n";
+            echo "File: " . $e->getFile() . " (Line " . $e->getLine() . ")\n\n";
+            echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
+            exit(1);
+        }
+
+        if (!headers_sent()) {
+            http_response_code(500);
+        }
+
         $isDebug = strtolower((string)getenv('APP_DEBUG')) === 'true' || getenv('APP_DEBUG') === '1';
-        http_response_code(500);
 
         if (!$isDebug) {
             if (!headers_sent()) {

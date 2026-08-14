@@ -20,6 +20,7 @@ if ($argc < 2) {
     echo CliColor::bold(CliColor::cyan("Zen PHP Framework CLI Tool\n"));
     echo "Usage: php zen <command> [options]\n\n";
     echo CliColor::yellow("Available commands:\n");
+    echo "  " . str_pad(CliColor::green("serve"), 25) . " Start local PHP development server (Laravel serve style)\n";
     echo "  " . str_pad(CliColor::green("setup"), 25) . " Setup clean environment and clear starter tutorial data\n";
     echo "  " . str_pad(CliColor::green("clear"), 25) . " Clear temporary files, session cache, and view buffers\n";
     echo "  " . str_pad(CliColor::green("optimize"), 25) . " Optimize framework autoloading and route performance\n";
@@ -53,6 +54,28 @@ if ($argc < 2) {
 $command = $argv[1];
 
 switch ($command) {
+    case 'serve':
+        $host = '127.0.0.1';
+        $port = '8000';
+
+        foreach ($argv as $arg) {
+            if (str_starts_with($arg, '--host=')) {
+                $host = substr($arg, 7);
+            } elseif (str_starts_with($arg, '--port=')) {
+                $port = substr($arg, 7);
+            }
+        }
+
+        echo CliColor::bold(CliColor::cyan("\n⚡ Zen PHP Development Server (v8.0.1)\n"));
+        echo CliColor::green("Server running at: ") . CliColor::bold("http://{$host}:{$port}\n");
+        echo CliColor::yellow("Document root: ") . "public/\n";
+        echo "Press Ctrl+C to stop the server.\n\n";
+
+        $publicDir = __DIR__ . '/public';
+        $cmd = sprintf('php -S %s:%s -t %s', escapeshellarg($host), escapeshellarg($port), escapeshellarg($publicDir));
+        passthru($cmd);
+        break;
+
     case 'setup':
         echo CliColor::bold(CliColor::cyan("\n=== Zen Framework Setup ===\n"));
         echo "Clearing starter tutorial & initializing fresh workspace...\n";
@@ -628,9 +651,9 @@ switch ($command) {
             @rmdir($target);
         };
         // Clean up UI & React bloat
-        $deleteRecursive(BASE_PATH . '/resources/js');
-        $deleteRecursive(BASE_PATH . '/app/views/pulse');
-        $deleteRecursive(BASE_PATH . '/app/views/home');
+        $deleteRecursive(__DIR__ . '/resources/js');
+        $deleteRecursive(__DIR__ . '/app/views/pulse');
+        $deleteRecursive(__DIR__ . '/app/views/home');
         echo CliColor::green("[OK] Frontend UI views & React components removed for minimal footprint.\n");
         echo CliColor::green("[OK] CORS Middleware & Bearer Token Authentication enabled.\n");
         echo CliColor::green("[OK] Swagger OpenAPI Interactive Documentation ready at /docs.\n");
@@ -648,14 +671,14 @@ switch ($command) {
             @rmdir($target);
         };
         // Clean up Blade Pulse views to reduce footprint
-        $deleteRecursive(BASE_PATH . '/app/views/pulse');
+        $deleteRecursive(__DIR__ . '/app/views/pulse');
         
         // Ensure React entry points exist
-        if (!is_dir(BASE_PATH . '/resources/js/Pages')) {
-            mkdir(BASE_PATH . '/resources/js/Pages', 0755, true);
+        if (!is_dir(__DIR__ . '/resources/js/Pages')) {
+            mkdir(__DIR__ . '/resources/js/Pages', 0755, true);
         }
-        if (!file_exists(BASE_PATH . '/resources/js/app.jsx')) {
-            file_put_contents(BASE_PATH . '/resources/js/app.jsx', "import React from 'react';\nimport { createRoot } from 'react-dom/client';\nimport Dashboard from './Pages/Dashboard';\n\nconst rootElement = document.getElementById('app');\nif (rootElement) {\n    createRoot(rootElement).render(<Dashboard />);\n}\n");
+        if (!file_exists(__DIR__ . '/resources/js/app.jsx')) {
+            file_put_contents(__DIR__ . '/resources/js/app.jsx', "import React from 'react';\nimport { createRoot } from 'react-dom/client';\nimport Dashboard from './Pages/Dashboard';\n\nconst rootElement = document.getElementById('app');\nif (rootElement) {\n    createRoot(rootElement).render(<Dashboard />);\n}\n");
         }
         echo CliColor::green("[OK] Unused server-side Blade Pulse components removed.\n");
         echo CliColor::green("[OK] package.json with React 18 & Vite initialized.\n");
@@ -674,7 +697,7 @@ switch ($command) {
             @rmdir($target);
         };
         // Clean up React/Inertia SPA assets to focus on Blade + Zen Pulse
-        $deleteRecursive(BASE_PATH . '/resources/js');
+        $deleteRecursive(__DIR__ . '/resources/js');
         echo CliColor::green("[OK] Inertia & React SPA files removed to streamline front-end.\n");
         echo CliColor::green("[OK] tailwind.config.js & Tailwind engine active.\n");
         echo CliColor::green("[OK] Zen Pulse Live Reactive Engine active.\n");
