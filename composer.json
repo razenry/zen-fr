@@ -39,7 +39,7 @@
     },
     "scripts": {
         "serve": "php zen serve",
-        "dev": "php zen serve",
+        "dev": "php zen dev",
         "test": "vendor/bin/pest"
     }
 }
