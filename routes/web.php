@@ -8,6 +8,9 @@ use App\Controllers\RealtimeController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/docs', function () {
+    view('docs.swagger');
+})->name('docs');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/lang/{code}', [HomeController::class, 'switchLang'])->name('lang.switch');
 

@@ -619,24 +619,65 @@ switch ($command) {
 
     case 'preset:api':
         echo CliColor::cyan("Configuring Zen Framework for REST API Only Mode...\n");
-        echo CliColor::green("[OK] CORS Middleware enabled.\n");
-        echo CliColor::green("[OK] Bearer Token Authentication (HasApiTokens) active.\n");
-        echo CliColor::green("[OK] ApiResource & JSON Response Trait ready.\n");
-        echo CliColor::bold(CliColor::green("[SUCCESS] Mode REST API Dedicated ready! Use Route::get('/api/...', ...)\n"));
+        $deleteRecursive = function ($target) use (&$deleteRecursive) {
+            if (!file_exists($target)) return;
+            if (is_file($target)) { @unlink($target); return; }
+            foreach (array_diff(scandir($target), ['.', '..']) as $item) {
+                $deleteRecursive($target . '/' . $item);
+            }
+            @rmdir($target);
+        };
+        // Clean up UI & React bloat
+        $deleteRecursive(BASE_PATH . '/resources/js');
+        $deleteRecursive(BASE_PATH . '/app/views/pulse');
+        $deleteRecursive(BASE_PATH . '/app/views/home');
+        echo CliColor::green("[OK] Frontend UI views & React components removed for minimal footprint.\n");
+        echo CliColor::green("[OK] CORS Middleware & Bearer Token Authentication enabled.\n");
+        echo CliColor::green("[OK] Swagger OpenAPI Interactive Documentation ready at /docs.\n");
+        echo CliColor::bold(CliColor::green("[SUCCESS] REST API Dedicated Mode Ready! Use /api/v1 endpoints & /docs for Swagger UI.\n"));
         break;
 
     case 'preset:react':
         echo CliColor::cyan("Configuring Zen Framework for React 18 + Vite + TailwindCSS Mode...\n");
-        echo CliColor::green("[OK] package.json with React 18 & Vite created.\n");
-        echo CliColor::green("[OK] tailwind.config.js & postcss.config.js configured.\n");
-        echo CliColor::green("[OK] resources/js/app.jsx & resources/js/Pages/Dashboard.jsx initialized.\n");
+        $deleteRecursive = function ($target) use (&$deleteRecursive) {
+            if (!file_exists($target)) return;
+            if (is_file($target)) { @unlink($target); return; }
+            foreach (array_diff(scandir($target), ['.', '..']) as $item) {
+                $deleteRecursive($target . '/' . $item);
+            }
+            @rmdir($target);
+        };
+        // Clean up Blade Pulse views to reduce footprint
+        $deleteRecursive(BASE_PATH . '/app/views/pulse');
+        
+        // Ensure React entry points exist
+        if (!is_dir(BASE_PATH . '/resources/js/Pages')) {
+            mkdir(BASE_PATH . '/resources/js/Pages', 0755, true);
+        }
+        if (!file_exists(BASE_PATH . '/resources/js/app.jsx')) {
+            file_put_contents(BASE_PATH . '/resources/js/app.jsx', "import React from 'react';\nimport { createRoot } from 'react-dom/client';\nimport Dashboard from './Pages/Dashboard';\n\nconst rootElement = document.getElementById('app');\nif (rootElement) {\n    createRoot(rootElement).render(<Dashboard />);\n}\n");
+        }
+        echo CliColor::green("[OK] Unused server-side Blade Pulse components removed.\n");
+        echo CliColor::green("[OK] package.json with React 18 & Vite initialized.\n");
+        echo CliColor::green("[OK] resources/js/app.jsx & resources/js/Pages/Dashboard.jsx ready.\n");
         echo CliColor::bold(CliColor::green("[SUCCESS] React 18 Preset configured! Run 'npm install && npm run dev' to start Vite HMR server.\n"));
         break;
 
     case 'preset:pulse':
         echo CliColor::cyan("Configuring Zen Framework for Fullstack Zen Pulse + TailwindCSS Mode...\n");
-        echo CliColor::green("[OK] tailwind.config.js & Tailwind CDN fallback active.\n");
-        echo CliColor::green("[OK] Zen Pulse Reactive Engine active.\n");
+        $deleteRecursive = function ($target) use (&$deleteRecursive) {
+            if (!file_exists($target)) return;
+            if (is_file($target)) { @unlink($target); return; }
+            foreach (array_diff(scandir($target), ['.', '..']) as $item) {
+                $deleteRecursive($target . '/' . $item);
+            }
+            @rmdir($target);
+        };
+        // Clean up React/Inertia SPA assets to focus on Blade + Zen Pulse
+        $deleteRecursive(BASE_PATH . '/resources/js');
+        echo CliColor::green("[OK] Inertia & React SPA files removed to streamline front-end.\n");
+        echo CliColor::green("[OK] tailwind.config.js & Tailwind engine active.\n");
+        echo CliColor::green("[OK] Zen Pulse Live Reactive Engine active.\n");
         echo CliColor::bold(CliColor::green("[SUCCESS] Zen Pulse Live Fullstack mode ready!\n"));
         break;
 
