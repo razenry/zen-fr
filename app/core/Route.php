@@ -96,7 +96,13 @@ class Route
     public static function getUrl($name, $params = [])
     {
         if (!isset(self::$namedRoutes[$name])) {
-            throw new \Exception("Route name '{$name}' not found.");
+            if ($name === 'docs.index' && isset(self::$namedRoutes['docs'])) {
+                $name = 'docs';
+            } elseif ($name === 'docs' && isset(self::$namedRoutes['docs.index'])) {
+                $name = 'docs.index';
+            } else {
+                return baseUrl(ltrim($name, '/'));
+            }
         }
         
         $uri = self::$namedRoutes[$name];
