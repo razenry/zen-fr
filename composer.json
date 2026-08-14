@@ -37,5 +37,10 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
+    },
+    "scripts": {
+        "serve": "php zen serve",
+        "dev": "php zen serve",
+        "test": "vendor/bin/pest"
     }
 }
