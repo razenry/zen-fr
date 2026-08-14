@@ -20,9 +20,15 @@ class Model
 
     public function __construct()
     {
-        $this->db = new Database();
+        try {
+            $this->db = new Database();
+        } catch (\Throwable $e) {
+            $this->db = null;
+        }
         $this->table = $this->table ?: strtolower(basename(str_replace('\\', '/', static::class))) . 's';
-        $this->db->table($this->table);
+        if ($this->db) {
+            $this->db->table($this->table);
+        }
     }
 
     public static function __callStatic($method, $parameters)

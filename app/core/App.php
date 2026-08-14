@@ -79,7 +79,22 @@ class App
         $html = '';
         if ($isDev) {
             $viteDevUrl = getenv('VITE_DEV_SERVER') ?: 'http://localhost:5173';
+            if (file_exists($rootDir . '/hot')) {
+                $customHot = trim(file_get_contents($rootDir . '/hot'));
+                if (!empty($customHot)) {
+                    $viteDevUrl = $customHot;
+                }
+            }
+
             $html .= '<script type="module" src="' . $viteDevUrl . '/@vite/client"></script>' . "\n";
+            $html .= '<script type="module">
+  import RefreshRuntime from "' . $viteDevUrl . '/@react-refresh";
+  RefreshRuntime.injectIntoGlobalHook(window);
+  window.$RefreshReg$ = () => {};
+  window.$RefreshSig$ = () => (type) => type;
+  window.__vite_plugin_react_preamble_installed__ = true;
+</script>' . "\n";
+
             foreach ($entrypoints as $entry) {
                 if (str_ends_with($entry, '.css')) {
                     $html .= '<link rel="stylesheet" href="' . $viteDevUrl . '/' . ltrim($entry, '/') . '">' . "\n";
@@ -88,16 +103,20 @@ class App
                 }
             }
         } else {
+            $manifestFile = $rootDir . '/public/build/manifest.json';
+            $manifest = file_exists($manifestFile) ? json_decode(file_get_contents($manifestFile), true) : [];
+
             foreach ($entrypoints as $entry) {
+                $cleanEntry = ltrim($entry, '/');
+                $file = $manifest[$cleanEntry]['file'] ?? $cleanEntry;
+
                 if (str_ends_with($entry, '.css')) {
-                    $html .= '<link rel="stylesheet" href="' . rtrim($base, '/') . '/public/build/' . ltrim($entry, '/') . '">' . "\n";
+                    $html .= '<link rel="stylesheet" href="' . rtrim($base, '/') . '/public/build/' . $file . '">' . "\n";
                 } else {
-                    $html .= '<script type="module" src="' . rtrim($base, '/') . '/public/build/' . ltrim($entry, '/') . '"></script>' . "\n";
+                    $html .= '<script type="module" src="' . rtrim($base, '/') . '/public/build/' . $file . '"></script>' . "\n";
                 }
             }
         }
-
-        $html .= '<script src="https://cdn.tailwindcss.com"></script>' . "\n";
 
         return $html;
     }

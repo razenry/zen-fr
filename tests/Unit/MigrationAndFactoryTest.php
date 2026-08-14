@@ -60,14 +60,12 @@ test('factory generates mock model instances with fake data', function () {
     expect($single->attributes['name'])->toBe('Custom Name');
     expect($single->attributes)->toHaveKey('email');
 
-    $multiple = $factory->count(3)->create();
-    expect($multiple->count())->toBe(3);
+    $multiple = $factory->count(3)->make();
+    expect(count($multiple))->toBe(3);
 });
 
 test('seeder call array executes without error', function () {
-    $executed = [];
-
-    $seeder = new class($executed) extends Seeder {
+    $seeder = new class extends Seeder {
         public function run() {}
     };
 

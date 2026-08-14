@@ -12,11 +12,11 @@ test('app react container rendering with props serialization', function () {
     expect($output)->toContain('Test Dashboard');
 });
 
-test('app vite asset helper includes tailwind cdn fallback', function () {
+test('app vite asset helper includes dev server entrypoints', function () {
     $viteHtml = App::Vite(['resources/css/app.css', 'resources/js/app.jsx']);
 
-    expect($viteHtml)->toContain('https://cdn.tailwindcss.com');
     expect($viteHtml)->toContain('resources/js/app.jsx');
+    expect($viteHtml)->toContain('@vite/client');
 });
 
 test('tailwind v4 and vite configuration files exist', function () {

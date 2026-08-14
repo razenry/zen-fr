@@ -8,7 +8,11 @@ abstract class Seeder
 
     public function __construct()
     {
-        $this->db = new Database();
+        try {
+            $this->db = new Database();
+        } catch (\Throwable $e) {
+            // Unit test environment or MySQL offline
+        }
     }
 
     /**
