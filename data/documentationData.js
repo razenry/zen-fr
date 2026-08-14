@@ -112,10 +112,10 @@ export const docsNavigation = [
       zh: '入门指南与安装设置'
     },
     description: {
-      id: 'Persyaratan sistem, cara instalasi, dev server gabungan, dan siklus hidup framework (lifecycle).',
-      en: 'System requirements, installation, concurrent dev server, and framework lifecycle.',
-      ja: 'システム要件、インストール、並行開発サーバー、フレームワークのライフサイクル。',
-      zh: '系统要求、安装步骤、并行开发服务器及框架生命周期。'
+      id: 'Persyaratan sistem, cara instalasi, php zen setup, dev server gabungan, dan siklus hidup (lifecycle) request.',
+      en: 'System requirements, installation, php zen setup, concurrent dev server, and request lifecycle.',
+      ja: 'システム要件、インストール、php zen setup、並行開発サーバー、リクエストライフサイクル。',
+      zh: '系统要求、安装步骤、php zen setup、并行开发服务器及请求生命周期。'
     }
   },
   {
@@ -128,7 +128,7 @@ export const docsNavigation = [
       zh: '核心架构与辅助函数'
     },
     description: {
-      id: 'Struktur MVC, Service-Repository Pattern, Dependency Injection, dan global helper functions.',
+      id: 'Struktur MVC, Service-Repository Pattern, Dependency Injection, dan daftar fungsi helper global.',
       en: 'MVC structure, Service-Repository pattern, Dependency Injection, and global helper functions.',
       ja: 'MVC構造、サービスリポジトリパターン、依存性注入、グローバルヘルパー関数。',
       zh: 'MVC 结构、服务-存储库模式、依赖注入及全局辅助函数。'
@@ -164,6 +164,38 @@ export const docsNavigation = [
       en: 'Clean architecture controllers, service business logic, repository ORM, and input validation.',
       ja: 'クリーンアーキテクチャ、サービスビジネスロジック、リポジトリ ORM、および入力検証。',
       zh: '整洁架构控制器、服务业务逻辑、存储库 ORM 及输入验证。'
+    }
+  },
+  {
+    slug: 'database-orm',
+    icon: 'Database',
+    title: {
+      id: 'Database, Migrations & ORM Relations',
+      en: 'Database, Migrations & ORM Relations',
+      ja: 'データベース、マイグレーション & ORM 関連',
+      zh: '数据库、迁移与 ORM 关联'
+    },
+    description: {
+      id: 'Schema builder, migrasi tabel, seeders, Active Record Models, serta query relasi (hasMany, belongsTo, whereHas).',
+      en: 'Schema builder, migrations, seeders, Active Record Models, and relation queries (hasMany, belongsTo, whereHas).',
+      ja: 'スキーマビルダー、マイグレーション、シード、Active Record モデル、リレーションクエリ。',
+      zh: '架构构建器、数据迁移、填充器、Active Record 模型及关联查询。'
+    }
+  },
+  {
+    slug: 'crud-guide',
+    icon: 'FileCode',
+    title: {
+      id: 'Standard & Relational CRUD Tutorial',
+      en: 'Standard & Relational CRUD Tutorial',
+      ja: '標準 & リレーション CRUD チュートリアル',
+      zh: '标准与关联 CRUD 教程'
+    },
+    description: {
+      id: 'Panduan langkah demi langkah membuat CRUD Standar & Relasional (Kategori & Produk) dengan Service-Repository Pattern.',
+      en: 'Step-by-step guide to building Standard & Relational CRUD (Category & Product) with Service-Repository pattern.',
+      ja: 'サービス・リポジトリパターンを使用した標準およびリレーション CRUD の完全ガイド。',
+      zh: '基于服务-存储库模式构建标准与关联 CRUD (分类与产品) 的分步指南。'
     }
   },
   {
@@ -208,8 +240,8 @@ export const docsNavigation = [
       zh: '专用 REST API 与 Swagger (+ 完整 CRUD)'
     },
     description: {
-      id: 'Mode Dedicated REST API, Standard Enterprise JSON Envelopes, Swagger UI, & CRUD API.',
-      en: 'Dedicated REST API Mode, Enterprise JSON Envelopes, Swagger UI, & CRUD API tutorial.',
+      id: 'Mode Dedicated REST API, Standard Enterprise JSON Envelopes, Swagger UI, & API Resource CRUD.',
+      en: 'Dedicated REST API Mode, Enterprise JSON Envelopes, Swagger UI, & API Resource CRUD.',
       ja: '専用 REST API モード、エンタープライズ JSON レスポンス、Swagger UI、CRUD API。',
       zh: '专用 REST API 模式、企业级 JSON 响应结构、Swagger UI 及 CRUD API。'
     }
@@ -266,10 +298,10 @@ export const docsNavigation = [
     slug: 'ai-agents',
     icon: 'Bot',
     title: {
-      id: 'AI Assistant Handbook',
-      en: 'AI Assistant Handbook',
-      ja: 'AI アシスタントハンドブック',
-      zh: 'AI 助手开发手册'
+      id: 'AI Assistant Handbook (AGENTS.md)',
+      en: 'AI Assistant Handbook (AGENTS.md)',
+      ja: 'AI アシスタントハンドブック (AGENTS.md)',
+      zh: 'AI 助手开发手册 (AGENTS.md)'
     },
     description: {
       id: 'Pedoman standar arsitektur dan instruksi kerja untuk AI pair programmer (AGENTS.md).',
@@ -283,8 +315,8 @@ export const docsNavigation = [
 export const docsDetailContent = {
   'getting-started': {
     id: {
-      title: 'Getting Started & Framework Lifecycle (v9.1.6)',
-      subtitle: 'Panduan penginstalan lengkap, penjelasan siklus hidup (lifecycle) request, struktur folder, dan pengoperasian dev server gabungan Zen PHP Framework.',
+      title: 'Getting Started, Setup & Framework Lifecycle (v9.1.6)',
+      subtitle: 'Panduan penginstalan lengkap, inisialisasi php zen setup, konfigurasi .env, siklus hidup (lifecycle) request, dan pengoperasian dev server gabungan Zen PHP Framework.',
       sections: [
         {
           id: 'framework-lifecycle',
@@ -298,7 +330,7 @@ export const docsDetailContent = {
             '5. Controller & Service Injection: Memanggil method controller yang sesuai dan mengeksekusi logika bisnis di Service Layer.',
             '6. Response Hydration: Mengembalikan hasil dalam bentuk Blade View (HTML), React Component (Inertia SPA), atau Standard JSON API Envelope.'
           ],
-          code: `// Alur Singkat Request Lifecycle:\nBrowser Request -> public/index.php -> app/init.php -> Middleware -> Route -> Controller -> Service -> Repository -> Database -> Response`,
+          code: `Browser Request -> public/index.php -> app/init.php -> Middleware Pipeline -> Route Dispatcher -> Controller -> Service -> Repository -> Database -> Response Hydration`,
           language: 'text'
         },
         {
@@ -306,7 +338,8 @@ export const docsDetailContent = {
           heading: '2. Persyaratan Sistem',
           text: 'Zen PHP Framework v9.1.6 dirancang ultra-ringan dan kompatibel dengan lingkungan PHP modern:',
           items: [
-            'PHP versi ^8.0 atau lebih baru',
+            'PHP versi ^8.0 atau lebih baru (PHP 8.3 & 8.4 didukung penuh)',
+            'Ekstensi PDO PHP & Mbstring',
             'Composer versi ^2.0',
             'Node.js ^18.0 (Opsional, dibutuhkan untuk preset React 18 & Vite HMR)',
             'Database: MySQL, PostgreSQL, SQLite, atau MariaDB'
@@ -322,8 +355,22 @@ export const docsDetailContent = {
           language: 'bash'
         },
         {
+          id: 'zen-setup',
+          heading: '4. Inisialisasi Otomatis via Zen Setup',
+          text: 'Setelah project dibuat, jalankan perintah setup otomatis untuk menyiapkan struktur direktori dan environment:',
+          code: `# Jalankan otomatisasi setup\nphp zen setup`,
+          language: 'bash'
+        },
+        {
+          id: 'env-config',
+          heading: '5. Konfigurasi Environment (.env)',
+          text: 'Buka berkas .env dan sesuaikan pengaturan koneksi database Anda:',
+          code: `DB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=zen_db\nDB_USERNAME=root\nDB_PASSWORD=`,
+          language: 'text'
+        },
+        {
           id: 'dev-server',
-          heading: '4. Menjalankan Concurrent Dev Server',
+          heading: '6. Menjalankan Concurrent Dev Server',
           text: 'Zen PHP dilengkapi Built-in Concurrent Dev Server yang secara simultan menyalakan PHP HTTP server (port 8000) dan Vite HMR server (port 5173):',
           code: `# Jalankan PHP Dev Server + Vite HMR secara bersamaan\ncomposer run dev\n# Atau via Zen CLI\nphp zen dev\n\n# Atau jalankan PHP Server saja (port 8000)\nphp zen serve`,
           language: 'bash'
@@ -331,47 +378,39 @@ export const docsDetailContent = {
       ]
     },
     en: {
-      title: 'Getting Started & Framework Lifecycle (v9.1.6)',
-      subtitle: 'Complete installation guide, request lifecycle explanation, folder structure, and operating the concurrent development server.',
+      title: 'Getting Started, Setup & Framework Lifecycle (v9.1.6)',
+      subtitle: 'Complete installation guide, php zen setup initialization, .env configuration, request lifecycle explanation, and concurrent development server.',
       sections: [
         {
           id: 'framework-lifecycle',
           heading: '1. Request Lifecycle',
-          text: 'Understanding how Zen PHP Framework processes incoming requests from start to finish:',
-          items: [
-            '1. Front Controller (public/index.php): Single entry point for all incoming HTTP requests.',
-            '2. Framework Bootstrap (app/init.php): Loads PSR-4 autoloader, environment variables, and error handlers.',
-            '3. Route Dispatcher (App\\Core\\Route): Matches request URL and method against registered web or API routes.',
-            '4. Middleware Pipeline: Executes Auth, CORS, and Security middlewares prior to reaching the controller.',
-            '5. Controller & Service Injection: Dispatches controller methods and executes business logic in the Service Layer.',
-            '6. Response Hydration: Returns rendered HTML Blade Views, React Inertia components, or Standard JSON Envelopes.'
-          ],
+          text: 'Understanding how Zen PHP Framework processes incoming requests:',
           code: `Browser Request -> public/index.php -> app/init.php -> Middleware -> Route -> Controller -> Service -> Repository -> Database -> Response`,
           language: 'text'
         }
       ]
     },
     ja: {
-      title: 'はじめに & フレームワークのライフサイクル',
-      subtitle: 'Zen PHP Framework の完全なインストール、リクエストライフサイクル、ディレクトリスイッチ手順。',
+      title: 'はじめに、セットアップ & ライフサイクル',
+      subtitle: 'Zen PHP の完全インストール、php zen setup、.env 設定、ライフサイクルの解説。',
       sections: [
         {
           id: 'framework-lifecycle',
           heading: '1. リクエストライフサイクル',
-          text: 'Zen PHP がリクエストを処理する完全なフロー:',
+          text: 'Zen PHP の処理フロー:',
           code: `Request -> public/index.php -> app/init.php -> Middleware -> Route -> Controller -> Service -> Response`,
           language: 'text'
         }
       ]
     },
     zh: {
-      title: '入门指南与框架生命周期',
-      subtitle: 'Zen PHP 框架的完整安装指南、请求生命周期说明、目录结构及开发服务器操作。',
+      title: '入门指南、安装设置与生命周期',
+      subtitle: 'Zen PHP 框架的完整安装指南、php zen setup 初始化、.env 配置、请求生命周期及开发服务器说明。',
       sections: [
         {
           id: 'framework-lifecycle',
-          heading: '1. 请求生命周期 (Request Lifecycle)',
-          text: 'Zen PHP 框架处理每一个 HTTP 请求的完整过程：',
+          heading: '1. 请求生命周期',
+          text: 'Zen PHP 框架处理请求的完整流程：',
           code: `Request -> public/index.php -> app/init.php -> Middleware -> Route -> Controller -> Service -> Response`,
           language: 'text'
         }
@@ -389,18 +428,18 @@ export const docsDetailContent = {
           heading: '1. Pola Arsitektur Enterprise (Service & Repository Pattern)',
           text: 'Zen PHP memisahkan tanggung jawab kode menjadi 3 layer utama:',
           items: [
-            'Controller: Menangani HTTP request, validasi input, dan mengembalikan response (HTML / React / JSON).',
-            'Service Layer: Tempat penulisan logika bisnis (business logic) utama aplikasi.',
+            'Controller: Menangani HTTP request, validasi input dasar, dan mengembalikan response (View/JSON). Controller dilarang melakukan query database langsung.',
+            'Service Layer: Tempat penulisan logika bisnis (business logic) utama aplikasi, transaksi kompleks, dan integrasi modul.',
             'Repository Layer: Mengisolasi query ke database / ORM sehingga logika data terpisah dari bisnis.'
           ],
-          code: `// Contoh Alur Kerja Clean Architecture:\n// Controller -> Service -> Repository -> Model -> Database`,
-          language: 'php'
+          code: `[ HTTP Request ] ──> [ Controller ] ──> [ Service (Business Logic) ] ──> [ Repository (Data Access) ] ──> [ Model / Database ]`,
+          language: 'text'
         },
         {
           id: 'global-helpers',
           heading: '2. Daftar Helper Functions Global',
           text: 'Zen PHP menyediakan helper global siap pakai tanpa perlu mengimpor kelas:',
-          code: `// 1. Mengembalikan Blade View\nreturn view('home.index', ['title' => 'Dashboard']);\n\n// 2. Mengembalikan React Inertia Component\nreturn react('Pages/UserList', ['users' => $users]);\n// atau\nreturn inertia('Pages/UserList', ['users' => $users]);\n\n// 3. Mengembalikan Enterprise JSON API Envelope\nreturn response()->json($data, 200, 'Berhasil diambil');\n\n// 4. Otorisasi Gate & Security\ngate()->define('admin-only', fn($user) => $user['role'] === 'admin');\nauthorize('admin-only');`,
+          code: `// 1. Mengembalikan Blade View\nreturn view('home.index', ['title' => 'Dashboard']);\n\n// 2. Mengembalikan React Inertia Component\nreturn react('Pages/UserList', ['users' => $users]);\n// atau\nreturn inertia('Pages/UserList', ['users' => $users]);\n\n// 3. Mengembalikan Enterprise JSON API Envelope\nreturn response()->json($data, 200, 'Berhasil diambil');\n\n// 4. Pengambil Input Request & Redirect\n$name = request('name');\nredirect(route('home'));\n\n// 5. Otorisasi Gate & Security\ngate()->define('admin-only', fn($user) => $user['role'] === 'admin');\nauthorize('admin-only');`,
           language: 'php'
         }
       ]
@@ -411,28 +450,23 @@ export const docsDetailContent = {
       sections: [
         {
           id: 'mvc-service-repository',
-          heading: '1. Enterprise Architecture Pattern (Service & Repository)',
+          heading: '1. Enterprise Architecture Pattern',
           text: 'Zen PHP separates code responsibilities into 3 distinct layers:',
-          items: [
-            'Controller: Handles HTTP requests, input validation, and returns responses.',
-            'Service Layer: Contains application core business logic.',
-            'Repository Layer: Isolates database queries and ORM operations.'
-          ],
-          code: `// Application Flow:\n// Controller -> Service -> Repository -> Model -> Database`,
-          language: 'php'
+          code: `[ HTTP Request ] ──> [ Controller ] ──> [ Service ] ──> [ Repository ] ──> [ Model ]`,
+          language: 'text'
         }
       ]
     },
     ja: {
       title: 'コアアーキテクチャ & グローバルヘルパー',
-      subtitle: 'Zen PHP における MVC と Service-Repository パターンの解説。',
+      subtitle: 'Zen PHP における Service-Repository パターンの解説。',
       sections: [
         {
           id: 'mvc-service-repository',
-          heading: '1. アーキテクチャの役割',
-          text: 'コードの役割を3層に分離:',
+          heading: '1. アーキテクチャパターン',
+          text: '3層構造:',
           code: `Controller -> Service -> Repository -> Model`,
-          language: 'php'
+          language: 'text'
         }
       ]
     },
@@ -442,10 +476,10 @@ export const docsDetailContent = {
       sections: [
         {
           id: 'mvc-service-repository',
-          heading: '1. 企业级分层架构',
-          text: 'Zen PHP 将应用逻辑清晰地划分为 3 个核心层：',
+          heading: '1. 企业级架构模式',
+          text: '三层结构：',
           code: `Controller -> Service -> Repository -> Model`,
-          language: 'php'
+          language: 'text'
         }
       ]
     }
@@ -460,14 +494,14 @@ export const docsDetailContent = {
           id: 'route-definition',
           heading: '1. Pendefinisian Route Web & API',
           text: 'Semua rute web didaftarkan di routes/web.php dan rute REST API di routes/api.php menggunakan kelas App\\Core\\Route:',
-          code: `use App\\Core\\Route;\nuse App\\Controllers\\HomeController;\nuse App\\Controllers\\ProductController;\n\n// Basic GET Route dengan Closure\nRoute::get('/', function () {\n    return view('welcome');\n});\n\n// Route mengarah ke Controller & Named Route\nRoute::get('/about', [HomeController::class, 'about'])->name('about');\n\n// HTTP Methods yang didukung\nRoute::get('/products', [ProductController::class, 'index']);\nRoute::post('/products', [ProductController::class, 'store']);\nRoute::put('/products/{id}', [ProductController::class, 'update']);\nRoute::delete('/products/{id}', [ProductController::class, 'destroy']);`,
+          code: `use App\\Core\\Route;\nuse App\\Controllers\\HomeController;\nuse App\\Controllers\\ProductController;\n\n// Basic GET Route dengan Closure\nRoute::get('/hello', function() {\n    echo "Hello World!";\n});\n\n// Route mengarah ke Controller & Named Route\nRoute::get('/', [HomeController::class, 'index'])->name('home');\nRoute::get('/about', [HomeController::class, 'about'])->name('about');\n\n// HTTP Methods yang didukung\nRoute::get('/products', [ProductController::class, 'index']);\nRoute::post('/products', [ProductController::class, 'store']);\nRoute::put('/products/{id}', [ProductController::class, 'update']);\nRoute::delete('/products/{id}', [ProductController::class, 'destroy']);`,
           language: 'php'
         },
         {
           id: 'dynamic-parameters',
           heading: '2. Parameter Dinamis & Grouping Rute',
-          text: 'Anda dapat menangkap URI parameter dinamis dan mengelompokkan rute dengan prefix & middleware:',
-          code: `// Route Parameter Dinamis\nRoute::get('/users/{id}', function ($id) {\n    return "User ID: " . $id;\n});\n\n// Route Grouping dengan Prefix & Middleware\nRoute::group([\n    'prefix' => '/api/v1',\n    'middleware' => [\\App\\Middleware\\AuthMiddleware::class, \\App\\Middleware\\CorsMiddleware::class]\n], function () {\n    Route::get('/profile', [UserController::class, 'profile']);\n    Route::post('/settings', [UserController::class, 'updateSettings']);\n});`,
+          text: 'Anda dapat menangkap segmen URL dengan mendefinisikan parameter pada URI rute dan mengelompokkan rute:',
+          code: `// Route Parameter Dinamis (/user/123 -> $id = 123)\nRoute::get('/user/{id}', [UserController::class, 'show']);\n\n// Named Routes Redirect & View\nredirect(route('home'));\n\n// Route Grouping dengan Prefix & Middleware\nRoute::group([\n    'prefix' => '/api/v1',\n    'middleware' => [\\App\\Middleware\\AuthMiddleware::class, \\App\\Middleware\\CorsMiddleware::class]\n], function () {\n    Route::get('/profile', [UserController::class, 'profile']);\n    Route::post('/settings', [UserController::class, 'updateSettings']);\n});`,
           language: 'php'
         },
         {
@@ -495,20 +529,13 @@ export const docsDetailContent = {
     },
     en: {
       title: 'Routing & Middleware Engine',
-      subtitle: 'Complete guide to defining Web & API routes, dynamic parameters, named routes, route caching, and HTTP Middleware (CORS, Auth, Security).',
+      subtitle: 'Complete guide to Web & API routes, dynamic parameters, named routes, route caching, and HTTP Middleware.',
       sections: [
         {
           id: 'route-definition',
           heading: '1. Web & API Route Definitions',
           text: 'Web routes are registered in routes/web.php and REST API routes in routes/api.php:',
-          code: `use App\\Core\\Route;\nuse App\\Controllers\\ProductController;\n\nRoute::get('/products', [ProductController::class, 'index'])->name('products.index');\nRoute::post('/products', [ProductController::class, 'store']);\nRoute::put('/products/{id}', [ProductController::class, 'update']);\nRoute::delete('/products/{id}', [ProductController::class, 'destroy']);`,
-          language: 'php'
-        },
-        {
-          id: 'middleware-code',
-          heading: '2. Custom Middleware Implementation',
-          text: 'Create and attach middleware to routes:',
-          code: `namespace App\\Middleware;\n\nclass AuthMiddleware\n{\n    public function handle($request, $next)\n    {\n        if (!auth()->check()) {\n            return response()->json(['message' => 'Unauthenticated'], 401);\n        }\n        return $next($request);\n    }\n}`,
+          code: `use App\\Core\\Route;\nuse App\\Controllers\\ProductController;\n\nRoute::get('/products', [ProductController::class, 'index'])->name('products.index');`,
           language: 'php'
         }
       ]
@@ -557,21 +584,14 @@ export const docsDetailContent = {
           id: 'service-layer',
           heading: '2. Service Layer (App\\Services)',
           text: 'Service menampung seluruh logika bisnis (business logic) aplikasi:',
-          code: `namespace App\\Services;\n\nuse App\\Repositories\\ProductRepository;\n\nclass ProductService extends BaseService\n{\n    protected ProductRepository $productRepo;\n\n    public function __construct(?ProductRepository $productRepo = null)\n    {\n        $this->productRepo = $productRepo ?? new ProductRepository();\n    }\n\n    public function createProduct(array $data)\n    {\n        // Kalkulasi diskon atau logika bisnis lainnya\n        if ($data['price'] > 1000000) {\n            $data['discount'] = 10; // Diskon 10%\n        }\n\n        try {\n            $product = $this->productRepo->create($data);\n            return $this->success($product, 'Produk berhasil dibuat.');\n        } catch (\\Throwable $e) {\n            return $this->error('Gagal menyimpan produk: ' . $e->getMessage());\n        }\n    }\n}`,
+          code: `namespace App\\Services;\n\nuse App\\Repositories\\ProductRepository;\n\nclass ProductService extends BaseService\n{\n    protected ProductRepository $productRepo;\n\n    public function __construct(?ProductRepository $productRepo = null)\n    {\n        $this->productRepo = $productRepo ?? new ProductRepository();\n    }\n\n    public function createProduct(array $data)\n    {\n        if (empty($data['name'])) {\n            return $this->error('Nama produk wajib diisi.');\n        }\n\n        try {\n            $product = $this->productRepo->create($data);\n            return $this->success($product, 'Produk berhasil dibuat.');\n        } catch (\\Throwable $e) {\n            return $this->error('Gagal menyimpan produk: ' . $e->getMessage());\n        }\n    }\n}`,
           language: 'php'
         },
         {
           id: 'repository-layer',
           heading: '3. Repository Layer (App\\Repositories)',
           text: 'Repository bertindak sebagai abstraksi query database ke Active Record Model:',
-          code: `namespace App\\Repositories;\n\nuse App\\Models\\Product;\n\nclass ProductRepository extends BaseRepository\n{\n    protected function getModelClass(): string\n    {\n        return Product::class;\n    }\n\n    public function getExpensiveProducts($minPrice = 5000000)\n    {\n        return Product::where('price', '>=', $minPrice)->get();\n    }\n}`,
-          language: 'php'
-        },
-        {
-          id: 'model-layer',
-          heading: '4. Model Layer (App\\Models\\Product.php)',
-          text: 'Model merepresentasikan tabel database:',
-          code: `namespace App\\Models;\n\nuse App\\Core\\Model;\n\nclass Product extends Model\n{\n    protected $table = 'products';\n    protected $fillable = ['name', 'price', 'discount'];\n}`,
+          code: `namespace App\\Repositories;\n\nuse App\\Models\\Product;\n\nclass ProductRepository extends BaseRepository\n{\n    protected function getModelClass(): string\n    {\n        return Product::class;\n    }\n\n    public function getLatestProducts($limit = 10)\n    {\n        return Product::where('status', '=', 'published')->get();\n    }\n}`,
           language: 'php'
         }
       ]
@@ -584,7 +604,7 @@ export const docsDetailContent = {
           id: 'controller-layer',
           heading: '1. Controller Layer Implementation',
           text: 'Controllers handle HTTP requests and invoke Services:',
-          code: `namespace App\\Controllers;\n\nuse App\\Core\\Controller;\nuse App\\Services\\ProductService;\n\nclass ProductController extends Controller\n{\n    public function index()\n    {\n        $products = (new ProductService())->getAllProducts();\n        return response()->json($products);\n    }\n}`,
+          code: `namespace App\\Controllers;\nuse App\\Core\\Controller;\n\nclass ProductController extends Controller {}`,
           language: 'php'
         }
       ]
@@ -612,6 +632,158 @@ export const docsDetailContent = {
           text: '控制器负责处理 HTTP 请求与分发：',
           code: `namespace App\\Controllers;\nclass ProductController extends Controller {}`,
           language: 'php'
+        }
+      ]
+    }
+  },
+
+  'database-orm': {
+    id: {
+      title: 'Database, Migrations & ORM Relationships',
+      subtitle: 'Panduan lengkap Schema builder, migrasi tabel database, seeders, Active Record Models, serta query relasi (hasMany, belongsTo, whereHas, with).',
+      sections: [
+        {
+          id: 'schema-migrations',
+          heading: '1. Schema Builder & Migrasi Database',
+          text: 'Zen PHP menyediakan Schema Builder yang intuitif untuk mengelola struktur tabel database:',
+          code: `use Database\\Schema;\nuse Database\\Blueprint;\n\nclass CreateProductsTable\n{\n    public function up()\n    {\n        Schema::create('products', function (Blueprint $table) {\n            $table->id();\n            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();\n            $table->string('name');\n            $table->integer('price');\n            $table->text('description')->nullable();\n            $table->timestamps();\n            $table->softDeletes(); // Support Soft Delete\n        });\n    }\n\n    public function down()\n    {\n        Schema::dropIfExists('products');\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'seeders',
+          heading: '2. Database Seeders',
+          text: 'Gunakan seeders untuk mengisi data awal ke database:',
+          code: `namespace Database\\Seeders;\n\nuse Database\\Seeder;\nuse App\\Models\\Product;\n\nclass ProductSeeder extends Seeder\n{\n    public function run()\n    {\n        Product::create([\n            'category_id' => 1,\n            'name' => 'Zen Laptop Pro',\n            'price' => 15000000\n        ]);\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'orm-relationships',
+          heading: '3. Relasi Model Active Record (One-to-Many / BelongsTo)',
+          text: 'Definisikan relasi antar model di kelas Model:',
+          code: `// App\\Models\\Category.php\nnamespace App\\Models;\nuse App\\Core\\Model;\n\nclass Category extends Model\n{\n    public function products()\n    {\n        return $this->hasMany(Product::class, 'category_id');\n    }\n}\n\n// App\\Models\\Product.php\nnamespace App\\Models;\nuse App\\Core\\Model;\n\nclass Product extends Model\n{\n    public function category()\n    {\n        return $this->belongsTo(Category::class, 'category_id');\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'relation-querying',
+          heading: '4. Relation Querying (whereHas, has, with)',
+          text: 'Zen PHP mendukung pencarian relasi gaya Laravel:',
+          code: `// Eager loading relasi\n$products = Product::with('category')->get();\n\n// Filtering berdasarkan ketersediaan relasi (whereHas)\n$categories = Category::whereHas('products', function($q) {\n    $q->where('price', '>', 5000000);\n})->get();`,
+          language: 'php'
+        }
+      ]
+    },
+    en: {
+      title: 'Database, Migrations & ORM Relationships',
+      subtitle: 'Schema builder, migrations, seeders, Active Record Models, and relation queries (hasMany, belongsTo, whereHas, with).',
+      sections: [
+        {
+          id: 'schema-migrations',
+          heading: '1. Schema Builder & Migrations',
+          text: 'Manage database schemas using Schema Builder:',
+          code: `Schema::create('products', function (Blueprint $table) {\n    $table->id();\n    $table->string('name');\n    $table->timestamps();\n});`,
+          language: 'php'
+        }
+      ]
+    },
+    ja: {
+      title: 'データベース、マイグレーション & ORM 関連',
+      subtitle: 'スキーマビルダー、マイグレーション、シード、Active Record モデル、リレーションクエリ。',
+      sections: [
+        {
+          id: 'schema-migrations',
+          heading: '1. マイグレーション',
+          text: 'データベース構造の定義:',
+          code: `Schema::create('products', function (Blueprint $table) { $table->id(); });`,
+          language: 'php'
+        }
+      ]
+    },
+    zh: {
+      title: '数据库、迁移与 ORM 关联',
+      subtitle: '架构构建器、数据迁移、填充器、Active Record 模型及关联查询。',
+      sections: [
+        {
+          id: 'schema-migrations',
+          heading: '1. 数据迁移与架构',
+          text: '使用 Schema Builder 创建数据表：',
+          code: `Schema::create('products', function (Blueprint $table) { $table->id(); });`,
+          language: 'php'
+        }
+      ]
+    }
+  },
+
+  'crud-guide': {
+    id: {
+      title: 'Standard & Relational CRUD Tutorial',
+      subtitle: 'Tutorial langkah demi langkah pembuatan aplikasi CRUD Standar & Relasional (Kategori & Produk) dengan Service & Repository Pattern.',
+      sections: [
+        {
+          id: 'step1-migration',
+          heading: '1. Buat Migrasi Kategori & Produk',
+          text: 'Jalankan perintah Zen CLI:',
+          code: `php zen make:migration create_categories_table\nphp zen make:migration create_products_table\nphp zen migrate`,
+          language: 'bash'
+        },
+        {
+          id: 'step2-scaffolding',
+          heading: '2. Buat Model, Repository, Service & Controller',
+          text: 'Gunakan generator CLI Zen untuk scaffolding otomatis:',
+          code: `php zen make:model Product\nphp zen make:repository Product\nphp zen make:service Product\nphp zen make:controller ProductController`,
+          language: 'bash'
+        },
+        {
+          id: 'step3-repository',
+          heading: '3. Repository Implementation (app/repositories/ProductRepository.php)',
+          text: 'Repository mengabstraksi query data produk:',
+          code: `namespace App\\Repositories;\n\nuse App\\Models\\Product;\n\nclass ProductRepository extends BaseRepository\n{\n    protected function getModelClass(): string\n    {\n        return Product::class;\n    }\n\n    public function getProductsWithCategory()\n    {\n        return Product::with('category')->get();\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'step4-service',
+          heading: '4. Service Implementation (app/services/ProductService.php)',
+          text: 'Service memproses logika bisnis pembuatan dan penghapusan produk:',
+          code: `namespace App\\Services;\n\nuse App\\Repositories\\ProductRepository;\n\nclass ProductService extends BaseService\n{\n    protected ProductRepository $repo;\n\n    public function __construct(?ProductRepository $repo = null)\n    {\n        $this->repo = $repo ?? new ProductRepository();\n    }\n\n    public function createProduct(array $data)\n    {\n        if (empty($data['name']) || empty($data['price'])) {\n            return $this->error('Nama dan harga wajib diisi.');\n        }\n\n        $product = $this->repo->create($data);\n        return $this->success($product, 'Produk berhasil dibuat.');\n    }\n}`,
+          language: 'php'
+        }
+      ]
+    },
+    en: {
+      title: 'Standard & Relational CRUD Tutorial',
+      subtitle: 'Step-by-step tutorial to building Standard & Relational CRUD (Category & Product) with Service & Repository pattern.',
+      sections: [
+        {
+          id: 'step1-migration',
+          heading: '1. Create Migrations',
+          text: 'Generate migration files via CLI:',
+          code: `php zen make:migration create_products_table\nphp zen migrate`,
+          language: 'bash'
+        }
+      ]
+    },
+    ja: {
+      title: '標準 & リレーション CRUD チュートリアル',
+      subtitle: 'サービス・リポジトリパターンを使用した CRUD 開発ステップ。',
+      sections: [
+        {
+          id: 'step1-migration',
+          heading: '1. マイグレーション作成',
+          text: 'CLI で作成:',
+          code: `php zen make:migration create_products_table`,
+          language: 'bash'
+        }
+      ]
+    },
+    zh: {
+      title: '标准与关联 CRUD 教程',
+      subtitle: '基于服务-存储库模式构建标准与关联 CRUD (分类与产品) 的分步指南。',
+      sections: [
+        {
+          id: 'step1-migration',
+          heading: '1. 创建迁移文件',
+          text: '运行 CLI 生成迁移：',
+          code: `php zen make:migration create_products_table`,
+          language: 'bash'
         }
       ]
     }

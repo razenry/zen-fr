@@ -8,6 +8,8 @@ import {
   Cpu, 
   GitBranch, 
   Layers, 
+  Database,
+  FileCode,
   Atom, 
   Zap, 
   Server, 
@@ -28,6 +30,8 @@ const iconMap = {
   Cpu,
   GitBranch,
   Layers,
+  Database,
+  FileCode,
   Atom,
   Zap,
   Server,
@@ -47,7 +51,7 @@ export default function Sidebar({ isMobileOpen, onCloseMobile }) {
       <div className="mb-3 px-3 text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono flex items-center justify-between">
         <span>{t.menuTitle}</span>
         <span className="text-[10px] text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20 font-bold">
-          11 Topic
+          {docsNavigation.length} Topics
         </span>
       </div>
 
