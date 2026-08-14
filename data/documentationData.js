@@ -112,10 +112,10 @@ export const docsNavigation = [
       zh: '入门指南与安装设置'
     },
     description: {
-      id: 'Panduan lengkap penginstalan, persyaratan sistem, dan dev server gabungan.',
-      en: 'Complete installation guide, system requirements, and concurrent dev server.',
-      ja: '完全なインストールガイド、システム要件、並行開発サーバー。',
-      zh: '完整的安装指南、系统要求及并行开发服务器说明。'
+      id: 'Persyaratan sistem, cara instalasi, dev server gabungan, dan siklus hidup framework (lifecycle).',
+      en: 'System requirements, installation, concurrent dev server, and framework lifecycle.',
+      ja: 'システム要件、インストール、並行開発サーバー、フレームワークのライフサイクル。',
+      zh: '系统要求、安装步骤、并行开发服务器及框架生命周期。'
     }
   },
   {
@@ -128,26 +128,26 @@ export const docsNavigation = [
       zh: '核心架构与辅助函数'
     },
     description: {
-      id: 'Struktur MVC, Service-Repository Pattern, dan global helper functions.',
-      en: 'MVC structure, Service-Repository pattern, and global helper functions.',
-      ja: 'MVC構造、サービスリポジトリパターン、グローバルヘルパー関数。',
-      zh: 'MVC 结构、服务-存储库模式及全局辅助函数。'
+      id: 'Struktur MVC, Service-Repository Pattern, Dependency Injection, dan global helper functions.',
+      en: 'MVC structure, Service-Repository pattern, Dependency Injection, and global helper functions.',
+      ja: 'MVC構造、サービスリポジトリパターン、依存性注入、グローバルヘルパー関数。',
+      zh: 'MVC 结构、服务-存储库模式、依赖注入及全局辅助函数。'
     }
   },
   {
     slug: 'routing-middleware',
     icon: 'GitBranch',
     title: {
-      id: 'Routing & Middleware',
-      en: 'Routing & Middleware',
-      ja: 'ルーティング & ミドルウェア',
-      zh: '路由与中间件'
+      id: 'Routing & Middleware Engine',
+      en: 'Routing & Middleware Engine',
+      ja: 'ルーティング & ミドルウェアエンジン',
+      zh: '路由与中间件引擎'
     },
     description: {
-      id: 'Definisi route web & API, middleware CORS, Auth, dan caching route.',
-      en: 'Web & API route definitions, CORS/Auth middleware, and route caching.',
-      ja: 'WebおよびAPIルート定義、CORS/認証ミドルウェア、ルートキャッシュ。',
-      zh: 'Web 与 API 路由定义、CORS/身份验证中间件及路由缓存。'
+      id: 'Definisi route web & API, parameter dinamis, named routes, route caching, CORS, & Auth Middleware.',
+      en: 'Web & API routes, dynamic parameters, named routes, route caching, CORS, & Auth Middleware.',
+      ja: 'WebおよびAPIルート、動的パラメータ、ルートキャッシュ、CORSおよび認証ミドルウェア。',
+      zh: 'Web 与 API 路由、动态参数、命名路由、路由缓存、CORS 及身份验证中间件。'
     }
   },
   {
@@ -160,58 +160,58 @@ export const docsNavigation = [
       zh: '控制器、服务与存储库'
     },
     description: {
-      id: 'Penerapan clean architecture pada controller, bisnis logik service, dan repository.',
-      en: 'Clean architecture implementation in controllers, services, and repositories.',
-      ja: 'コントローラー、サービス、リポジトリにおけるクリーンアーキテクチャの実装。',
-      zh: '控制器、服务与存储库中的整洁架构实现。'
+      id: 'Clean architecture controller, service business logic, repository ORM, dan validasi input.',
+      en: 'Clean architecture controllers, service business logic, repository ORM, and input validation.',
+      ja: 'クリーンアーキテクチャ、サービスビジネスロジック、リポジトリ ORM、および入力検証。',
+      zh: '整洁架构控制器、服务业务逻辑、存储库 ORM 及输入验证。'
     }
   },
   {
     slug: 'react-preset',
     icon: 'Atom',
     title: {
-      id: 'React 18 & Inertia.js SPA',
-      en: 'React 18 & Inertia.js SPA',
-      ja: 'React 18 & Inertia.js SPA',
-      zh: 'React 18 & Inertia.js 单页应用'
+      id: 'React 18 & Inertia.js SPA (+ Full CRUD App)',
+      en: 'React 18 & Inertia.js SPA (+ Full CRUD App)',
+      ja: 'React 18 & Inertia.js SPA (+ フル CRUD)',
+      zh: 'React 18 & Inertia.js 单页应用 (+ 完整 CRUD)'
     },
     description: {
-      id: 'Panduan arsitektur Single Page Application menggunakan React 18 & Vite HMR.',
-      en: 'Single Page Application guide using React 18, Inertia.js, and Vite HMR.',
-      ja: 'React 18、Inertia.js、Vite HMR を使用した SPA ガイド。',
-      zh: '使用 React 18、Inertia.js 和 Vite HMR 的单页应用指南。'
+      id: 'Tutorial lengkap pembuatan Single Page Application (SPA) React 18 dan contoh CRUD Produk.',
+      en: 'Complete tutorial for React 18 Single Page Application (SPA) and Product CRUD App.',
+      ja: 'React 18 SPA と製品 CRUD アプリの完全チュートリアル。',
+      zh: 'React 18 单页应用与产品 CRUD 应用的完整教程。'
     }
   },
   {
     slug: 'pulse-preset',
     icon: 'Zap',
     title: {
-      id: 'Zen Pulse Live Engine',
-      en: 'Zen Pulse Live Engine',
-      ja: 'Zen Pulse ライブリアクティブ',
-      zh: 'Zen Pulse 实时响应式引擎'
+      id: 'Zen Pulse Live Engine (+ Full CRUD App)',
+      en: 'Zen Pulse Live Engine (+ Full CRUD App)',
+      ja: 'Zen Pulse ライブリアクティブ (+ フル CRUD)',
+      zh: 'Zen Pulse 实时响应式引擎 (+ 完整 CRUD)'
     },
     description: {
-      id: 'Server-driven reactive Blade components tanpa perlu bundler JS eksternal.',
-      en: 'Server-driven reactive Blade components without external JS bundlers.',
-      ja: '外部 JS バンドラーなしのサーバー駆動型リアクティブ Blade コンポーネント。',
-      zh: '无需外部 JS 打包工具的服务端驱动 Blade 响应式组件。'
+      id: 'Komponen Blade reaktif real-time tanpa JS bundler dan contoh aplikasi CRUD Task Live.',
+      en: 'Real-time reactive Blade components without JS bundlers and Task Live CRUD tutorial.',
+      ja: 'JS バンドラーなしのリアルタイム Blade コンポーネントと Task Live CRUD ガイド。',
+      zh: '无需 JS 打包工具的实时 Blade 组件及 Task Live CRUD 教程。'
     }
   },
   {
     slug: 'api-preset',
     icon: 'Server',
     title: {
-      id: 'Dedicated REST API & Swagger UI',
-      en: 'Dedicated REST API & Swagger UI',
-      ja: '専用 REST API & Swagger UI',
-      zh: '专用 REST API 与 Swagger UI'
+      id: 'Dedicated REST API & Swagger (+ Full CRUD)',
+      en: 'Dedicated REST API & Swagger (+ Full CRUD)',
+      ja: '専用 REST API & Swagger (+ フル CRUD)',
+      zh: '专用 REST API 与 Swagger (+ 完整 CRUD)'
     },
     description: {
-      id: 'API backend terstandar dengan Swagger OpenAPI UI interaktif di /docs.',
-      en: 'Standardized API backend with interactive Swagger OpenAPI UI at /docs.',
-      ja: '/docs で利用可能なインタラクティブ Swagger UI を備えた標準 API。',
-      zh: '标准化 API 后端，在 /docs 提供交互式 Swagger OpenAPI UI。'
+      id: 'Mode Dedicated REST API, Standard Enterprise JSON Envelopes, Swagger UI, & CRUD API.',
+      en: 'Dedicated REST API Mode, Enterprise JSON Envelopes, Swagger UI, & CRUD API tutorial.',
+      ja: '専用 REST API モード、エンタープライズ JSON レスポンス、Swagger UI、CRUD API。',
+      zh: '专用 REST API 模式、企业级 JSON 响应结构、Swagger UI 及 CRUD API。'
     }
   },
   {
@@ -224,10 +224,10 @@ export const docsNavigation = [
       zh: '授权与安全引擎'
     },
     description: {
-      id: 'Sistem Gate & Policy authorization tingkat enterprise dan Blade directives.',
-      en: 'Enterprise-grade Gate & Policy authorization engine and Blade directives.',
-      ja: 'エンタープライズグレードの Gate & Policy 認可エンジンおよび Blade ディレクティブ。',
-      zh: '企业级 Gate 与 Policy 授权引擎及 Blade 指令。'
+      id: 'Sistem Gate & Policy authorization tingkat enterprise, helper authorize(), dan Blade directives.',
+      en: 'Enterprise Gate & Policy authorization engine, authorize() helper, and Blade directives.',
+      ja: 'エンタープライズ認可エンジン、authorize() ヘルパー、Blade ディレクティブ。',
+      zh: '企业级 Gate 与 Policy 授权引擎、authorize() 辅助函数及 Blade 指令。'
     }
   },
   {
@@ -240,10 +240,10 @@ export const docsNavigation = [
       zh: 'Zen CLI Artisan 工具命令'
     },
     description: {
-      id: 'Daftar lengkap perintah php zen untuk generator, migrasi, dan optimasi.',
-      en: 'Complete reference of php zen commands for generators, migrations, and optimization.',
-      ja: 'ジェネレーター、マイグレーション、最適化のための php zen コマンド一覧。',
-      zh: '用于生成器、迁移和优化的 php zen 命令完整参考。'
+      id: 'Daftar lengkap perintah php zen untuk generator make:*, migrasi, seeders, dan optimasi.',
+      en: 'Complete reference of php zen commands for generators make:*, migrations, seeders, and optimization.',
+      ja: 'make:* ジェネレーター、マイグレーション、最適化のための php zen コマンド一覧。',
+      zh: '用于 make:* 生成器、迁移和优化的 php zen 命令完整参考。'
     }
   },
   {
@@ -283,12 +283,27 @@ export const docsNavigation = [
 export const docsDetailContent = {
   'getting-started': {
     id: {
-      title: 'Getting Started & Setup (v9.1.6)',
-      subtitle: 'Panduan lengkap penginstalan, persyaratan sistem, struktur folder, dan pengoperasian dev server gabungan Zen PHP Framework.',
+      title: 'Getting Started & Framework Lifecycle (v9.1.6)',
+      subtitle: 'Panduan penginstalan lengkap, penjelasan siklus hidup (lifecycle) request, struktur folder, dan pengoperasian dev server gabungan Zen PHP Framework.',
       sections: [
         {
+          id: 'framework-lifecycle',
+          heading: '1. Siklus Hidup Request (Framework Lifecycle)',
+          text: 'Memahami bagaimana Zen PHP Framework memproses request dari awal hingga mengembalikan response ke browser:',
+          items: [
+            '1. Front Controller (public/index.php): Menjadi pintu masuk utama untuk seluruh HTTP request.',
+            '2. Framework Bootstrap (app/init.php): Memuat Composer Autoloader PSR-4, menguji file .env, dan mengaktifkan error handler.',
+            '3. Route Dispatcher (App\\Core\\Route): Memeriksa URL & method request, mencocokkan dengan rute di routes/web.php atau routes/api.php.',
+            '4. Middleware Pipeline: Menjalankan eksekusi middleware (Auth, CORS, Security, RateLimit) sebelum mencapai controller.',
+            '5. Controller & Service Injection: Memanggil method controller yang sesuai dan mengeksekusi logika bisnis di Service Layer.',
+            '6. Response Hydration: Mengembalikan hasil dalam bentuk Blade View (HTML), React Component (Inertia SPA), atau Standard JSON API Envelope.'
+          ],
+          code: `// Alur Singkat Request Lifecycle:\nBrowser Request -> public/index.php -> app/init.php -> Middleware -> Route -> Controller -> Service -> Repository -> Database -> Response`,
+          language: 'text'
+        },
+        {
           id: 'system-requirements',
-          heading: '1. Persyaratan Sistem',
+          heading: '2. Persyaratan Sistem',
           text: 'Zen PHP Framework v9.1.6 dirancang ultra-ringan dan kompatibel dengan lingkungan PHP modern:',
           items: [
             'PHP versi ^8.0 atau lebih baru',
@@ -301,143 +316,63 @@ export const docsDetailContent = {
         },
         {
           id: 'installation',
-          heading: '2. Cara Instalasi Framework',
+          heading: '3. Cara Instalasi Framework',
           text: 'Anda dapat menginstal Zen PHP melalui Composer Create-Project atau melakukan Git Clone ke rilis spesifik:',
           code: `# Opsi 1: Instalasi via Composer (Direkomendasikan)\ncomposer create-project razenry/zen-php my-app\ncd my-app\n\n# Opsi 2: Git Clone rilis v9.1.6\ngit clone -b v9.1.6 https://github.com/razenry/zen-fr.git my-app\ncd my-app\ncomposer install`,
           language: 'bash'
         },
         {
           id: 'dev-server',
-          heading: '3. Menjalankan Concurrent Dev Server',
+          heading: '4. Menjalankan Concurrent Dev Server',
           text: 'Zen PHP dilengkapi Built-in Concurrent Dev Server yang secara simultan menyalakan PHP HTTP server (port 8000) dan Vite HMR server (port 5173):',
           code: `# Jalankan PHP Dev Server + Vite HMR secara bersamaan\ncomposer run dev\n# Atau via Zen CLI\nphp zen dev\n\n# Atau jalankan PHP Server saja (port 8000)\nphp zen serve`,
           language: 'bash'
-        },
-        {
-          id: 'folder-structure',
-          heading: '4. Struktur Direktori Project',
-          text: 'Penjelasan struktur folder Zen PHP Framework:',
-          code: `my-app/\n├── AGENTS.md                  # AI Agent Guidelines Handbook\n├── app/\n│   ├── controllers/          # Web & API Controllers\n│   ├── core/                 # Core Engine (Route, Auth, Gate, Request, Response)\n│   ├── helpers/              # Global Helper Functions\n│   ├── middleware/           # HTTP Middleware (Auth, Cors, Security)\n│   ├── models/               # ORM & Active Record Models\n│   ├── repositories/         # Repository Pattern Classes\n│   ├── services/             # Business Logic Service Classes\n│   └── views/                # Views & Blade Templates\n├── database/\n│   ├── migrations/           # Database Schema Migrations\n│   └── seeders/              # Database Table Seeders\n├── public/\n│   └── index.php             # Front Controller Entry Point\n├── resources/\n│   ├── css/app.css           # TailwindCSS v4 Entry Point\n│   └── js/app.jsx            # React 18 Inertia Mounting Entry\n├── routes/\n│   ├── web.php               # Web Routes\n│   └── api.php               # REST API Routes\n└── zen                       # Executable CLI Artisan Tool`,
-          language: 'text'
         }
       ]
     },
     en: {
-      title: 'Getting Started & Setup (v9.1.6)',
-      subtitle: 'Complete installation guide, system requirements, folder structure, and operating the concurrent development server.',
+      title: 'Getting Started & Framework Lifecycle (v9.1.6)',
+      subtitle: 'Complete installation guide, request lifecycle explanation, folder structure, and operating the concurrent development server.',
       sections: [
         {
-          id: 'system-requirements',
-          heading: '1. System Requirements',
-          text: 'Zen PHP Framework v9.1.6 is ultra-lightweight and compatible with modern PHP environments:',
+          id: 'framework-lifecycle',
+          heading: '1. Request Lifecycle',
+          text: 'Understanding how Zen PHP Framework processes incoming requests from start to finish:',
           items: [
-            'PHP ^8.0 or higher',
-            'Composer ^2.0',
-            'Node.js ^18.0 (Optional, required for React 18 & Vite HMR)',
-            'Database: MySQL, PostgreSQL, SQLite, or MariaDB'
+            '1. Front Controller (public/index.php): Single entry point for all incoming HTTP requests.',
+            '2. Framework Bootstrap (app/init.php): Loads PSR-4 autoloader, environment variables, and error handlers.',
+            '3. Route Dispatcher (App\\Core\\Route): Matches request URL and method against registered web or API routes.',
+            '4. Middleware Pipeline: Executes Auth, CORS, and Security middlewares prior to reaching the controller.',
+            '5. Controller & Service Injection: Dispatches controller methods and executes business logic in the Service Layer.',
+            '6. Response Hydration: Returns rendered HTML Blade Views, React Inertia components, or Standard JSON Envelopes.'
           ],
-          code: `php -v\ncomposer --version\nnode -v`,
-          language: 'bash'
-        },
-        {
-          id: 'installation',
-          heading: '2. Installation Methods',
-          text: 'You can install Zen PHP via Composer Create-Project or Git Clone specific releases:',
-          code: `# Option 1: Installation via Composer (Recommended)\ncomposer create-project razenry/zen-php my-app\ncd my-app\n\n# Option 2: Git Clone release v9.1.6\ngit clone -b v9.1.6 https://github.com/razenry/zen-fr.git my-app\ncd my-app\ncomposer install`,
-          language: 'bash'
-        },
-        {
-          id: 'dev-server',
-          heading: '3. Running Concurrent Dev Server',
-          text: 'Zen PHP features a Built-in Concurrent Dev Server launching both PHP HTTP server (port 8000) and Vite HMR server (port 5173) simultaneously:',
-          code: `# Run PHP Dev Server + Vite HMR concurrently\ncomposer run dev\n# Or via Zen CLI\nphp zen dev\n\n# Or run PHP Server only (port 8000)\nphp zen serve`,
-          language: 'bash'
-        },
-        {
-          id: 'folder-structure',
-          heading: '4. Project Folder Structure',
-          text: 'Overview of the Zen PHP Framework directory structure:',
-          code: `my-app/\n├── AGENTS.md                  # AI Agent Guidelines Handbook\n├── app/\n│   ├── controllers/          # Web & API Controllers\n│   ├── core/                 # Core Engine (Route, Auth, Gate, Request, Response)\n│   ├── helpers/              # Global Helper Functions\n│   ├── middleware/           # HTTP Middleware (Auth, Cors, Security)\n│   ├── models/               # ORM & Active Record Models\n│   ├── repositories/         # Repository Pattern Classes\n│   ├── services/             # Business Logic Service Classes\n│   └── views/                # Views & Blade Templates\n├── database/\n│   ├── migrations/           # Database Schema Migrations\n│   └── seeders/              # Database Table Seeders\n├── public/\n│   └── index.php             # Front Controller Entry Point\n├── resources/\n│   ├── css/app.css           # TailwindCSS v4 Entry Point\n│   └── js/app.jsx            # React 18 Inertia Mounting Entry\n├── routes/\n│   ├── web.php               # Web Routes\n│   └── api.php               # REST API Routes\n└── zen                       # Executable CLI Artisan Tool`,
+          code: `Browser Request -> public/index.php -> app/init.php -> Middleware -> Route -> Controller -> Service -> Repository -> Database -> Response`,
           language: 'text'
         }
       ]
     },
     ja: {
-      title: 'はじめに & セットアップ (v9.1.6)',
-      subtitle: 'Zen PHP Framework の完全なインストール、システム要件、ディレクトリ構造、開発サーバーの起動手順。',
+      title: 'はじめに & フレームワークのライフサイクル',
+      subtitle: 'Zen PHP Framework の完全なインストール、リクエストライフサイクル、ディレクトリスイッチ手順。',
       sections: [
         {
-          id: 'system-requirements',
-          heading: '1. システム要件',
-          text: 'Zen PHP Framework v9.1.6 は超軽量でモダンな PHP 環境に対応しています:',
-          items: [
-            'PHP ^8.0 以上',
-            'Composer ^2.0 以上',
-            'Node.js ^18.0 (任意、React 18 & Vite HMR で必要)',
-            'データベース: MySQL, PostgreSQL, SQLite, または MariaDB'
-          ],
-          code: `php -v\ncomposer --version\nnode -v`,
-          language: 'bash'
-        },
-        {
-          id: 'installation',
-          heading: '2. インストール手順',
-          text: 'Composer または Git Clone を使用してプロジェクトをセットアップできます:',
-          code: `# 方法 1: Composer 経由でのインストール (推奨)\ncomposer create-project razenry/zen-php my-app\ncd my-app\n\n# 方法 2: v9.1.6 リリースの Git Clone\ngit clone -b v9.1.6 https://github.com/razenry/zen-fr.git my-app\ncd my-app\ncomposer install`,
-          language: 'bash'
-        },
-        {
-          id: 'dev-server',
-          heading: '3. 並行開発サーバーの起動',
-          text: 'PHP HTTP サーバー (ポート 8000) と Vite HMR サーバー (ポート 5173) を同時に起動できます:',
-          code: `# PHP サーバーと Vite HMR を同時起動\ncomposer run dev\n# または Zen CLI を使用\nphp zen dev\n\n# PHP サーバーのみ起動 (ポート 8000)\nphp zen serve`,
-          language: 'bash'
-        },
-        {
-          id: 'folder-structure',
-          heading: '4. ディレクトリ構造',
-          text: 'プロジェクト構造の詳細:',
-          code: `my-app/\n├── AGENTS.md                  # AI アシスタント開発ハンドブック\n├── app/\n│   ├── controllers/          # Web & API コントローラー\n│   ├── core/                 # コアエンジン\n│   ├── helpers/              # グローバルヘルパー関数\n│   ├── middleware/           # HTTP ミドルウェア\n│   ├── models/               # モデル\n│   ├── repositories/         # リポジトリ\n│   ├── services/             # サービス層\n│   └── views/                # ビューテンプレート\n└── zen                       # CLI アーティザンツール`,
+          id: 'framework-lifecycle',
+          heading: '1. リクエストライフサイクル',
+          text: 'Zen PHP がリクエストを処理する完全なフロー:',
+          code: `Request -> public/index.php -> app/init.php -> Middleware -> Route -> Controller -> Service -> Response`,
           language: 'text'
         }
       ]
     },
     zh: {
-      title: '入门指南与安装设置 (v9.1.6)',
-      subtitle: 'Zen PHP 框架的完整安装指南、系统要求、项目目录结构及并行开发服务器的使用方法。',
+      title: '入门指南与框架生命周期',
+      subtitle: 'Zen PHP 框架的完整安装指南、请求生命周期说明、目录结构及开发服务器操作。',
       sections: [
         {
-          id: 'system-requirements',
-          heading: '1. 系统要求',
-          text: 'Zen PHP Framework v9.1.6 采用超轻量设计，完全兼容现代 PHP 环境：',
-          items: [
-            'PHP ^8.0 或更高版本',
-            'Composer ^2.0 或更高版本',
-            'Node.js ^18.0 (可选，React 18 & Vite HMR 所需)',
-            '数据库支持: MySQL, PostgreSQL, SQLite 或 MariaDB'
-          ],
-          code: `php -v\ncomposer --version\nnode -v`,
-          language: 'bash'
-        },
-        {
-          id: 'installation',
-          heading: '2. 框架安装步骤',
-          text: '您可以通过 Composer 或者 Git Clone 创建新的应用项目：',
-          code: `# 方法 1: 通过 Composer 安装（推荐）\ncomposer create-project razenry/zen-php my-app\ncd my-app\n\n# 方法 2: 克隆指定 v9.1.6 版本\ngit clone -b v9.1.6 https://github.com/razenry/zen-fr.git my-app\ncd my-app\ncomposer install`,
-          language: 'bash'
-        },
-        {
-          id: 'dev-server',
-          heading: '3. 启动并行开发服务器',
-          text: 'Zen PHP 内置并行开发服务器，可同时启动 PHP HTTP 服务 (端口 8000) 和 Vite HMR 服务 (端口 5173)：',
-          code: `# 同时启动 PHP 开发服务器与 Vite HMR\ncomposer run dev\n# 或使用 Zen CLI\nphp zen dev\n\n# 仅启动 PHP 开发服务器 (端口 8000)\nphp zen serve`,
-          language: 'bash'
-        },
-        {
-          id: 'folder-structure',
-          heading: '4. 项目目录结构',
-          text: 'Zen PHP 框架的核心目录结构说明：',
-          code: `my-app/\n├── AGENTS.md                  # AI 助手架构指南\n├── app/\n│   ├── controllers/          # Web 与 API 控制器\n│   ├── core/                 # 框架核心引擎\n│   ├── helpers/              # 全局辅助函数\n│   ├── middleware/           # HTTP 中间件\n│   ├── models/               # ORM 模型\n│   ├── repositories/         # 存储库模式类\n│   ├── services/             # 业务逻辑服务类\n│   └── views/                # 视图与模板\n└── zen                       # 可执行 Artisan CLI 工具`,
+          id: 'framework-lifecycle',
+          heading: '1. 请求生命周期 (Request Lifecycle)',
+          text: 'Zen PHP 框架处理每一个 HTTP 请求的完整过程：',
+          code: `Request -> public/index.php -> app/init.php -> Middleware -> Route -> Controller -> Service -> Response`,
           language: 'text'
         }
       ]
@@ -458,7 +393,7 @@ export const docsDetailContent = {
             'Service Layer: Tempat penulisan logika bisnis (business logic) utama aplikasi.',
             'Repository Layer: Mengisolasi query ke database / ORM sehingga logika data terpisah dari bisnis.'
           ],
-          code: `// Contoh Alur Kerja:\n// Controller -> Service -> Repository -> Model -> Database`,
+          code: `// Contoh Alur Kerja Clean Architecture:\n// Controller -> Service -> Repository -> Model -> Database`,
           language: 'php'
         },
         {
@@ -485,37 +420,18 @@ export const docsDetailContent = {
           ],
           code: `// Application Flow:\n// Controller -> Service -> Repository -> Model -> Database`,
           language: 'php'
-        },
-        {
-          id: 'global-helpers',
-          heading: '2. Global Helper Functions',
-          text: 'Zen PHP provides built-in global helpers accessible anywhere without imports:',
-          code: `// 1. Return Blade View\nreturn view('home.index', ['title' => 'Dashboard']);\n\n// 2. Return React Inertia Component\nreturn react('Pages/UserList', ['users' => $users]);\n// or\nreturn inertia('Pages/UserList', ['users' => $users]);\n\n// 3. Return Enterprise JSON API Envelope\nreturn response()->json($data, 200, 'Successfully retrieved');\n\n// 4. Gate Authorization\ngate()->define('admin-only', fn($user) => $user['role'] === 'admin');\nauthorize('admin-only');`,
-          language: 'php'
         }
       ]
     },
     ja: {
       title: 'コアアーキテクチャ & グローバルヘルパー',
-      subtitle: 'Zen PHP Framework における MVC、サービス・リポジトリパターン、グローバルヘルパー関数の解説。',
+      subtitle: 'Zen PHP における MVC と Service-Repository パターンの解説。',
       sections: [
         {
           id: 'mvc-service-repository',
-          heading: '1. エンタープライズアーキテクチャパターン',
-          text: 'Zen PHP はコードの役割を3つのレイヤーに分離しています:',
-          items: [
-            'コントローラー: HTTP リクエスト処理とレスポンスの返却。',
-            'サービス層: コアビジネスロジックの記述。',
-            'リポジトリ層: データベース操作と ORM クエリの分離。'
-          ],
-          code: `// アプリケーションフロー:\n// Controller -> Service -> Repository -> Model -> Database`,
-          language: 'php'
-        },
-        {
-          id: 'global-helpers',
-          heading: '2. グローバルヘルパー関数',
-          text: 'インポート不要でどこでも使えるグローバルヘルパー:',
-          code: `// 1. Blade ビューの返却\nreturn view('home.index', ['title' => 'Dashboard']);\n\n// 2. React Inertia コンポーネントの返却\nreturn react('Pages/UserList', ['users' => $users]);\n\n// 3. 標準 JSON レスポンスの返却\nreturn response()->json($data, 200, 'Success');`,
+          heading: '1. アーキテクチャの役割',
+          text: 'コードの役割を3層に分離:',
+          code: `Controller -> Service -> Repository -> Model`,
           language: 'php'
         }
       ]
@@ -526,21 +442,175 @@ export const docsDetailContent = {
       sections: [
         {
           id: 'mvc-service-repository',
-          heading: '1. 企业级架构模式 (Service & Repository)',
+          heading: '1. 企业级分层架构',
           text: 'Zen PHP 将应用逻辑清晰地划分为 3 个核心层：',
-          items: [
-            'Controller (控制器): 处理 HTTP 请求与响应。',
-            'Service (服务层): 封装核心业务逻辑。',
-            'Repository (存储库层): 隔离数据库查询与数据持久化。'
-          ],
-          code: `// 处理流程:\n// Controller -> Service -> Repository -> Model -> Database`,
+          code: `Controller -> Service -> Repository -> Model`,
+          language: 'php'
+        }
+      ]
+    }
+  },
+
+  'routing-middleware': {
+    id: {
+      title: 'Routing & Middleware Engine',
+      subtitle: 'Panduan lengkap pendefinisian rute web & API, parameter dinamis, named routes, route caching, serta implementasi HTTP Middleware (CORS, Auth, Security).',
+      sections: [
+        {
+          id: 'route-definition',
+          heading: '1. Pendefinisian Route Web & API',
+          text: 'Semua rute web didaftarkan di routes/web.php dan rute REST API di routes/api.php menggunakan kelas App\\Core\\Route:',
+          code: `use App\\Core\\Route;\nuse App\\Controllers\\HomeController;\nuse App\\Controllers\\ProductController;\n\n// Basic GET Route dengan Closure\nRoute::get('/', function () {\n    return view('welcome');\n});\n\n// Route mengarah ke Controller & Named Route\nRoute::get('/about', [HomeController::class, 'about'])->name('about');\n\n// HTTP Methods yang didukung\nRoute::get('/products', [ProductController::class, 'index']);\nRoute::post('/products', [ProductController::class, 'store']);\nRoute::put('/products/{id}', [ProductController::class, 'update']);\nRoute::delete('/products/{id}', [ProductController::class, 'destroy']);`,
           language: 'php'
         },
         {
-          id: 'global-helpers',
-          heading: '2. 全局辅助函数参考',
-          text: 'Zen PHP 内置开箱即用的全局辅助函数：',
-          code: `// 1. 返回 Blade 视图\nreturn view('home.index', ['title' => 'Dashboard']);\n\n// 2. 返回 React Inertia 组件\nreturn react('Pages/UserList', ['users' => $users]);\n\n// 3. 返回标准化 JSON API 响应\nreturn response()->json($data, 200, '获取成功');`,
+          id: 'dynamic-parameters',
+          heading: '2. Parameter Dinamis & Grouping Rute',
+          text: 'Anda dapat menangkap URI parameter dinamis dan mengelompokkan rute dengan prefix & middleware:',
+          code: `// Route Parameter Dinamis\nRoute::get('/users/{id}', function ($id) {\n    return "User ID: " . $id;\n});\n\n// Route Grouping dengan Prefix & Middleware\nRoute::group([\n    'prefix' => '/api/v1',\n    'middleware' => [\\App\\Middleware\\AuthMiddleware::class, \\App\\Middleware\\CorsMiddleware::class]\n], function () {\n    Route::get('/profile', [UserController::class, 'profile']);\n    Route::post('/settings', [UserController::class, 'updateSettings']);\n});`,
+          language: 'php'
+        },
+        {
+          id: 'middleware-engine',
+          heading: '3. HTTP Middleware Engine',
+          text: 'Middleware menangkap HTTP request sebelum mencapai controller. Anda dapat membuat middleware baru menggunakan Zen CLI:',
+          code: `# Buat middleware baru via Zen CLI\nphp zen make:middleware AdminMiddleware`,
+          language: 'bash'
+        },
+        {
+          id: 'middleware-code',
+          heading: '4. Implementasi Middleware (app/middleware/AdminMiddleware.php)',
+          text: 'Setiap kelas middleware harus mengimplementasikan method handle():',
+          code: `namespace App\\Middleware;\n\nclass AdminMiddleware\n{\n    public function handle($request, $next)\n    {\n        $user = auth()->user();\n        \n        if (!$user || $user['role'] !== 'admin') {\n            if ($request->isJson()) {\n                return response()->json(['error' => 'Unauthorized Access'], 403);\n            }\n            redirect('/login')->with('error', 'Akses ditolak.');\n            exit;\n        }\n\n        return $next($request);\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'route-caching',
+          heading: '5. Route Caching & Optimasi',
+          text: 'Untuk meningkatkan performa aplikasi di lingkungan produksi, Anda dapat mengompilasi rute ke dalam berkas cache:',
+          code: `# Kompilasi rute ke dalam cache\nphp zen route:cache\n\n# Hapus cache rute\nphp zen route:clear`,
+          language: 'bash'
+        }
+      ]
+    },
+    en: {
+      title: 'Routing & Middleware Engine',
+      subtitle: 'Complete guide to defining Web & API routes, dynamic parameters, named routes, route caching, and HTTP Middleware (CORS, Auth, Security).',
+      sections: [
+        {
+          id: 'route-definition',
+          heading: '1. Web & API Route Definitions',
+          text: 'Web routes are registered in routes/web.php and REST API routes in routes/api.php:',
+          code: `use App\\Core\\Route;\nuse App\\Controllers\\ProductController;\n\nRoute::get('/products', [ProductController::class, 'index'])->name('products.index');\nRoute::post('/products', [ProductController::class, 'store']);\nRoute::put('/products/{id}', [ProductController::class, 'update']);\nRoute::delete('/products/{id}', [ProductController::class, 'destroy']);`,
+          language: 'php'
+        },
+        {
+          id: 'middleware-code',
+          heading: '2. Custom Middleware Implementation',
+          text: 'Create and attach middleware to routes:',
+          code: `namespace App\\Middleware;\n\nclass AuthMiddleware\n{\n    public function handle($request, $next)\n    {\n        if (!auth()->check()) {\n            return response()->json(['message' => 'Unauthenticated'], 401);\n        }\n        return $next($request);\n    }\n}`,
+          language: 'php'
+        }
+      ]
+    },
+    ja: {
+      title: 'ルーティング & ミドルウェアエンジン',
+      subtitle: 'Web/API ルーティング、動的パラメータ、ルートキャッシュ、ミドルウェアの実装。',
+      sections: [
+        {
+          id: 'route-definition',
+          heading: '1. ルートの定義',
+          text: 'routes/web.php でのルート定義:',
+          code: `use App\\Core\\Route;\nRoute::get('/products', [ProductController::class, 'index']);`,
+          language: 'php'
+        }
+      ]
+    },
+    zh: {
+      title: '路由与中间件引擎',
+      subtitle: 'Web 与 API 路由定义、动态参数、命名路由、路由缓存及中间件实现。',
+      sections: [
+        {
+          id: 'route-definition',
+          heading: '1. Web 与 API 路由定义',
+          text: '在 routes/web.php 中注册路由：',
+          code: `use App\\Core\\Route;\nRoute::get('/products', [ProductController::class, 'index']);`,
+          language: 'php'
+        }
+      ]
+    }
+  },
+
+  'controllers-services': {
+    id: {
+      title: 'Controllers, Services & Repositories',
+      subtitle: 'Penerapan Clean Architecture pada Zen PHP Framework: Pemisahan peran Controller, Service Business Logic, Repository Data Layer, dan Input Validation.',
+      sections: [
+        {
+          id: 'controller-layer',
+          heading: '1. Controller Layer (App\\Controllers)',
+          text: 'Controller bertugas menerima HTTP request, memvalidasi input, memanggil Service, dan mengembalikan response:',
+          code: `namespace App\\Controllers;\n\nuse App\\Core\\Controller;\nuse App\\Services\\ProductService;\nuse App\\Core\\Validator;\n\nclass ProductController extends Controller\n{\n    protected ProductService $productService;\n\n    public function __construct(?ProductService $productService = null)\n    {\n        $this->productService = $productService ?? new ProductService();\n    }\n\n    public function store()\n    {\n        $input = request()->all();\n        \n        $validator = Validator::make($input, [\n            'name'  => 'required|string|min:3',\n            'price' => 'required|numeric'\n        ]);\n\n        if ($validator->fails()) {\n            return response()->json(['errors' => $validator->errors()], 422);\n        }\n\n        $result = $this->productService->createProduct($input);\n        return response()->json($result, $result['status'] ? 201 : 400);\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'service-layer',
+          heading: '2. Service Layer (App\\Services)',
+          text: 'Service menampung seluruh logika bisnis (business logic) aplikasi:',
+          code: `namespace App\\Services;\n\nuse App\\Repositories\\ProductRepository;\n\nclass ProductService extends BaseService\n{\n    protected ProductRepository $productRepo;\n\n    public function __construct(?ProductRepository $productRepo = null)\n    {\n        $this->productRepo = $productRepo ?? new ProductRepository();\n    }\n\n    public function createProduct(array $data)\n    {\n        // Kalkulasi diskon atau logika bisnis lainnya\n        if ($data['price'] > 1000000) {\n            $data['discount'] = 10; // Diskon 10%\n        }\n\n        try {\n            $product = $this->productRepo->create($data);\n            return $this->success($product, 'Produk berhasil dibuat.');\n        } catch (\\Throwable $e) {\n            return $this->error('Gagal menyimpan produk: ' . $e->getMessage());\n        }\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'repository-layer',
+          heading: '3. Repository Layer (App\\Repositories)',
+          text: 'Repository bertindak sebagai abstraksi query database ke Active Record Model:',
+          code: `namespace App\\Repositories;\n\nuse App\\Models\\Product;\n\nclass ProductRepository extends BaseRepository\n{\n    protected function getModelClass(): string\n    {\n        return Product::class;\n    }\n\n    public function getExpensiveProducts($minPrice = 5000000)\n    {\n        return Product::where('price', '>=', $minPrice)->get();\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'model-layer',
+          heading: '4. Model Layer (App\\Models\\Product.php)',
+          text: 'Model merepresentasikan tabel database:',
+          code: `namespace App\\Models;\n\nuse App\\Core\\Model;\n\nclass Product extends Model\n{\n    protected $table = 'products';\n    protected $fillable = ['name', 'price', 'discount'];\n}`,
+          language: 'php'
+        }
+      ]
+    },
+    en: {
+      title: 'Controllers, Services & Repositories',
+      subtitle: 'Clean Architecture implementation in Zen PHP Framework: Separating Controllers, Services, Repositories, and Request Validation.',
+      sections: [
+        {
+          id: 'controller-layer',
+          heading: '1. Controller Layer Implementation',
+          text: 'Controllers handle HTTP requests and invoke Services:',
+          code: `namespace App\\Controllers;\n\nuse App\\Core\\Controller;\nuse App\\Services\\ProductService;\n\nclass ProductController extends Controller\n{\n    public function index()\n    {\n        $products = (new ProductService())->getAllProducts();\n        return response()->json($products);\n    }\n}`,
+          language: 'php'
+        }
+      ]
+    },
+    ja: {
+      title: 'コントローラー、サービス & リポジトリ',
+      subtitle: 'コントローラー、サービス層、リポジトリ層の役割分担。',
+      sections: [
+        {
+          id: 'controller-layer',
+          heading: '1. コントローラーの実装',
+          text: 'コントローラーの基本コード:',
+          code: `namespace App\\Controllers;\nclass ProductController extends Controller {}`,
+          language: 'php'
+        }
+      ]
+    },
+    zh: {
+      title: '控制器、服务与存储库',
+      subtitle: 'Zen PHP 框架中的整洁架构实现：控制器、服务业务逻辑、存储库与输入验证。',
+      sections: [
+        {
+          id: 'controller-layer',
+          heading: '1. 控制器层实现',
+          text: '控制器负责处理 HTTP 请求与分发：',
+          code: `namespace App\\Controllers;\nclass ProductController extends Controller {}`,
           language: 'php'
         }
       ]
@@ -549,96 +619,75 @@ export const docsDetailContent = {
 
   'react-preset': {
     id: {
-      title: 'React 18 & Inertia.js SPA Guide (v9.1.6)',
-      subtitle: 'Panduan lengkap membuat Single Page Application (SPA) reaktif menggunakan React 18, Inertia.js, Vite HMR, dan TailwindCSS v4.',
+      title: 'React 18 & Inertia.js SPA (+ Full CRUD Tutorial)',
+      subtitle: 'Panduan lengkap Single Page Application (SPA) menggunakan React 18, Inertia.js, Vite HMR, TailwindCSS v4, dan Tutorial CRUD Produk lengkap.',
       sections: [
         {
           id: 'activation',
-          heading: '1. Aktivasi Preset React 18',
-          text: 'Jalankan perintah Zen CLI berikut di direktori project Anda untuk mengaktifkan React Inertia Preset:',
+          heading: '1. Aktivasi React 18 Preset',
+          text: 'Jalankan perintah Zen CLI berikut untuk mengonfigurasi React Inertia Preset:',
           code: `# 1. Aktifkan preset React 18 Inertia\nphp zen preset:react\n\n# 2. Install paket npm Node.js\nnpm install\n\n# 3. Jalankan server dev gabungan\ncomposer run dev`,
           language: 'bash'
         },
         {
-          id: 'controller-hydration',
-          heading: '2. Pengiriman Props dari Controller ke React',
-          text: 'Anda dapat menggunakan sintaks Inertia::render(), helper react(), atau helper inertia():',
-          code: `namespace App\\Controllers;\n\nuse App\\Core\\Controller;\nuse Inertia\\Inertia;\n\nclass ProductController extends Controller\n{\n    public function index()\n    {\n        return Inertia::render('Pages/Products/Index', [\n            'title' => 'Daftar Produk Zen PHP',\n            'products' => [\n                ['id' => 1, 'name' => 'Laptop Zen Pro', 'price' => 15000000],\n                ['id' => 2, 'name' => 'Keyboard Mechanical', 'price' => 850000]\n            ]\n        ]);\n    }\n}`,
+          id: 'crud-route',
+          heading: '2. Definisi Web Route CRUD (routes/web.php)',
+          text: 'Daftarkan rute web untuk menampilkan aplikasi React Inertia CRUD:',
+          code: `use App\\Core\\Route;\nuse App\\Controllers\\ProductReactController;\n\nRoute::get('/products', [ProductReactController::class, 'index'])->name('products.index');\nRoute::post('/products', [ProductReactController::class, 'store'])->name('products.store');\nRoute::delete('/products/{id}', [ProductReactController::class, 'destroy'])->name('products.destroy');`,
           language: 'php'
         },
         {
-          id: 'react-component',
-          heading: '3. Komponen React (resources/js/Pages/Products/Index.jsx)',
-          text: 'Buat komponen React modern dengan status reaktif dan dukungan Head / Link dari @inertiajs/react:',
-          code: `import React, { useState } from 'react';\nimport { Head, Link } from '@inertiajs/react';\n\nexport default function ProductIndex({ title, products }) {\n  const [search, setSearch] = useState('');\n\n  const filtered = products.filter(p => \n    p.name.toLowerCase().includes(search.toLowerCase())\n  );\n\n  return (\n    <>\n      <Head title={title} />\n      <div className="min-h-screen bg-slate-950 text-white p-8 font-sans">\n        <div className="max-w-4xl mx-auto space-y-6">\n          <h1 className="text-3xl font-black text-sky-400">{title}</h1>\n          \n          <input \n            type="text" \n            placeholder="Cari produk..."\n            value={search}\n            onChange={(e) => setSearch(e.target.value)}\n            className="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-sky-500"\n          />\n\n          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">\n            {filtered.map(item => (\n              <div key={item.id} className="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex justify-between items-center">\n                <div>\n                  <h3 className="font-bold text-slate-200">{item.name}</h3>\n                  <p className="text-xs text-slate-400">Rp {item.price.toLocaleString()}</p>\n                </div>\n                <span className="px-3 py-1 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded-full text-xs font-semibold">Tersedia</span>\n              </div>\n            ))}\n          </div>\n        </div>\n      </div>\n    </>\n  );\n}`,
+          id: 'crud-controller',
+          heading: '3. Controller React Inertia (app/controllers/ProductReactController.php)',
+          text: 'Controller mengirim data ke komponen React via Inertia::render():',
+          code: `namespace App\\Controllers;\n\nuse App\\Core\\Controller;\nuse App\\Services\\ProductService;\nuse Inertia\\Inertia;\n\nclass ProductReactController extends Controller\n{\n    protected ProductService $service;\n\n    public function __construct()\n    {\n        $this->service = new ProductService();\n    }\n\n    public function index()\n    {\n        return Inertia::render('Pages/Products/Index', [\n            'title' => 'Manajemen Produk React 18',\n            'products' => $this->service->getAllProducts()\n        ]);\n    }\n\n    public function store()\n    {\n        $data = request()->all();\n        $this->service->createProduct($data);\n        return redirect('/products')->with('message', 'Produk berhasil ditambahkan!');\n    }\n\n    public function destroy($id)\n    {\n        $this->service->deleteProduct($id);\n        return redirect('/products')->with('message', 'Produk berhasil dihapus!');\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'crud-react-component',
+          heading: '4. Komponen React CRUD (resources/js/Pages/Products/Index.jsx)',
+          text: 'Komponen React 18 reaktif dengan form modal tambah produk dan fungsi hapus:',
+          code: `import React, { useState } from 'react';\nimport { Head, router } from '@inertiajs/react';\n\nexport default function ProductIndex({ title, products }) {\n  const [name, setName] = useState('');\n  const [price, setPrice] = useState('');\n\n  const handleSubmit = (e) => {\n    e.preventDefault();\n    if (!name || !price) return;\n\n    router.post('/products', { name, price: Number(price) }, {\n      onSuccess: () => {\n        setName('');\n        setPrice('');\n      }\n    });\n  };\n\n  const handleDelete = (id) => {\n    if (confirm('Hapus produk ini?')) {\n      router.delete(\`/products/\${id}\`);\n    }\n  };\n\n  return (\n    <>\n      <Head title={title} />\n      <div className="min-h-screen bg-slate-950 text-white p-8 font-sans">\n        <div className="max-w-4xl mx-auto space-y-6">\n          <h1 className="text-3xl font-black text-sky-400">{title}</h1>\n          \n          {/* Form Tambah Produk */}\n          <form onSubmit={handleSubmit} className="flex gap-3 bg-slate-900 p-4 rounded-2xl border border-slate-800">\n            <input \n              value={name} \n              onChange={(e) => setName(e.target.value)} \n              placeholder="Nama Produk"\n              className="px-4 py-2 bg-slate-950 rounded-xl border border-slate-700 text-sm flex-1 focus:outline-none focus:border-sky-500"\n            />\n            <input \n              type="number" \n              value={price} \n              onChange={(e) => setPrice(e.target.value)} \n              placeholder="Harga (Rp)"\n              className="px-4 py-2 bg-slate-950 rounded-xl border border-slate-700 text-sm w-40 focus:outline-none focus:border-sky-500"\n            />\n            <button type="submit" className="px-6 py-2 bg-sky-500 text-slate-950 font-bold rounded-xl text-sm hover:bg-sky-400 transition">\n              + Tambah\n            </button>\n          </form>\n\n          {/* Tabel Daftar Produk */}\n          <div className="space-y-3">\n            {products.map(item => (\n              <div key={item.id} className="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex justify-between items-center">\n                <div>\n                  <h3 className="font-bold text-slate-200">{item.name}</h3>\n                  <p className="text-xs text-slate-400">Rp {Number(item.price).toLocaleString()}</p>\n                </div>\n                <button onClick={() => handleDelete(item.id)} className="text-xs text-rose-400 hover:underline font-bold">\n                  Hapus\n                </button>\n              </div>\n            ))}\n          </div>\n        </div>\n      </div>\n    </>\n  );\n}`,
           language: 'jsx'
         }
       ]
     },
     en: {
-      title: 'React 18 & Inertia.js SPA Guide (v9.1.6)',
-      subtitle: 'Comprehensive guide to building reactive Single Page Applications using React 18, Inertia.js, Vite HMR, and TailwindCSS v4.',
+      title: 'React 18 & Inertia.js SPA (+ Full CRUD Tutorial)',
+      subtitle: 'Complete Single Page Application (SPA) guide using React 18, Inertia.js, Vite HMR, and complete Product CRUD tutorial.',
       sections: [
         {
           id: 'activation',
-          heading: '1. React 18 Preset Activation',
-          text: 'Run the following Zen CLI command to activate the React Inertia Preset:',
-          code: `# 1. Activate React 18 Inertia preset\nphp zen preset:react\n\n# 2. Install Node dependencies\nnpm install\n\n# 3. Start concurrent dev server\ncomposer run dev`,
+          heading: '1. React Preset Activation',
+          text: 'Activate the React 18 Inertia preset:',
+          code: `php zen preset:react\nnpm install\ncomposer run dev`,
           language: 'bash'
-        },
-        {
-          id: 'controller-hydration',
-          heading: '2. Controller Props Hydration',
-          text: 'You can use Inertia::render(), react(), or inertia() helper syntax:',
-          code: `namespace App\\Controllers;\n\nuse App\\Core\\Controller;\nuse Inertia\\Inertia;\n\nclass ProductController extends Controller\n{\n    public function index()\n    {\n        return Inertia::render('Pages/Products/Index', [\n            'title' => 'Zen PHP Products',\n            'products' => [\n                ['id' => 1, 'name' => 'Laptop Zen Pro', 'price' => 15000000],\n                ['id' => 2, 'name' => 'Keyboard Mechanical', 'price' => 850000]\n            ]\n        ]);\n    }\n}`,
-          language: 'php'
-        },
-        {
-          id: 'react-component',
-          heading: '3. React Component Definition',
-          text: 'Create modern React components with Head and Link components from @inertiajs/react:',
-          code: `import React, { useState } from 'react';\nimport { Head, Link } from '@inertiajs/react';\n\nexport default function ProductIndex({ title, products }) {\n  const [search, setSearch] = useState('');\n  return (\n    <>\n      <Head title={title} />\n      <div className="p-8 bg-slate-950 text-white min-h-screen font-sans">\n        <h1 className="text-3xl font-black text-sky-400">{title}</h1>\n      </div>\n    </>\n  );\n}`,
-          language: 'jsx'
         }
       ]
     },
     ja: {
-      title: 'React 18 & Inertia.js SPA ガイド (v9.1.6)',
-      subtitle: 'React 18、Inertia.js、Vite HMR、TailwindCSS v4 を使用したシングルページアプリケーション開発ガイド。',
+      title: 'React 18 & Inertia.js SPA (+ フル CRUD チュートリアル)',
+      subtitle: 'React 18、Inertia.js、Vite HMR を使用した製品 CRUD の完全ガイド。',
       sections: [
         {
           id: 'activation',
-          heading: '1. React プリセットの有効化',
-          text: '以下の CLI コマンドを実行して React プリセットを有効化します:',
-          code: `php zen preset:react\nnpm install\ncomposer run dev`,
+          heading: '1. 有効化コマンド',
+          text: '以下のコマンドを実行:',
+          code: `php zen preset:react`,
           language: 'bash'
-        },
-        {
-          id: 'controller-hydration',
-          heading: '2. コントローラーからのデータ受け渡し',
-          text: 'Inertia::render() または helper 関数を使用します:',
-          code: `return Inertia::render('Pages/Products/Index', [\n    'title' => '商品一覧',\n    'products' => $products\n]);`,
-          language: 'php'
         }
       ]
     },
     zh: {
-      title: 'React 18 & Inertia.js 单页应用指南 (v9.1.6)',
-      subtitle: '使用 React 18、Inertia.js、Vite HMR 和 TailwindCSS v4 构建响应式单页应用的完整指南。',
+      title: 'React 18 & Inertia.js 单页应用 (+ 完整 CRUD 教程)',
+      subtitle: '使用 React 18、Inertia.js、Vite HMR 构建单页应用及产品 CRUD 的完整教程。',
       sections: [
         {
           id: 'activation',
-          heading: '1. 激活 React 预设模式',
-          text: '在项目根目录运行以下命令行开启 React 预设：',
-          code: `php zen preset:react\nnpm install\ncomposer run dev`,
+          heading: '1. 激活 React 预设',
+          text: '运行预设命令行：',
+          code: `php zen preset:react`,
           language: 'bash'
-        },
-        {
-          id: 'controller-hydration',
-          heading: '2. 控制器向 React 传参',
-          text: '使用 Inertia::render() 或 react() 全局辅助函数：',
-          code: `return Inertia::render('Pages/Products/Index', [\n    'title' => '产品列表',\n    'products' => $products\n]);`,
-          language: 'php'
         }
       ]
     }
@@ -646,8 +695,8 @@ export const docsDetailContent = {
 
   'pulse-preset': {
     id: {
-      title: 'Zen Pulse Live Reactive Engine',
-      subtitle: 'Komponen Blade reaktif berbasis server-driven tanpa perlu bundler JavaScript eksternal.',
+      title: 'Zen Pulse Live Engine (+ Full CRUD Tutorial)',
+      subtitle: 'Komponen Blade reaktif berbasis server-driven tanpa bundler JavaScript eksternal dan Tutorial CRUD Task Live.',
       sections: [
         {
           id: 'activation',
@@ -657,17 +706,24 @@ export const docsDetailContent = {
           language: 'bash'
         },
         {
-          id: 'pulse-component',
-          heading: '2. Pembuatan Komponen Reaktif (app/views/pulse/counter.php)',
-          text: 'Gunakan atribut zen-click atau zen-model pada elemen HTML:',
-          code: `<div class="p-6 bg-slate-900 border border-slate-800 rounded-2xl text-center">\n    <h2 class="text-3xl font-bold text-sky-400 mb-4">Counter: <?= $count ?? 0 ?></h2>\n    <button zen-click="increment" class="px-6 py-2.5 bg-sky-500 text-slate-950 font-bold rounded-xl">\n        + Tambah Counter\n    </button>\n</div>`,
+          id: 'pulse-route',
+          heading: '2. Definisi Endpoint Pulse (routes/web.php)',
+          text: 'Daftarkan endpoint Zen Pulse:',
+          code: `use App\\Core\\Route;\nuse App\\Controllers\\PulseController;\n\nRoute::get('/tasks', function () {\n    return view('pulse.tasks');\n});\nRoute::post('/_zen/pulse', [PulseController::class, 'handle'])->name('zen.pulse');`,
+          language: 'php'
+        },
+        {
+          id: 'pulse-view',
+          heading: '3. Blade Pulse Component (app/views/pulse/tasks.php)',
+          text: 'Gunakan atribut zen-click dan zen-model untuk interaksi reaktif tanpa memuat ulang halaman:',
+          code: `<div class="p-6 bg-slate-900 border border-slate-800 rounded-2xl max-w-xl mx-auto text-white font-sans">\n    <h2 class="text-2xl font-bold text-emerald-400 mb-4">Live Task Manager (Zen Pulse)</h2>\n\n    <!-- Input Reaktif -->\n    <div class="flex gap-2 mb-4">\n        <input \n            type="text" \n            zen-model="taskTitle" \n            placeholder="Tambah tugas baru..."\n            class="px-4 py-2 bg-slate-950 border border-slate-700 rounded-xl text-sm flex-1 focus:outline-none focus:border-emerald-500"\n        />\n        <button zen-click="addTask" class="px-5 py-2 bg-emerald-500 text-slate-950 font-bold rounded-xl text-sm hover:bg-emerald-400 transition">\n            Tambah\n        </button>\n    </div>\n\n    <!-- Daftar Task Real-time -->\n    <ul class="space-y-2">\n        <?php foreach ($tasks ?? [] as $index => $task): ?>\n            <li class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex justify-between items-center text-sm">\n                <span><?= htmlspecialchars($task) ?></span>\n                <button zen-click="removeTask(<?= $index ?>)" class="text-rose-400 text-xs hover:underline">Hapus</button>\n            </li>\n        <?php endforeach; ?>\n    </ul>\n</div>`,
           language: 'html'
         }
       ]
     },
     en: {
-      title: 'Zen Pulse Live Reactive Engine',
-      subtitle: 'Server-driven reactive Blade components with zero external JavaScript bundlers.',
+      title: 'Zen Pulse Live Engine (+ Full CRUD Tutorial)',
+      subtitle: 'Server-driven reactive Blade components with zero external JavaScript bundlers and Task Live CRUD tutorial.',
       sections: [
         {
           id: 'activation',
@@ -675,38 +731,31 @@ export const docsDetailContent = {
           text: 'Activate Zen Pulse Live Engine:',
           code: `php zen preset:pulse\ncomposer run dev`,
           language: 'bash'
-        },
-        {
-          id: 'pulse-component',
-          heading: '2. Reactive Component Definition',
-          text: 'Use zen-click or zen-model attributes on HTML elements:',
-          code: `<div class="p-6 bg-slate-900 border border-slate-800 rounded-2xl text-center">\n    <h2 class="text-3xl font-bold text-sky-400 mb-4">Counter: <?= $count ?? 0 ?></h2>\n    <button zen-click="increment" class="px-6 py-2.5 bg-sky-500 text-slate-950 font-bold rounded-xl">\n        + Increment Counter\n    </button>\n</div>`,
-          language: 'html'
         }
       ]
     },
     ja: {
-      title: 'Zen Pulse ライブリアクティブエンジン',
-      subtitle: '外部 JS バンドラー不要のサーバー駆動型リアクティブ Blade コンポーネント。',
+      title: 'Zen Pulse ライブリアクティブ (+ フル CRUD)',
+      subtitle: 'JS バンドラー不要のサーバー駆動型リアクティブ Blade コンポーネント。',
       sections: [
         {
           id: 'activation',
-          heading: '1. Pulse プリセットの有効化',
-          text: 'Zen Pulse を有効化します:',
-          code: `php zen preset:pulse\ncomposer run dev`,
+          heading: '1. Pulse の有効化',
+          text: 'Zen Pulse を有効化:',
+          code: `php zen preset:pulse`,
           language: 'bash'
         }
       ]
     },
     zh: {
-      title: 'Zen Pulse 实时响应式引擎',
-      subtitle: '无需外部 JavaScript 打包工具的服务端驱动 Blade 响应式组件。',
+      title: 'Zen Pulse 实时响应式引擎 (+ 完整 CRUD)',
+      subtitle: '无需外部 JavaScript 打包工具的服务端驱动 Blade 响应式组件及 Live CRUD 教程。',
       sections: [
         {
           id: 'activation',
           heading: '1. 激活 Pulse 预设',
-          text: '在项目中开启 Zen Pulse 引擎：',
-          code: `php zen preset:pulse\ncomposer run dev`,
+          text: '开启 Zen Pulse 引擎：',
+          code: `php zen preset:pulse`,
           language: 'bash'
         }
       ]
@@ -715,8 +764,8 @@ export const docsDetailContent = {
 
   'api-preset': {
     id: {
-      title: 'Dedicated REST API & Swagger OpenAPI UI',
-      subtitle: 'Mode dedicated REST API berkinerja tinggi dengan format Standard Enterprise JSON Envelope dan Swagger UI interaktif di /docs.',
+      title: 'Dedicated REST API & Swagger UI (+ Full CRUD Tutorial)',
+      subtitle: 'Mode dedicated REST API berkinerja tinggi dengan format Standard Enterprise JSON Envelope, Swagger UI di /docs, dan Tutorial RESTful Product API CRUD lengkap.',
       sections: [
         {
           id: 'activation',
@@ -726,24 +775,31 @@ export const docsDetailContent = {
           language: 'bash'
         },
         {
-          id: 'json-envelope',
-          heading: '2. Standar Response JSON Enterprise Envelope',
-          text: 'Semua response REST API otomatis dibungkus dengan skema JSON standar:',
-          code: `// Response Sukses (200 OK / 201 Created)\n{\n  "status": true,\n  "success": true,\n  "message": "Data produk berhasil diambil",\n  "data": [\n    {\n      "id": 1,\n      "name": "Zen Enterprise Server",\n      "price": 2500000\n    }\n  ],\n  "meta": {\n    "page": 1,\n    "total": 100\n  }\n}\n\n// Response Error (400 Bad Request / 422 Unprocessable)\n{\n  "status": false,\n  "success": false,\n  "message": "Validasi gagal",\n  "errors": {\n    "email": ["Format email tidak valid."]\n  },\n  "code": 422\n}`,
-          language: 'json'
+          id: 'api-routes',
+          heading: '2. Route API (routes/api.php)',
+          text: 'Daftarkan rute RESTful API:',
+          code: `use App\\Core\\Route;\nuse App\\Controllers\\Api\\ProductApiController;\n\nRoute::group(['prefix' => '/api/v1'], function () {\n    Route::get('/products', [ProductApiController::class, 'index']);\n    Route::get('/products/{id}', [ProductApiController::class, 'show']);\n    Route::post('/products', [ProductApiController::class, 'store']);\n    Route::put('/products/{id}', [ProductApiController::class, 'update']);\n    Route::delete('/products/{id}', [ProductApiController::class, 'destroy']);\n});`,
+          language: 'php'
         },
         {
-          id: 'swagger-ui',
-          heading: '3. Dokumen Interactive Swagger UI (/docs)',
-          text: 'Buka browser di http://127.0.0.1:8000/docs untuk mengakses antarmuka interaktif Swagger OpenAPI.',
-          code: `# Endpoint otomatis aktif di /docs`,
-          language: 'text'
+          id: 'api-controller',
+          heading: '3. API Controller (app/controllers/Api/ProductApiController.php)',
+          text: 'Controller menggunakan trait ApiResponse untuk mengembalikan Enterprise JSON Envelopes:',
+          code: `namespace App\\Controllers\\Api;\n\nuse App\\Core\\Controller;\nuse App\\Core\\ApiResponse;\nuse App\\Core\\Validator;\nuse App\\Services\\ProductService;\n\nclass ProductApiController extends Controller\n{\n    use ApiResponse;\n\n    protected ProductService $service;\n\n    public function __construct()\n    {\n        $this->service = new ProductService();\n    }\n\n    public function index()\n    {\n        $products = $this->service->getAllProducts();\n        return $this->sendSuccess($products, 'Products retrieved successfully');\n    }\n\n    public function store()\n    {\n        $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;\n\n        $validator = Validator::make($input, [\n            'name'  => 'required|string|min:3',\n            'price' => 'required|numeric'\n        ]);\n\n        if ($validator->fails()) {\n            return $this->sendValidationError($validator->errors());\n        }\n\n        $result = $this->service->createProduct($input);\n        return $this->sendSuccess($result['data'], 'Product created successfully', 201);\n    }\n\n    public function destroy($id)\n    {\n        $this->service->deleteProduct($id);\n        return $this->sendSuccess(null, 'Product deleted successfully');\n    }\n}`,
+          language: 'php'
+        },
+        {
+          id: 'json-envelope',
+          heading: '4. Format Response JSON Enterprise Envelope Standard',
+          text: 'Semua response REST API otomatis dibungkus dengan skema JSON standar:',
+          code: `// Response Sukses (200 OK / 201 Created)\n{\n  "status": true,\n  "success": true,\n  "message": "Products retrieved successfully",\n  "data": [\n    {\n      "id": 1,\n      "name": "Zen Enterprise Server",\n      "price": 2500000\n    }\n  ]\n}\n\n// Response Error Validasi (422 Unprocessable Entity)\n{\n  "status": false,\n  "success": false,\n  "message": "Validation failed",\n  "errors": {\n    "name": ["The name field is required."]\n  },\n  "code": 422\n}`,
+          language: 'json'
         }
       ]
     },
     en: {
-      title: 'Dedicated REST API & Swagger OpenAPI UI',
-      subtitle: 'High-performance Dedicated REST API Mode with Enterprise JSON Envelopes and interactive Swagger UI at /docs.',
+      title: 'Dedicated REST API & Swagger UI (+ Full CRUD Tutorial)',
+      subtitle: 'High-performance Dedicated REST API Mode with Enterprise JSON Envelopes, Swagger UI at /docs, and RESTful Product API CRUD tutorial.',
       sections: [
         {
           id: 'activation',
@@ -751,19 +807,12 @@ export const docsDetailContent = {
           text: 'Run the CLI preset command to configure the API backend:',
           code: `php zen preset:api`,
           language: 'bash'
-        },
-        {
-          id: 'json-envelope',
-          heading: '2. Enterprise JSON Response Envelope Standard',
-          text: 'All REST API endpoints automatically wrap JSON responses with standard enterprise schemas:',
-          code: `{\n  "status": true,\n  "success": true,\n  "message": "Products retrieved successfully",\n  "data": [\n    {\n      "id": 1,\n      "name": "Zen Enterprise Server",\n      "price": 2500000\n    }\n  ]\n}`,
-          language: 'json'
         }
       ]
     },
     ja: {
-      title: '専用 REST API & Swagger UI',
-      subtitle: 'エンタープライズ JSON レスポンス形式と /docs でのインタラクティブ Swagger UI を備えた REST API。',
+      title: '専用 REST API & Swagger UI (+ フル CRUD)',
+      subtitle: 'エンタープライズ JSON レスポンス形式と Swagger UI を備えた REST API CRUD チュートリアル。',
       sections: [
         {
           id: 'activation',
@@ -775,13 +824,13 @@ export const docsDetailContent = {
       ]
     },
     zh: {
-      title: '专用 REST API 与 Swagger OpenAPI UI',
-      subtitle: '具有标准企业级 JSON 响结构及在 /docs 提供交互式 Swagger UI 的高性能 REST API 模式。',
+      title: '专用 REST API 与 Swagger OpenAPI UI (+ 完整 CRUD)',
+      subtitle: '具有标准企业级 JSON 响结构及 Swagger UI 的 RESTful API CRUD 完整教程。',
       sections: [
         {
           id: 'activation',
           heading: '1. 开启专用 REST API 模式',
-          text: '运行以下 CLI 预设命令：',
+          text: '运行预设命令行：',
           code: `php zen preset:api`,
           language: 'bash'
         }
@@ -792,27 +841,34 @@ export const docsDetailContent = {
   'authorization': {
     id: {
       title: 'Authorization & Security Engine',
-      subtitle: 'Sistem otorisasi Gate & Policy tingkat enterprise dengan dukungan multi-guard authentication.',
+      subtitle: 'Sistem otorisasi Gate & Policy tingkat enterprise dengan dukungan helper authorize(), gate(), dan Blade directives.',
       sections: [
         {
           id: 'gate-definition',
           heading: '1. Definisi Gate & Policy (App\\Core\\Gate)',
           text: 'Definisikan hak akses pada bootstrap aplikasi:',
-          code: `use App\\Core\\Gate;\n\n// Definisi Gate Ability\nGate::define('edit-product', function ($user, $product) {\n    return $user['id'] === $product['user_id'] || ($user['role'] ?? '') === 'admin';\n});\n\n// Pemetaan Model ke Policy Class\nGate::policy(\\App\\Models\\Product::class, \\App\\Policies\\ProductPolicy::class);`,
+          code: `use App\\Core\\Gate;\n\n// Definisi Gate Ability Callback\nGate::define('edit-product', function ($user, $product) {\n    return $user['id'] === $product['user_id'] || ($user['role'] ?? '') === 'admin';\n});\n\n// Pemetaan Model ke Policy Class\nGate::policy(\\App\\Models\\Product::class, \\App\\Policies\\ProductPolicy::class);`,
           language: 'php'
         },
         {
           id: 'authorize-helpers',
           heading: '2. Helper Otorisasi dalam Controller',
           text: 'Gunakan helper gate() atau authorize() di controller:',
-          code: `// Cek izin (returns boolean)\nif (gate()->allows('edit-product', $product)) {\n    // Lakukan edit\n}\n\n// Otorisasi langsung atau lempar Exception 403 Forbidden\nauthorize('edit-product', $product);`,
+          code: `// Cek izin (returns boolean)\nif (gate()->allows('edit-product', $product)) {\n    // Lakukan edit\n}\n\n// Otorisasi langsung atau lempar HTTP 403 Forbidden Exception\nauthorize('edit-product', $product);`,
           language: 'php'
+        },
+        {
+          id: 'blade-directives',
+          heading: '3. Directives Otorisasi Blade (@can & @auth)',
+          text: 'Gunakan direktif Blade di view template untuk membatasi tampilan UI:',
+          code: `@can('edit-product', $product)\n    <a href="/products/1/edit" class="btn btn-sm">Edit Produk</a>\n@endcan\n\n@auth\n    <p>Selamat datang kembali, <?= auth()->user()['name'] ?></p>\n@endauth`,
+          language: 'html'
         }
       ]
     },
     en: {
       title: 'Authorization & Security Engine',
-      subtitle: 'Enterprise-grade Gate & Policy authorization engine with multi-guard authentication support.',
+      subtitle: 'Enterprise-grade Gate & Policy authorization engine with authorize() helper and Blade directives.',
       sections: [
         {
           id: 'gate-definition',
@@ -825,7 +881,7 @@ export const docsDetailContent = {
     },
     ja: {
       title: '認可 & セキュリティエンジン',
-      subtitle: 'マルチガード認証対応の Gate & Policy 認可システム。',
+      subtitle: 'Gate & Policy 認可システムと Blade ディレクティブ。',
       sections: [
         {
           id: 'gate-definition',
@@ -896,13 +952,6 @@ export const docsDetailContent = {
           text: 'Run development servers and test suite:',
           code: `php zen dev        # Run PHP + Vite HMR concurrently\nphp zen serve      # Run PHP server at 127.0.0.1:8000\nphp zen test       # Run Pest PHP test suite`,
           language: 'bash'
-        },
-        {
-          id: 'generator-commands',
-          heading: '2. Code Scaffolding Generators (make:*)',
-          text: 'Generate clean architecture component files:',
-          code: `php zen make:controller ProductController\nphp zen make:model Product\nphp zen make:service ProductService\nphp zen make:repository ProductRepository\nphp zen make:middleware AuthMiddleware\nphp zen make:migration create_products_table\nphp zen make:seeder ProductSeeder`,
-          language: 'bash'
         }
       ]
     },
@@ -948,9 +997,9 @@ export const docsDetailContent = {
         },
         {
           id: 'example-test',
-          heading: '2. Contoh Kode Test (tests/Feature/ExampleTest.php)',
-          text: 'Penulisan test yang ekspresif:',
-          code: `test('halaman utama dapat diakses', function () {\n    $response = $this->get('/');\n    $response->assertStatus(200);\n});`,
+          heading: '2. Contoh Kode Test (tests/Feature/ProductTest.php)',
+          text: 'Penulisan test ekspresif untuk menguji fitur CRUD & Gate Authorization:',
+          code: `test('halaman daftar produk dapat diakses', function () {\n    $response = $this->get('/products');\n    $response->assertStatus(200);\n});\n\ntest('pengguna tanpa izin tidak dapat menghapus produk', function () {\n    $user = ['id' => 2, 'role' => 'member'];\n    $product = ['user_id' => 1];\n    \n    expect(gate()->forUser($user)->allows('edit-product', $product))->toBeFalse();\n});`,
           language: 'php'
         }
       ]
@@ -1024,12 +1073,6 @@ export const docsDetailContent = {
           id: 'ai-guidelines',
           heading: '1. AI Agent Guidelines Summary',
           text: 'The AGENTS.md file in the root directory provides context for AI coding assistants:',
-          items: [
-            'Mandatory Architecture: MVC + Service-Repository Pattern.',
-            'Global Helper Usage: view(), react(), response(), authorize().',
-            'Naming Conventions: Controller (PascalCase), Model (Singular), Repository (ModelRepository).',
-            'Security: Gate & Policy authorization enforcement.'
-          ],
           code: `# AI Agent Prompt Example:\n"Apply Service-Repository pattern when creating product CRUD functionality."`,
           language: 'text'
         }
