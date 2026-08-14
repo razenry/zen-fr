@@ -14,6 +14,9 @@ trait ApiResponse
             header('Content-Type: application/json; charset=utf-8');
         }
         echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        if (PHP_SAPI === 'cli' && (defined('PHPUNIT_COMPOSER_INSTALL') || defined('PEST'))) {
+            return $payload;
+        }
         exit;
     }
 

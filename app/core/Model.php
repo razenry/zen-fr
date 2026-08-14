@@ -42,6 +42,10 @@ class Model
 
     public function __set($name, $value)
     {
+        $mutator = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $name))) . 'Attribute';
+        if (method_exists($this, $mutator)) {
+            $value = $this->$mutator($value);
+        }
         $this->attributes[$name] = $this->castAttribute($name, $value);
     }
 
@@ -49,6 +53,13 @@ class Model
     {
         if (array_key_exists($name, $this->relations)) {
             return $this->relations[$name];
+        }
+
+        $accessor = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $name))) . 'Attribute';
+        $value = $this->attributes[$name] ?? null;
+
+        if (method_exists($this, $accessor)) {
+            return $this->$accessor($value);
         }
 
         if (method_exists($this, $name)) {
@@ -61,7 +72,7 @@ class Model
             return $relation;
         }
 
-        return $this->attributes[$name] ?? null;
+        return $value;
     }
 
     public function setRelation(string $relation, $value): static
@@ -91,6 +102,13 @@ class Model
             case 'array':
             case 'json':
                 return is_string($value) ? json_decode($value, true) : (array)$value;
+            case 'date':
+            case 'datetime':
+                try {
+                    return is_string($value) ? new \DateTime($value) : $value;
+                } catch (\Throwable $e) {
+                    return $value;
+                }
             default:
                 return $value;
         }
@@ -158,6 +176,20 @@ class Model
     {
         $foreignKey = $foreignKey ?: strtolower(basename(str_replace('\\', '/', $relatedModel))) . '_id';
         return new BelongsTo($this, $relatedModel, $foreignKey, $ownerKey);
+    }
+
+    public function belongsToMany(
+        string $relatedModel,
+        ?string $table = null,
+        ?string $foreignPivotKey = null,
+        ?string $relatedPivotKey = null
+    ): Relations\BelongsToMany {
+        return new Relations\BelongsToMany($this, $relatedModel, $table, $foreignPivotKey, $relatedPivotKey);
+    }
+
+    public function relationLoaded(string $relation): bool
+    {
+        return array_key_exists($relation, $this->relations);
     }
 
     // --- Relationship Querying & Eager Loading ---
@@ -370,7 +402,39 @@ class Model
             $foreignKey = $relation->getForeignKey();
             $localKey = $relation->getLocalKey();
 
-            if ($relation instanceof BelongsTo) {
+            if ($relation instanceof Relations\BelongsToMany) {
+                $keys = array_filter(array_unique($models->pluck($localKey)->all()));
+                if (empty($keys)) continue;
+
+                $pivotTable = $relation->getPivotTable();
+                $foreignPivotKey = $relation->getForeignPivotKey();
+                $relatedPivotKey = $relation->getRelatedPivotKey();
+
+                $relatedInstance = new $relatedModelClass();
+                $relatedTable = $relatedInstance->getTable();
+                $relatedKey = $relatedInstance->getPrimaryKey();
+
+                $db = new \Database\Database();
+                $db->table($relatedTable)
+                    ->select("{$relatedTable}.*, {$pivotTable}.{$foreignPivotKey} as _pivot_foreign_key")
+                    ->join($pivotTable, "{$pivotTable}.{$relatedPivotKey}", '=', "{$relatedTable}.{$relatedKey}")
+                    ->whereIn("{$pivotTable}.{$foreignPivotKey}", $keys);
+
+                $results = $db->get();
+                $dictionary = [];
+                foreach ($results as $row) {
+                    $fk = $row['_pivot_foreign_key'];
+                    unset($row['_pivot_foreign_key']);
+                    $relatedObj = $relatedModelClass::hydrate($row);
+                    $dictionary[$fk][] = $relatedObj;
+                }
+
+                foreach ($models as $model) {
+                    $pkVal = $model->{$localKey};
+                    $items = $dictionary[$pkVal] ?? [];
+                    $model->setRelation($relationName, new Collection($items));
+                }
+            } elseif ($relation instanceof BelongsTo) {
                 $keys = array_filter(array_unique($models->pluck($foreignKey)->all()));
                 if (empty($keys)) continue;
 

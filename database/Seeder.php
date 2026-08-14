@@ -2,11 +2,9 @@
 
 namespace Database;
 
-use Database\Database;
-
 abstract class Seeder
 {
-    protected $db;
+    protected Database $db;
 
     public function __construct()
     {
@@ -19,13 +17,16 @@ abstract class Seeder
     abstract public function run();
 
     /**
-     * Call another seeder class.
+     * Call another seeder class or array of seeders.
      */
-    public function call($class)
+    public function call(array|string $classes): void
     {
-        if (class_exists($class)) {
-            $seeder = new $class();
-            $seeder->run();
+        $classes = is_array($classes) ? $classes : [$classes];
+        foreach ($classes as $class) {
+            if (class_exists($class)) {
+                $seeder = new $class();
+                $seeder->run();
+            }
         }
     }
 }

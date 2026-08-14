@@ -17,13 +17,13 @@ return [
     'btn_demo' => 'Coba Demo Interaktif',
 
     // Patch Notes & Upgrade Badges (Professional Format)
-    'badge_patch' => 'PATCH NOTES v2.0 RELEASE',
-    'badge_buff' => 'BUFF: PERFORMANCE ENHANCEMENTS',
+    'badge_patch' => 'PATCH NOTES v4.0 MAJOR RELEASE',
+    'badge_buff' => 'BUFF: PERFORMANCE & MULTI-DISK STORAGE',
     'badge_nerf' => 'NERF: CODEBASE PURGE & DEPRECATION',
     'badge_adjust' => 'ADJUSTMENT: SYSTEM REFACTORING',
-    'badge_new' => 'NEW: MAJOR FEATURES RELEASE',
-    'patch_title' => 'Catatan Pembaruan v2.0 Enterprise Release',
-    'patch_subtitle' => 'Ringkasan peningkatan performa, penambahan fitur utama baru, dan penyesuaian arsitektur sistem terpadu.',
+    'badge_new' => 'NEW: MAJOR ENTERPRISE FEATURES',
+    'patch_title' => 'Catatan Pembaruan v4.0 Enterprise Major Release',
+    'patch_subtitle' => 'Ringkasan fitur utama baru: Enhanced Multi-Disk Storage System, Cache Engine, Queue Jobs, Gate Authorization, Task Scheduling, dan Rate Limiter.',
     'upgrade_proc_title' => 'Prosedur Update Versi via Composer',
     'upgrade_proc_desc' => 'Jalankan perintah berikut pada terminal proyek Anda untuk memperbarui ke versi terbaru:',
 
@@ -38,8 +38,11 @@ return [
     'showcase_subtitle' => 'Uji coba langsung seluruh fitur utama Zen PHP Framework secara real-time di bawah ini.',
     'tab_pulse' => 'Zen Pulse Reactive',
     'tab_api' => 'RESTful API Tester',
+    'tab_storage' => 'Multi-Disk Storage',
+    'tab_cache_queue' => 'Cache & Queue Jobs',
+    'tab_gate' => 'Gate & Security',
     'tab_arch' => 'Service & Repository',
-    'tab_cli' => 'Zen CLI & Database Seeders',
+    'tab_cli' => 'Zen CLI & Seeders',
     'tab_patch' => 'Patch Notes & Upgrade',
 
     // Zen Pulse Demo Section

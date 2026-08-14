@@ -17,13 +17,13 @@ return [
     'btn_demo' => 'Try Live Demo',
 
     // Patch Notes & Upgrade Badges (Professional Format)
-    'badge_patch' => 'PATCH NOTES v2.0 RELEASE',
-    'badge_buff' => 'BUFF: PERFORMANCE ENHANCEMENTS',
+    'badge_patch' => 'PATCH NOTES v4.0 MAJOR RELEASE',
+    'badge_buff' => 'BUFF: PERFORMANCE & MULTI-DISK STORAGE',
     'badge_nerf' => 'NERF: CODEBASE PURGE & DEPRECATION',
     'badge_adjust' => 'ADJUSTMENT: SYSTEM REFACTORING',
-    'badge_new' => 'NEW: MAJOR FEATURES RELEASE',
-    'patch_title' => 'v2.0 Enterprise Release Patch Notes',
-    'patch_subtitle' => 'Summary of performance boosts, major new features, and unified system refactoring.',
+    'badge_new' => 'NEW: MAJOR ENTERPRISE FEATURES',
+    'patch_title' => 'v4.0 Enterprise Major Release Patch Notes',
+    'patch_subtitle' => 'Summary of new major features: Enhanced Multi-Disk Storage System, Cache Engine, Queue Jobs, Gate Authorization, Task Scheduling, and Rate Limiter.',
     'upgrade_proc_title' => 'Version Upgrade Procedure via Composer',
     'upgrade_proc_desc' => 'Run the following commands in your project terminal to upgrade to the latest version:',
 
@@ -38,8 +38,11 @@ return [
     'showcase_subtitle' => 'Test all core features of Zen PHP Framework interactively in real-time below.',
     'tab_pulse' => 'Zen Pulse Reactive',
     'tab_api' => 'RESTful API Tester',
+    'tab_storage' => 'Multi-Disk Storage',
+    'tab_cache_queue' => 'Cache & Queue Jobs',
+    'tab_gate' => 'Gate & Security',
     'tab_arch' => 'Service & Repository',
-    'tab_cli' => 'Zen CLI & Database Seeders',
+    'tab_cli' => 'Zen CLI & Seeders',
     'tab_patch' => 'Patch Notes & Upgrade',
 
     // Zen Pulse Demo Section

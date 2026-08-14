@@ -1,109 +1,73 @@
-# Zen PHP Framework
+# Zen PHP Framework (v8.0.1 Patch Release)
 
-Zen PHP Framework adalah framework PHP modern, ultra-ringan, dan cepat yang mengombinasikan kesederhanaan arsitektur MVC dengan keandalan Service & Repository Pattern, Zen Pulse Reactive Engine, Real-Time SSE Streaming, serta Pengujian Otomatis Pest PHP.
-
----
-
-## Fitur Utama
-
-1. **Service & Repository Pattern Standard**: Pemisahan tegas antara Controller, Logika Bisnis (Services), dan Akses Data (Repositories) untuk skala solo maupun tim.
-2. **Zen Pulse Reactive Engine**: Komponen reaktif zero-dependency untuk mengikat state dan action (`zen-model`, `zen-click`, `zen-submit`, `zen-poll`) tanpa javascript eksternal yang rumit.
-3. **Real-time SSE (Server-Sent Events)**: Streaming data dari server ke browser secara instan di `/_zen/sse`.
-4. **Pest PHP Testing Integration**: Dukungan pengujian otomatis (*unit & feature testing*) terintegrasi via `php zen test` dan `php zen make:test`.
-5. **Interactive Zen CLI Tool**: Alat baris perintah berwarna untuk setup otomatis (`zen setup`), migrasi database, dan generator (`make:repository`, `make:service`, `make:pulse`, `make:test`, `make:controller`, `make:model`, `make:migration`).
-6. **Expressive Laravel-like Routing**: Pengaturan rute dinamis dengan named routes, middleware sederhana, dan error handling terpusat.
-7. **Reusable UI Components**: Sistem komponen UI yang bersih (`App::Component()`) untuk membangun tampilan modular secara fleksibel.
+Zen PHP Framework adalah framework PHP modern, ultra-ringan, dan cepat yang mengombinasikan kesederhanaan arsitektur MVC dengan keandalan Service & Repository Pattern, 3 Starter Presets (REST API Dedicated + Swagger UI, React 18 + Vite, & Zen Pulse Live) dengan pembersihan *footprint* otomatis, TailwindCSS Engine Bawaan, Event & Listener Architecture, Blade Component Engine & Directives, Config Caching Optimization, Fluent HTTP Client Engine, Mail & Mailable System, Multi-Channel Notifications, Database Migrations Engine, Schema Builder, Model Factories, Seeder Runner, Zen Pulse Reactive Engine, Multi-Disk File Storage, Cache Engine, Queue Jobs, Gate Authorization, API Resources, serta Pengujian Otomatis Pest PHP.
 
 ---
 
-## Persyaratan Sistem & Instalasi
+## 📦 Pilihan Versi & Cara Download (Version Switcher Matrix)
 
-- **PHP** 8.0+ (PHP 8.3 / 8.4 kompatibel)
-- **MySQL / MariaDB**
-- **Composer**
+Zen PHP menggunakan **Git Release Branching System** (seperti Bootstrap) di mana setiap versi utama/patch memiliki branch dan tag terpisah.
 
-### Instalasi via Composer (Rekomendasi)
+| Versi | Status | Git Branch / Tag | Perintah Install / Checkout |
+| :--- | :--- | :--- | :--- |
+| **v8.0.1** | **Latest Patch (Recommended)** | `v8.0.1` | `git clone -b v8.0.1 https://github.com/razenry/zen-fr.git` |
+| **v8.0.0** | Major Release | `v8.0.0` | `git clone -b v8.0.0 https://github.com/razenry/zen-fr.git` |
+| **v7.1.0** | Minor Release | `v7.1.0` | `git clone -b v7.1.0 https://github.com/razenry/zen-fr.git` |
+| **v6.0.0** | Major Release | `v6.0.0` | `git clone -b v6.0.0 https://github.com/razenry/zen-fr.git` |
+| **v5.0.0** | Major Release | `v5.0.0` | `git clone -b v5.0.0 https://github.com/razenry/zen-fr.git` |
+| **v4.1.0** | Patch Release | `v4.1.0` | `git clone -b v4.1.0 https://github.com/razenry/zen-fr.git` |
+
+### 🚀 Cara Install & Switch Versi
 
 ```bash
-composer create-project razenry/zen-php my-app
-cd my-app
-php zen setup
+# Clone versi terbaru v8.0.1
+git clone -b v8.0.1 https://github.com/razenry/zen-fr.git my-project
+
+# Atau switch versi pada repo lokal
+git fetch --all --tags
+git checkout v8.0.1
+
+# Install via Composer
+composer create-project razenry/zen-php my-app "8.0.*"
 ```
 
 ---
 
-## Penggunaan Zen CLI
+## ⚡ 3 Starter Presets Framework (`php zen preset:<mode>`)
 
+Zen PHP v8.0.1 menyediakan 3 mode siap pakai dengan **pembersihan footprint otomatis** sesuai kebutuhan arsitektur aplikasi Anda:
+
+### 1. REST API Dedicated (`php zen preset:api`)
+- Mode murni Backend REST API tanpa view HTML overhead (otomatis membersihkan file UI/React yang tidak terpakai).
+- Terintegrasi Dokumentasi **Swagger UI** OpenAPI pada rute `/docs`.
+- Dilengkapi `CorsMiddleware`, `TokenAuth` (Sanctum-like API Tokens), `ApiResource`, dan `ApiResponse` trait.
+
+### 2. Fullstack React 18 + Vite (`php zen preset:react`)
+- Integrasi React 18 SPA/Hybrid dengan bundler Vite HMR dan TailwindCSS (otomatis membersihkan komponen Blade Pulse).
+- Render komponen React langsung dari controller Zen PHP:
+  ```php
+  return App::React('Pages/Dashboard', ['user' => $user]);
+  ```
+
+### 3. Fullstack Zen Pulse Live (`php zen preset:pulse`)
+- Server-side rendering HTML reaktif tanpa perlu install Node.js atau bundler eksternal (otomatis menghapus file React/Inertia untuk fokus pada 1 front-end).
+- Dilengkapi TailwindCSS Engine & live reactive state binding (`zen-model`, `zen-click`).
+
+---
+
+## 🎨 Integrasi Bawaan TailwindCSS
+
+TailwindCSS diinstall & dikonfigurasi secara default pada semua preset Fullstack (`tailwind.config.js`, `postcss.config.js`, `resources/css/app.css`):
+- **Vite Bundling**: `npm run dev` / `npm run build`
+- **Zero-Config CDN Fallback**: Terintegrasi otomatis via `App::Vite()`
+
+---
+
+## 🧪 Pengujian Otomatis
+
+Jalankan pengujian unit berbasis Pest PHP:
 ```bash
-# Menampilkan semua perintah
-php zen
-
-# Setup proyek bersih
-php zen setup
-
-# Jalankan pengujian otomatis (Pest PHP)
 php zen test
-
-# Jalankan / refresh migrasi database
-php zen migrate
-php zen migrate:refresh
-
-# Generators (Scaffolding)
-php zen make:repository UserRepository
-php zen make:service UserService
-php zen make:pulse Counter
-php zen make:test UserServiceTest
-php zen make:controller ProductController
-php zen make:model Product
-php zen make:migration create_products_table
+# atau
+vendor/bin/pest
 ```
-
----
-
-## Struktur Direktori Project
-
-```text
-zen-fr/
-├── app/
-│   ├── controllers/      # Controller Layer (Slim Controllers)
-│   ├── core/             # Core Engine (App, Route, Model, ZenPulseComponent)
-│   ├── helpers/          # Helper Functions (DateHelper, TextHelper)
-│   ├── models/           # ORM & Database Models
-│   ├── pulse/            # Zen Pulse Reactive Components
-│   ├── repositories/     # Data Access Layer (Repository Pattern)
-│   ├── services/         # Business Logic Layer (Service Pattern)
-│   └── views/            # View Templates, Layouts & Components
-├── database/
-│   └── migrations/       # File Skrip Migrasi Database
-├── public/
-│   ├── js/zen-pulse.js   # Engine JS Zen Pulse
-│   └── uploads/          # Folder Upload Media
-├── resources/
-│   └── lang/             # Lokalisasi (ID, EN, JA)
-├── routes/
-│   └── web.php           # Pendefinisian Route Aplikasi
-├── tests/                # Test Suite Pest PHP & PHPUnit
-│   ├── Feature/          # Feature / Integration Tests
-│   └── Unit/             # Unit Tests
-├── .env                  # Konfigurasi Environment & Database
-└── zen                   # Interactive CLI Executable
-```
-
----
-
-## Struktur Branch Repository
-
-Repository ini dipisahkan menjadi 2 branch utama untuk memudahkan pengembangan dan deployment:
-
-- **`main`** (Branch Saat Ini): **Clean Framework Starter**. Siap digunakan langsung untuk membangun aplikasi baru tanpa perlu menghapus file/konfigurasi dokumentasi.
-- **`docs`**: **Documentation & Reference Site**. Berisi seluruh file markdown dokumentasi beserta engine pembaca dokumentasi internal di rute `/docs`.
-
-### Mengakses Dokumentasi Lokal
-Jika Anda ingin menjalankan situs dokumentasi interaktif secara lokal:
-
-```bash
-git checkout docs
-php -S localhost:8000
-```
-Lalu buka `http://localhost:8000/docs` di browser Anda.
-

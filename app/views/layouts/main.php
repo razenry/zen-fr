@@ -33,7 +33,13 @@
         ?>
 
         <!-- Render view spesifik dari controller -->
-        <?php App\Core\App::View($content_view ?? '', $data ?? []); ?>
+        <?php 
+            if (isset($content_html)) {
+                echo $content_html;
+            } elseif (isset($content_view) && !empty($content_view)) {
+                App\Core\App::View($content_view, $data ?? []);
+            }
+        ?>
     </main>
 
     <!-- Memanggil komponen footer -->
