@@ -20,11 +20,10 @@ test('app vite asset helper includes tailwind cdn fallback', function () {
     expect($viteHtml)->toContain('resources/js/app.jsx');
 });
 
-test('tailwind and vite configuration files exist', function () {
-    expect(file_exists(dirname(__DIR__, 2) . '/tailwind.config.js'))->toBeTrue();
-    expect(file_exists(dirname(__DIR__, 2) . '/postcss.config.js'))->toBeTrue();
+test('tailwind v4 and vite configuration files exist', function () {
     expect(file_exists(dirname(__DIR__, 2) . '/vite.config.js'))->toBeTrue();
     expect(file_exists(dirname(__DIR__, 2) . '/package.json'))->toBeTrue();
+    expect(file_exists(dirname(__DIR__, 2) . '/resources/css/app.css'))->toBeTrue();
 });
 
 test('preset react CLI command executes cleanly without errors', function () {
