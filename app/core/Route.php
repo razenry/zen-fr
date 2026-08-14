@@ -109,7 +109,11 @@ class Route
 
     public static function resolve()
     {
-        $uri = isset($_GET['url']) ? '/' . rtrim($_GET['url'], '/') : '/';
+        $rawUri = $_GET['url'] ?? parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
+        $uri = '/' . trim($rawUri, '/');
+        if ($uri === '') {
+            $uri = '/';
+        }
         
         // Handle Method Override (e.g., _method=PUT in POST forms or headers)
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

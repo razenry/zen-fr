@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-require_once __DIR__ . '/app/init.php';
+require_once dirname(__DIR__) . '/app/init.php';
 
 // Global Error/Exception Handler
 set_error_handler(function ($severity, $message, $file, $line) {
@@ -17,8 +17,8 @@ set_exception_handler(function (\Throwable $e) {
 });
 
 // Include web and API routes
-require_once __DIR__ . '/routes/web.php';
-require_once __DIR__ . '/routes/api.php';
+require_once dirname(__DIR__) . '/routes/web.php';
+require_once dirname(__DIR__) . '/routes/api.php';
 
 use App\Core\Route;
 

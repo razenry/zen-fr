@@ -14,9 +14,10 @@ date_default_timezone_set('Asia/Jakarta');
 // Register Interactive Error Handler
 \App\Core\ErrorHandler::register();
 
-// Include Config & i18n Translation Engine
-require_once 'core/Config.php';
-require_once 'core/Lang.php';
+// Include Config, Global Helpers & i18n Translation Engine
+require_once __DIR__ . '/core/Config.php';
+require_once __DIR__ . '/core/Lang.php';
+require_once __DIR__ . '/helpers/helpers.php';
 
 // Initialize i18n
 \App\Core\Lang::init();

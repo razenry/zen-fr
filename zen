@@ -99,6 +99,12 @@ switch ($command) {
         }
 
         $publicDir = __DIR__ . '/public';
+        if (!is_dir($publicDir)) {
+            @mkdir($publicDir, 0755, true);
+        }
+        if (!file_exists($publicDir . '/index.php')) {
+            file_put_contents($publicDir . '/index.php', "<?php\n\nrequire_once dirname(__DIR__) . '/index.php';\n");
+        }
         $hasPackageJson = file_exists(__DIR__ . '/package.json');
 
         echo CliColor::bold(CliColor::cyan("\n⚡ Zen PHP Concurrent Development Server (v8.1.0)\n"));
@@ -743,6 +749,10 @@ switch ($command) {
             file_put_contents(__DIR__ . '/app/views/docs/swagger.php', '<!DOCTYPE html><html><head><title>Zen API Docs</title></head><body><h1>Zen API Documentation</h1></body></html>');
         }
 
+        // Update routes/web.php for API mode
+        $apiWebRoutes = "<?php\n\nuse App\\Core\\Route;\n\nRoute::get('/', function () {\n    header('Location: /docs');\n    exit;\n});\n\nRoute::get('/docs', function () {\n    view('docs.swagger');\n})->name('docs');\n";
+        file_put_contents(__DIR__ . '/routes/web.php', $apiWebRoutes);
+
         echo CliColor::green("[OK] Frontend UI views & React components removed for minimal footprint.\n");
         echo CliColor::green("[OK] CORS Middleware & Bearer Token Authentication enabled.\n");
         echo CliColor::green("[OK] Swagger OpenAPI Interactive Documentation ready at /docs.\n");
@@ -805,9 +815,14 @@ switch ($command) {
             file_put_contents(__DIR__ . '/vite.config.js', "import { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport tailwindcss from '@tailwindcss/vite';\n\nexport default defineConfig({\n  plugins: [react(), tailwindcss()],\n});\n");
         }
 
+        // Update routes/web.php for React mode
+        $reactWebRoutes = "<?php\n\nuse App\\Core\\Route;\n\nRoute::get('/', function () {\n    react('Pages/Dashboard', [\n        'title' => 'Zen PHP React Dashboard',\n        'user' => ['name' => 'Developer']\n    ]);\n})->name('home');\n\nRoute::get('/docs', function () {\n    view('docs.swagger');\n})->name('docs');\n";
+        file_put_contents(__DIR__ . '/routes/web.php', $reactWebRoutes);
+
         echo CliColor::green("[OK] Unused server-side Blade Pulse components removed.\n");
         echo CliColor::green("[OK] package.json with React 18 & Vite initialized.\n");
         echo CliColor::green("[OK] resources/js/app.jsx & resources/js/Pages/Dashboard.jsx ready.\n");
+        echo CliColor::green("[OK] routes/web.php updated to render React Dashboard.\n");
         echo CliColor::bold(CliColor::green("[SUCCESS] React 18 Preset configured! Run 'npm install && npm run dev' to start Vite HMR server.\n"));
         break;
 
