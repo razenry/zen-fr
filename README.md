@@ -1,4 +1,4 @@
-# Zen PHP Framework (v7.0.0 Major Release)
+# Zen PHP Framework (v7.1.0 Release)
 
 Zen PHP Framework adalah framework PHP modern, ultra-ringan, dan cepat yang mengombinasikan kesederhanaan arsitektur MVC dengan keandalan Service & Repository Pattern, Event & Listener Architecture, Blade Component Engine & Directives, Config Caching Optimization, Fluent HTTP Client Engine, Mail & Mailable System, Multi-Channel Notifications, Database Migrations Engine, Schema Builder, Model Factories, Seeder Runner, Zen Pulse Reactive Engine, Multi-Disk File Storage, Cache Engine, Queue Jobs, Gate Authorization, API Resources, serta Pengujian Otomatis Pest PHP.
 
@@ -10,24 +10,24 @@ Zen PHP menggunakan **Git Release Branching System** (seperti Bootstrap) di mana
 
 | Versi | Status | Git Branch / Tag | Perintah Install / Checkout |
 | :--- | :--- | :--- | :--- |
-| **v7.0.0** | **Latest Major (Recommended)** | `v7.0.0` | `git clone -b v7.0.0 https://github.com/razenry/zen-fr.git` |
+| **v7.1.0** | **Latest (Recommended)** | `v7.1.0` | `git clone -b v7.1.0 https://github.com/razenry/zen-fr.git` |
+| **v7.0.0** | Major Release | `v7.0.0` | `git clone -b v7.0.0 https://github.com/razenry/zen-fr.git` |
 | **v6.0.0** | Major Release | `v6.0.0` | `git clone -b v6.0.0 https://github.com/razenry/zen-fr.git` |
 | **v5.0.0** | Major Release | `v5.0.0` | `git clone -b v5.0.0 https://github.com/razenry/zen-fr.git` |
 | **v4.1.0** | Patch Release | `v4.1.0` | `git clone -b v4.1.0 https://github.com/razenry/zen-fr.git` |
-| **v4.0.0** | Release Stable | `v4.0.0` | `git clone -b v4.0.0 https://github.com/razenry/zen-fr.git` |
 
 ### 🚀 Cara Install & Switch Versi
 
 ```bash
-# Clone versi terbaru v7.0.0
-git clone -b v7.0.0 https://github.com/razenry/zen-fr.git my-project
+# Clone versi terbaru v7.1.0
+git clone -b v7.1.0 https://github.com/razenry/zen-fr.git my-project
 
 # Atau switch versi pada repo lokal
 git fetch --all --tags
-git checkout v7.0.0
+git checkout v7.1.0
 
 # Install via Composer
-composer create-project razenry/zen-php my-app "7.0.*"
+composer create-project razenry/zen-php my-app "7.1.*"
 ```
 
 ---
