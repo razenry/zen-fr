@@ -513,6 +513,42 @@ switch ($command) {
         echo CliColor::green("[OK] Policy created successfully: app/policies/{$name}.php\n");
         break;
 
+    case 'make:mail':
+        if (!isset($argv[2])) {
+            die(CliColor::red("Error: Mail name is required. Usage: php zen make:mail WelcomeMail\n"));
+        }
+        $rawName = ucfirst($argv[2]);
+        $name = str_ends_with($rawName, 'Mail') ? $rawName : $rawName . 'Mail';
+
+        $dir = __DIR__ . '/app/mail';
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
+
+        $file = "{$dir}/{$name}.php";
+        if (file_exists($file)) die(CliColor::red("Error: Mailable file already exists!\n"));
+
+        $content = "<?php\n\nnamespace App\\Mail;\n\nuse App\\Core\\Mailable;\n\nclass {$name} extends Mailable\n{\n    public function build(): static\n    {\n        return \$this->subject('Welcome to Zen PHP')\n                    ->html('<h1>Welcome to Zen PHP Framework</h1>');\n    }\n}\n";
+        file_put_contents($file, $content);
+        echo CliColor::green("[OK] Mailable created successfully: app/mail/{$name}.php\n");
+        break;
+
+    case 'make:notification':
+        if (!isset($argv[2])) {
+            die(CliColor::red("Error: Notification name is required. Usage: php zen make:notification OrderPaidNotification\n"));
+        }
+        $rawName = ucfirst($argv[2]);
+        $name = str_ends_with($rawName, 'Notification') ? $rawName : $rawName . 'Notification';
+
+        $dir = __DIR__ . '/app/notifications';
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
+
+        $file = "{$dir}/{$name}.php";
+        if (file_exists($file)) die(CliColor::red("Error: Notification file already exists!\n"));
+
+        $content = "<?php\n\nnamespace App\\Notifications;\n\nuse App\\Core\\Notification;\n\nclass {$name} extends Notification\n{\n    public function via(\$notifiable): array\n    {\n        return ['mail'];\n    }\n}\n";
+        file_put_contents($file, $content);
+        echo CliColor::green("[OK] Notification created successfully: app/notifications/{$name}.php\n");
+        break;
+
     case 'queue:work':
         echo CliColor::cyan("Processing queued background jobs...\n");
         $processed = \App\Core\Queue::workAll();
