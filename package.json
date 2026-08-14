@@ -1,11 +1,12 @@
 {
   "name": "zen-php-framework",
   "private": true,
-  "version": "8.0.0",
+  "version": "8.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "serve": "php zen serve"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",

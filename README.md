@@ -1,6 +1,6 @@
-# Zen PHP Framework (v8.0.1 Patch Release)
+# Zen PHP Framework (v8.1.0 Minor Release)
 
-Zen PHP Framework adalah framework PHP modern, ultra-ringan, dan cepat yang mengombinasikan kesederhanaan arsitektur MVC dengan keandalan Service & Repository Pattern, 3 Starter Presets (REST API Dedicated + Swagger UI, React 18 + Vite, & Zen Pulse Live) dengan pembersihan *footprint* otomatis, TailwindCSS Engine Bawaan, Event & Listener Architecture, Blade Component Engine & Directives, Config Caching Optimization, Fluent HTTP Client Engine, Mail & Mailable System, Multi-Channel Notifications, Database Migrations Engine, Schema Builder, Model Factories, Seeder Runner, Zen Pulse Reactive Engine, Multi-Disk File Storage, Cache Engine, Queue Jobs, Gate Authorization, API Resources, serta Pengujian Otomatis Pest PHP.
+Zen PHP Framework adalah framework PHP modern, ultra-ringan, dan cepat yang mengombinasikan kesederhanaan arsitektur MVC dengan keandalan Service & Repository Pattern, 3 Starter Presets (REST API Dedicated + Swagger UI, React 18 + Vite, & Zen Pulse Live) dengan pembersihan *footprint* otomatis, Built-in Development Server (`php zen serve`), TailwindCSS Engine Bawaan, Event & Listener Architecture, Blade Component Engine & Directives, Config Caching Optimization, Fluent HTTP Client Engine, Mail & Mailable System, Multi-Channel Notifications, Database Migrations Engine, Schema Builder, Model Factories, Seeder Runner, Zen Pulse Reactive Engine, Multi-Disk File Storage, Cache Engine, Queue Jobs, Gate Authorization, API Resources, serta Pengujian Otomatis Pest PHP.
 
 ---
 
@@ -10,7 +10,7 @@ Zen PHP menggunakan **Git Release Branching System** (seperti Bootstrap) di mana
 
 | Versi | Status | Git Branch / Tag | Perintah Install / Checkout |
 | :--- | :--- | :--- | :--- |
-| **v8.0.1** | **Latest Patch (Recommended)** | `v8.0.1` | `git clone -b v8.0.1 https://github.com/razenry/zen-fr.git` |
+| **v8.1.0** | **Latest Minor (Recommended)** | `v8.1.0` | `git clone -b v8.1.0 https://github.com/razenry/zen-fr.git` |
 | **v8.0.0** | Major Release | `v8.0.0` | `git clone -b v8.0.0 https://github.com/razenry/zen-fr.git` |
 | **v7.1.0** | Minor Release | `v7.1.0` | `git clone -b v7.1.0 https://github.com/razenry/zen-fr.git` |
 | **v6.0.0** | Major Release | `v6.0.0` | `git clone -b v6.0.0 https://github.com/razenry/zen-fr.git` |
@@ -20,22 +20,22 @@ Zen PHP menggunakan **Git Release Branching System** (seperti Bootstrap) di mana
 ### 🚀 Cara Install & Switch Versi
 
 ```bash
-# Clone versi terbaru v8.0.1
-git clone -b v8.0.1 https://github.com/razenry/zen-fr.git my-project
+# Clone versi terbaru v8.1.0
+git clone -b v8.1.0 https://github.com/razenry/zen-fr.git my-project
 
 # Atau switch versi pada repo lokal
 git fetch --all --tags
-git checkout v8.0.1
+git checkout v8.1.0
 
 # Install via Composer
-composer create-project razenry/zen-php my-app "8.0.*"
+composer create-project razenry/zen-php my-app
 ```
 
 ---
 
 ## ⚡ 3 Starter Presets Framework (`php zen preset:<mode>`)
 
-Zen PHP v8.0.1 menyediakan 3 mode siap pakai dengan **pembersihan footprint otomatis** sesuai kebutuhan arsitektur aplikasi Anda:
+Zen PHP v8.1.0 menyediakan 3 mode siap pakai dengan **pembersihan footprint otomatis** sesuai kebutuhan arsitektur aplikasi Anda:
 
 ### 1. REST API Dedicated (`php zen preset:api`)
 - Mode murni Backend REST API tanpa view HTML overhead (otomatis membersihkan file UI/React yang tidak terpakai).
