@@ -42,6 +42,6 @@
     <!-- Memanggil komponen footer -->
     <?php \App\Core\App::Component('footer'); ?>
 
-    <script src="<?= function_exists('baseUrl') ? baseUrl('public/js/zen-pulse.js') : '/public/js/zen-pulse.js' ?>"></script>
+    <script src="<?= function_exists('baseUrl') ? baseUrl('js/zen-pulse.js') : '/js/zen-pulse.js' ?>"></script>
 </body>
 </html>

@@ -22,37 +22,16 @@
                 </p>
 
                 <?php if(isset($exception) && $exception): ?>
-                    <div class="text-start mb-4">
-                        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-                            <div class="card-header bg-danger bg-opacity-10 border-0 py-3 px-4 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge bg-danger rounded-pill px-3 py-1.5"><?= get_class($exception) ?></span>
-                                </div>
-                                <button class="btn btn-sm btn-outline-danger" type="button" data-bs-toggle="collapse" data-bs-target="#debugCollapse" aria-expanded="false" aria-controls="debugCollapse">
-                                    <i class="bi bi-code-slash me-1"></i> Tampilkan Detail Debug
-                                </button>
-                            </div>
-                            <div class="collapse" id="debugCollapse">
-                                <div class="card-body p-4 bg-light border-top" style="border-color: rgba(0,0,0,0.05) !important;">
-                                    <div class="mb-3">
-                                        <h6 class="fw-bold text-dark mb-1">Pesan Error:</h6>
-                                        <p class="text-danger fw-semibold mb-2" style="font-size: 1.05rem;"><?= htmlspecialchars($exception->getMessage()) ?></p>
-                                        <small class="text-muted">
-                                            <i class="bi bi-file-earmark-code me-1"></i> File: <strong><?= htmlspecialchars($exception->getFile()) ?></strong> pada baris <strong><?= $exception->getLine() ?></strong>
-                                        </small>
-                                    </div>
-                                    <hr class="text-muted my-3">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <h6 class="fw-bold text-dark m-0">Stack Trace:</h6>
-                                        <button class="btn btn-xs btn-outline-secondary py-1 px-2.5 rounded-3" style="font-size: 0.8rem;" onclick="copyStackTrace()">
-                                            <i class="bi bi-clipboard me-1"></i> Salin Stack Trace
-                                        </button>
-                                    </div>
-                                    <pre class="pre-box"><code id="stackTraceText"><?= htmlspecialchars($exception->getTraceAsString()) ?></code></pre>
-                                </div>
-                            </div>
+                    <details class="text-start mb-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl backdrop-blur-xl" open>
+                        <summary class="font-bold text-rose-400 cursor-pointer mb-2 flex justify-between items-center text-sm">
+                            <span class="font-mono text-base font-bold">⚠️ <?= get_class($exception) ?>: <?= htmlspecialchars($exception->getMessage()) ?></span>
+                            <span class="text-xs text-slate-500 font-mono ms-2"><?= htmlspecialchars(basename($exception->getFile())) ?>:<?= $exception->getLine() ?></span>
+                        </summary>
+                        <div class="mt-3 pt-3 border-t border-slate-800 text-xs font-mono text-slate-300">
+                            <p class="text-slate-400 mb-2"><strong>File:</strong> <?= htmlspecialchars($exception->getFile()) ?> (Line <?= $exception->getLine() ?>)</p>
+                            <pre class="bg-slate-950 p-4 rounded-xl text-rose-300 overflow-x-auto border border-slate-800/80 text-xs leading-relaxed font-mono"><code><?= htmlspecialchars($exception->getTraceAsString()) ?></code></pre>
                         </div>
-                    </div>
+                    </details>
                 <?php endif; ?>
 
                 <div class="d-flex justify-content-center gap-3">
