@@ -42,6 +42,10 @@ class Model
 
     public function __set($name, $value)
     {
+        $mutator = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $name))) . 'Attribute';
+        if (method_exists($this, $mutator)) {
+            $value = $this->$mutator($value);
+        }
         $this->attributes[$name] = $this->castAttribute($name, $value);
     }
 
@@ -49,6 +53,13 @@ class Model
     {
         if (array_key_exists($name, $this->relations)) {
             return $this->relations[$name];
+        }
+
+        $accessor = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $name))) . 'Attribute';
+        $value = $this->attributes[$name] ?? null;
+
+        if (method_exists($this, $accessor)) {
+            return $this->$accessor($value);
         }
 
         if (method_exists($this, $name)) {
@@ -61,7 +72,7 @@ class Model
             return $relation;
         }
 
-        return $this->attributes[$name] ?? null;
+        return $value;
     }
 
     public function setRelation(string $relation, $value): static
@@ -91,6 +102,13 @@ class Model
             case 'array':
             case 'json':
                 return is_string($value) ? json_decode($value, true) : (array)$value;
+            case 'date':
+            case 'datetime':
+                try {
+                    return is_string($value) ? new \DateTime($value) : $value;
+                } catch (\Throwable $e) {
+                    return $value;
+                }
             default:
                 return $value;
         }

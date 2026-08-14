@@ -41,7 +41,12 @@ if ($argc < 2) {
     echo "  " . str_pad(CliColor::green("make:repository"), 25) . " Create a new Repository class\n";
     echo "  " . str_pad(CliColor::green("make:service"), 25) . " Create a new Service class\n";
     echo "  " . str_pad(CliColor::green("make:pulse"), 25) . " Create a new Zen Pulse reactive component\n";
+    echo "  " . str_pad(CliColor::green("make:job"), 25) . " Create a new Queue Job class\n";
+    echo "  " . str_pad(CliColor::green("make:policy"), 25) . " Create a new Policy authorization class\n";
     echo "  " . str_pad(CliColor::green("make:test"), 25) . " Create a new Pest PHP test file\n";
+    echo "  " . str_pad(CliColor::green("queue:work"), 25) . " Process queued jobs in background\n";
+    echo "  " . str_pad(CliColor::green("schedule:run"), 25) . " Run scheduled cron and job tasks\n";
+    echo "  " . str_pad(CliColor::green("cache:clear"), 25) . " Flush all application framework caches\n";
     exit(1);
 }
 
@@ -471,6 +476,60 @@ switch ($command) {
         $content = "<?php\n\ntest('example feature test', function () {\n    expect(true)->toBeTrue();\n});\n";
         file_put_contents($file, $content);
         echo CliColor::green("[OK] Test created successfully: tests/Unit/{$name}.php\n");
+        break;
+
+    case 'make:job':
+        if (!isset($argv[2])) {
+            die(CliColor::red("Error: Job name is required. Usage: php zen make:job ProcessPodcastJob\n"));
+        }
+        $rawName = ucfirst($argv[2]);
+        $name = str_ends_with($rawName, 'Job') ? $rawName : $rawName . 'Job';
+
+        $dir = __DIR__ . '/app/jobs';
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
+
+        $file = "{$dir}/{$name}.php";
+        if (file_exists($file)) die(CliColor::red("Error: Job file already exists!\n"));
+
+        $content = "<?php\n\nnamespace App\\Jobs;\n\nuse App\\Core\\Job;\n\nclass {$name} extends Job\n{\n    public function handle(): void\n    {\n        // Execute background job logic\n    }\n}\n";
+        file_put_contents($file, $content);
+        echo CliColor::green("[OK] Job created successfully: app/jobs/{$name}.php\n");
+        break;
+
+    case 'make:policy':
+        if (!isset($argv[2])) {
+            die(CliColor::red("Error: Policy name is required. Usage: php zen make:policy UserPolicy\n"));
+        }
+        $rawName = ucfirst($argv[2]);
+        $name = str_ends_with($rawName, 'Policy') ? $rawName : $rawName . 'Policy';
+
+        $dir = __DIR__ . '/app/policies';
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
+
+        $file = "{$dir}/{$name}.php";
+        if (file_exists($file)) die(CliColor::red("Error: Policy file already exists!\n"));
+
+        $content = "<?php\n\nnamespace App\\Policies;\n\nclass {$name}\n{\n    public function view(\$user, \$model): bool\n    {\n        return true;\n    }\n\n    public function update(\$user, \$model): bool\n    {\n        return \$user->id === \$model->user_id;\n    }\n}\n";
+        file_put_contents($file, $content);
+        echo CliColor::green("[OK] Policy created successfully: app/policies/{$name}.php\n");
+        break;
+
+    case 'queue:work':
+        echo CliColor::cyan("Processing queued background jobs...\n");
+        $processed = \App\Core\Queue::workAll();
+        echo CliColor::bold(CliColor::green("[SUCCESS] Processed {$processed} queued job(s).\n"));
+        break;
+
+    case 'schedule:run':
+        echo CliColor::cyan("Running scheduled tasks...\n");
+        $executed = \App\Core\Scheduler::runDueTasks();
+        echo CliColor::bold(CliColor::green("[SUCCESS] Executed {$executed} scheduled task(s).\n"));
+        break;
+
+    case 'cache:clear':
+        echo CliColor::cyan("Flushing application framework cache...\n");
+        \App\Core\Cache::flush();
+        echo CliColor::bold(CliColor::green("[SUCCESS] Application cache cleared successfully.\n"));
         break;
 
     default:

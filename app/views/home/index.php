@@ -64,6 +64,21 @@
                 </button>
             </li>
             <li class="nav-item flex-grow-1 text-center" role="presentation">
+                <button class="nav-link fw-bold py-2.5 px-3 rounded-2 w-100 text-nowrap" id="storage-tab" data-bs-toggle="tab" data-bs-target="#storage-pane" type="button" role="tab">
+                    <i class="bi bi-folder-symlink me-2"></i> <?= lang('tab_storage') ?>
+                </button>
+            </li>
+            <li class="nav-item flex-grow-1 text-center" role="presentation">
+                <button class="nav-link fw-bold py-2.5 px-3 rounded-2 w-100 text-nowrap" id="cache-queue-tab" data-bs-toggle="tab" data-bs-target="#cache-queue-pane" type="button" role="tab">
+                    <i class="bi bi-hdd-rack me-2"></i> <?= lang('tab_cache_queue') ?>
+                </button>
+            </li>
+            <li class="nav-item flex-grow-1 text-center" role="presentation">
+                <button class="nav-link fw-bold py-2.5 px-3 rounded-2 w-100 text-nowrap" id="gate-tab" data-bs-toggle="tab" data-bs-target="#gate-pane" type="button" role="tab">
+                    <i class="bi bi-shield-lock me-2"></i> <?= lang('tab_gate') ?>
+                </button>
+            </li>
+            <li class="nav-item flex-grow-1 text-center" role="presentation">
                 <button class="nav-link fw-bold py-2.5 px-3 rounded-2 w-100 text-nowrap" id="arch-tab" data-bs-toggle="tab" data-bs-target="#arch-pane" type="button" role="tab">
                     <i class="bi bi-diagram-3 me-2"></i> <?= lang('tab_arch') ?>
                 </button>
@@ -166,7 +181,88 @@
                 </div>
             </div>
 
-            <!-- TAB 3: Service & Repository Layer -->
+            <!-- TAB 3: Multi-Disk File Storage System -->
+            <div class="tab-pane fade" id="storage-pane" role="tabpanel">
+                <div class="bg-white p-4 rounded-3 shadow-sm border">
+                    <h5 class="fw-bold text-dark mb-2"><i class="bi bi-folder-symlink text-primary me-2"></i> Multi-Disk File Storage Engine</h5>
+                    <p class="text-secondary small mb-4">Sistem abstraksi penyimpanan file terpadu (Public, Local, S3 Cloud) dengan URL bertenggat waktu (signed URL) & upload fluen.</p>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="p-3 bg-dark text-light rounded-3 font-monospace pre-box">
+                                <div class="text-secondary mb-1">// Standard & Cloud Multi-Disk API</div>
+                                <div class="text-info">Storage::disk('public')->put('avatar.jpg', $data);</div>
+                                <div class="text-info mt-2">Storage::disk('s3')->get('documents/report.pdf');</div>
+                                <div class="text-success mt-2">$url = Storage::disk('s3')->temporaryUrl('file.pdf', 1800);</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 bg-dark text-light rounded-3 font-monospace pre-box">
+                                <div class="text-secondary mb-1">// Fluent Controller Upload Helpers</div>
+                                <div class="text-warning">$path = $request->file('avatar')->store('avatars', 's3');</div>
+                                <div class="text-warning mt-2">$path = $request->file('doc')->storeAs('docs', 'inv.pdf');</div>
+                                <div class="text-success mt-2">$path = $request->file('photo')->storePublicly('photos');</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: Cache Engine & Queue Jobs -->
+            <div class="tab-pane fade" id="cache-queue-pane" role="tabpanel">
+                <div class="bg-white p-4 rounded-3 shadow-sm border">
+                    <h5 class="fw-bold text-dark mb-2"><i class="bi bi-hdd-rack text-warning me-2"></i> Cache Engine & Background Queue Jobs</h5>
+                    <p class="text-secondary small mb-4">Akselerasi performa dengan file/memory caching serta penanganan tugas berat di latar belakang secara asinkron.</p>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="p-3 bg-dark text-light rounded-3 font-monospace pre-box">
+                                <div class="text-secondary mb-1">// Cache Facade API</div>
+                                <div class="text-info">Cache::put('key', 'value', 3600);</div>
+                                <div class="text-info mt-2">$val = Cache::remember('users', 3600, fn() => User::all());</div>
+                                <div class="text-warning mt-2">Cache::forget('key'); // php zen cache:clear</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 bg-dark text-light rounded-3 font-monospace pre-box">
+                                <div class="text-secondary mb-1">// Background Queue Jobs</div>
+                                <div class="text-success">ProcessPodcastJob::dispatch($podcast);</div>
+                                <div class="text-secondary mt-2">// Worker Runner via Terminal:</div>
+                                <div class="text-warning">php zen queue:work</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: Gate Authorization & Security -->
+            <div class="tab-pane fade" id="gate-pane" role="tabpanel">
+                <div class="bg-white p-4 rounded-3 shadow-sm border">
+                    <h5 class="fw-bold text-dark mb-2"><i class="bi bi-shield-lock text-danger me-2"></i> Authorization (Gates & Policies) & Throttling</h5>
+                    <p class="text-secondary small mb-4">Kontrol hak akses berbasis peran & kebijakan keamanan serta pembatasan rate limit API.</p>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="p-3 bg-dark text-light rounded-3 font-monospace pre-box">
+                                <div class="text-secondary mb-1">// Gate Authorization API</div>
+                                <div class="text-info">Gate::define('edit-post', fn($u, $p) => $u->id === $p->user_id);</div>
+                                <div class="text-success mt-2">if (Gate::allows('edit-post', $user, $post)) { ... }</div>
+                                <div class="text-warning mt-2">Gate::authorize('edit-post', $user, $post);</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 bg-dark text-light rounded-3 font-monospace pre-box">
+                                <div class="text-secondary mb-1">// Rate Limiter & Policies CLI</div>
+                                <div class="text-info">Route::middleware('throttle:60,1');</div>
+                                <div class="text-warning mt-2">php zen make:policy UserPolicy</div>
+                                <div class="text-success mt-2">php zen schedule:run</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: Service & Repository Layer -->
             <div class="tab-pane fade" id="arch-pane" role="tabpanel">
                 <div class="bg-white p-4 rounded-3 shadow-sm border">
                     <h5 class="fw-bold text-dark mb-2"><?= lang('arch_title') ?></h5>
@@ -199,7 +295,7 @@
                 </div>
             </div>
 
-            <!-- TAB 4: Zen CLI & Database Seeders -->
+            <!-- TAB 7: Zen CLI & Database Seeders -->
             <div class="tab-pane fade" id="cli-pane" role="tabpanel">
                 <div class="bg-white p-4 rounded-3 shadow-sm border">
                     <h5 class="fw-bold text-dark mb-2"><?= lang('cli_title') ?></h5>
@@ -219,17 +315,17 @@
                         <div class="col-md-6">
                             <div class="p-3 bg-dark text-light rounded-3 font-monospace pre-box">
                                 <div class="text-secondary mb-2"><?= lang('cli_comment_scaffold') ?></div>
-                                <div class="text-info">php zen make:seeder OrderSeeder</div>
-                                <div class="text-info">php zen make:service OrderService</div>
-                                <div class="text-info">php zen make:repository OrderRepository</div>
-                                <div class="text-info">php zen make:pulse OrderTracker</div>
+                                <div class="text-info">php zen make:job ProcessOrderJob</div>
+                                <div class="text-info">php zen make:policy ProductPolicy</div>
+                                <div class="text-info">php zen cache:clear</div>
+                                <div class="text-info">php zen queue:work</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 5: Patch Notes & Upgrade -->
+            <!-- TAB 8: Patch Notes & Upgrade -->
             <div class="tab-pane fade" id="patch-pane" role="tabpanel">
                 <div class="bg-white p-4 rounded-3 shadow-sm border">
                     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 pb-3 border-bottom">
@@ -248,9 +344,9 @@
                             <div class="p-3 bg-success bg-opacity-10 border border-success rounded-3 h-100">
                                 <h6 class="fw-bold text-success mb-2"><i class="bi bi-check-circle-fill me-1"></i> <?= lang('badge_new') ?></h6>
                                 <ul class="small text-secondary mb-0 ps-3">
-                                    <li>Database Seeder Engine (<code>php zen db:seed</code>)</li>
-                                    <li>Service & Repository Layer Standards</li>
-                                    <li>Multi-Language i18n Engine (ID, EN, JA)</li>
+                                    <li>Enhanced Multi-Disk Storage System & Signed URLs</li>
+                                    <li>Cache Engine & Background Queue Jobs</li>
+                                    <li>Gate Authorization, Task Scheduler & Rate Limiter</li>
                                 </ul>
                             </div>
                         </div>
@@ -258,9 +354,9 @@
                             <div class="p-3 bg-primary bg-opacity-10 border border-primary rounded-3 h-100">
                                 <h6 class="fw-bold text-primary mb-2"><i class="bi bi-lightning-fill me-1"></i> <?= lang('badge_buff') ?></h6>
                                 <ul class="small text-secondary mb-0 ps-3">
-                                    <li>Pest PHP Test Suite Execution (0.21s)</li>
-                                    <li>Zero-Dependency Zen Pulse Reactivity</li>
-                                    <li>Subfolder <code>baseUrl</code> Auto-Resolution</li>
+                                    <li>ORM Attribute Casts & Mutator Enhancements</li>
+                                    <li>Pest PHP Test Suite Execution (0.25s)</li>
+                                    <li>New CLI Generators: <code>make:job</code> & <code>make:policy</code></li>
                                 </ul>
                             </div>
                         </div>
@@ -270,9 +366,10 @@
                         <div class="text-secondary mb-2">// <?= lang('upgrade_proc_title') ?></div>
                         <div class="text-info">composer update razenry/zen-php</div>
                         <div class="text-warning mt-2">php zen clear</div>
+                        <div class="text-warning">php zen cache:clear</div>
                         <div class="text-warning">php zen migrate</div>
                         <div class="text-warning">php zen db:seed</div>
-                        <div class="text-success">php zen optimize</div>
+                        <div class="text-success">php zen test</div>
                     </div>
                 </div>
             </div>

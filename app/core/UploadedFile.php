@@ -49,16 +49,20 @@ class UploadedFile
         return $this->error === UPLOAD_ERR_OK && (is_uploaded_file($this->tmpName) || file_exists($this->tmpName));
     }
 
+    public function hashName(?string $path = null): string
+    {
+        $extension = $this->getClientOriginalExtension();
+        $filename = bin2hex(random_bytes(16)) . ($extension ? '.' . $extension : '');
+        return $path ? trim($path, '/') . '/' . $filename : $filename;
+    }
+
     public function store(string $path = '', string $disk = 'public'): ?string
     {
         if (!$this->isValid()) {
             return null;
         }
 
-        $extension = $this->getClientOriginalExtension();
-        $filename = bin2hex(random_bytes(16)) . ($extension ? '.' . $extension : '');
-        $targetPath = trim($path, '/') . '/' . $filename;
-
+        $targetPath = $this->hashName($path);
         $contents = file_get_contents($this->tmpName);
         if ($contents !== false && Storage::disk($disk)->put($targetPath, $contents)) {
             return $targetPath;
@@ -66,4 +70,30 @@ class UploadedFile
 
         return null;
     }
+
+    public function storeAs(string $path, string $name, string $disk = 'public'): ?string
+    {
+        if (!$this->isValid()) {
+            return null;
+        }
+
+        $targetPath = trim($path, '/') . '/' . ltrim($name, '/');
+        $contents = file_get_contents($this->tmpName);
+        if ($contents !== false && Storage::disk($disk)->put($targetPath, $contents)) {
+            return $targetPath;
+        }
+
+        return null;
+    }
+
+    public function storePublicly(string $path = ''): ?string
+    {
+        return $this->store($path, 'public');
+    }
+
+    public function storePubliclyAs(string $path, string $name): ?string
+    {
+        return $this->storeAs($path, $name, 'public');
+    }
 }
+
