@@ -82,11 +82,24 @@ if (!function_exists('view')) {
 
 if (!function_exists('react')) {
     /**
-     * Render a React 18 SPA component
+     * Render a React 18 / Inertia SPA component
      */
     function react(string $component, array $props = [], string $layout = 'app'): void
     {
-        App::React($component, $props, $layout);
+        Inertia::render($component, $props, $layout);
+    }
+}
+
+if (!function_exists('inertia')) {
+    /**
+     * Render an Inertia.js React SPA component
+     */
+    function inertia(?string $component = null, array $props = [], string $layout = 'app')
+    {
+        if ($component === null) {
+            return new Inertia();
+        }
+        return Inertia::render($component, $props, $layout);
     }
 }
 

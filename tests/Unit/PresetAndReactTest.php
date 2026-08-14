@@ -8,9 +8,8 @@ test('app react container rendering with props serialization', function () {
     $output = ob_get_clean();
 
     expect($output)->toContain('id="app"');
-    expect($output)->toContain('data-component="Pages/Dashboard"');
-    expect($output)->toContain('&quot;title&quot;:&quot;Test Dashboard&quot;');
-    expect($output)->toContain('&quot;user_id&quot;:42');
+    expect($output)->toContain('data-page=');
+    expect($output)->toContain('Test Dashboard');
 });
 
 test('app vite asset helper includes tailwind cdn fallback', function () {

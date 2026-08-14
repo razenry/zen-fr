@@ -54,18 +54,11 @@ class App
     }
 
     /**
-     * Render React 18 / SPA component container with props
+     * Render React 18 / Inertia SPA component container with props
      */
     public static function React(string $component, array $props = [], string $layout = 'app'): void
     {
-        $jsonProps = htmlspecialchars(json_encode($props), ENT_QUOTES, 'UTF-8');
-        $html = '<div id="app" data-component="' . htmlspecialchars($component) . '" data-props="' . $jsonProps . '"></div>';
-        
-        static::Layout($layout, null, [
-            'content_html' => $html,
-            'component' => $component,
-            'props' => $props,
-        ]);
+        Inertia::render($component, $props, $layout);
     }
 
     /**
@@ -74,7 +67,13 @@ class App
     public static function Vite(array|string $entrypoints = ['resources/css/app.css', 'resources/js/app.jsx']): string
     {
         $entrypoints = is_array($entrypoints) ? $entrypoints : [$entrypoints];
-        $isDev = getenv('APP_ENV') === 'local' || getenv('VITE_DEV') === 'true' || file_exists(dirname(__DIR__, 2) . '/hot');
+        $rootDir = dirname(__DIR__, 2);
+        
+        $isDev = getenv('APP_ENV') === 'local' || 
+                 getenv('VITE_DEV') === 'true' || 
+                 file_exists($rootDir . '/hot') ||
+                 !file_exists($rootDir . '/public/build/manifest.json');
+
         $base = function_exists('baseUrl') ? baseUrl('') : '';
 
         $html = '';

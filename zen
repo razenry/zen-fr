@@ -107,9 +107,12 @@ switch ($command) {
         }
         $hasPackageJson = file_exists(__DIR__ . '/package.json');
 
-        echo CliColor::bold(CliColor::cyan("\n⚡ Zen PHP Concurrent Development Server (v8.1.0)\n"));
-        echo CliColor::green("PHP Server running at: ") . CliColor::bold("http://{$host}:{$port}\n");
-        echo CliColor::yellow("Document root: ") . "public/\n";
+        // Create hot file for Vite dev server detection
+        $hotFile = __DIR__ . '/hot';
+        file_put_contents($hotFile, 'http://localhost:5173');
+
+        echo CliColor::banner("⚡ ZEN PHP DEVELOPMENT SERVER (v9.0.0)", "Concurrent PHP Backend & Vite HMR Engine");
+        echo CliColor::green("  [PHP Server]   ") . CliColor::bold("http://{$host}:{$port}") . CliColor::dim(" (Document Root: public/)\n");
 
         $descriptors = [
             0 => STDIN,
@@ -129,9 +132,9 @@ switch ($command) {
         // 2. Start Vite / Node Dev Server if package.json exists
         if ($hasPackageJson) {
             if (!is_dir(__DIR__ . '/node_modules')) {
-                echo CliColor::yellow("💡 [Vite Hint] 'node_modules' folder not found. Run 'npm install' to enable Vite HMR.\n");
+                echo CliColor::yellow("  [Vite Server]  💡 'node_modules' folder not found. Run 'npm install' to enable Vite HMR.\n");
             } else {
-                echo CliColor::cyan("⚡ [Vite / Node] Starting HMR dev server (npm run dev)...\n");
+                echo CliColor::cyan("  [Vite Server]  ") . CliColor::bold("http://localhost:5173") . CliColor::dim(" (Node HMR & React 18 Engine)\n");
                 $isWin = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
                 $npmCmd = $isWin ? 'cmd /c npm run dev' : 'npm run dev';
                 $npmProc = @proc_open($npmCmd, $descriptors, $pipesNpm);
@@ -141,7 +144,22 @@ switch ($command) {
             }
         }
 
-        echo "Press Ctrl+C to stop all servers.\n\n";
+        echo "\n" . CliColor::dim("Press Ctrl+C to stop all development servers cleanly.\n\n");
+
+        // Cleanup on exit function
+        $cleanup = function () use ($hotFile, &$processes) {
+            if (file_exists($hotFile)) {
+                @unlink($hotFile);
+            }
+            foreach ($processes as $proc) {
+                if (is_resource($proc)) {
+                    @proc_terminate($proc);
+                    @proc_close($proc);
+                }
+            }
+        };
+
+        register_shutdown_function($cleanup);
 
         // Keep parent process alive monitoring workers
         while (true) {
@@ -158,12 +176,7 @@ switch ($command) {
             usleep(300000);
         }
 
-        foreach ($processes as $proc) {
-            if (is_resource($proc)) {
-                @proc_terminate($proc);
-                @proc_close($proc);
-            }
-        }
+        $cleanup();
         break;
 
     case 'setup':
