@@ -6,8 +6,8 @@ test('cache put, get, remember, and forget', function () {
     Cache::flush();
 
     // Put & Get
-    Cache::put('framework_version', '4.0.0', 300);
-    expect(Cache::get('framework_version'))->toBe('4.0.0');
+    Cache::put('framework_version', '7.0.0', 300);
+    expect(Cache::get('framework_version'))->toBe('7.0.0');
 
     // Has
     expect(Cache::has('framework_version'))->toBeTrue();
