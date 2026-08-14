@@ -1,7 +1,7 @@
 {
     "name": "zen-php-framework",
     "private": true,
-    "version": "9.1.1",
+    "version": "9.1.2",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -17,6 +17,7 @@
         "vite": "^5.1.4"
     },
     "dependencies": {
+        "@inertiajs/react": "^1.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     }

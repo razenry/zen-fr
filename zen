@@ -793,20 +793,19 @@ switch ($command) {
         if (!is_dir(__DIR__ . '/resources/js/Pages')) {
             mkdir(__DIR__ . '/resources/js/Pages', 0755, true);
         }
-        if (!file_exists(__DIR__ . '/resources/js/app.jsx')) {
-            $appJsxCode = "import React from 'react';\nimport { createRoot } from 'react-dom/client';\nimport Dashboard from './Pages/Dashboard';\n\nconst pages = {\n  'Pages/Dashboard': Dashboard,\n};\n\nfunction initApp() {\n  const rootElement = document.getElementById('app');\n  if (!rootElement) return;\n\n  const componentName = rootElement.getAttribute('data-component') || 'Pages/Dashboard';\n  const rawProps = rootElement.getAttribute('data-props') || '{}';\n  \n  let props = {};\n  try {\n    props = JSON.parse(rawProps);\n  } catch (e) {\n    console.error('Failed to parse React props', e);\n  }\n\n  const Component = pages[componentName] || Dashboard;\n\n  const root = createRoot(rootElement);\n  root.render(\n    <React.StrictMode>\n      <Component {...props} />\n    </React.StrictMode>\n  );\n}\n\nif (document.readyState === 'loading') {\n  document.addEventListener('DOMContentLoaded', initApp);\n} else {\n  initApp();\n}\n";
-            file_put_contents(__DIR__ . '/resources/js/app.jsx', $appJsxCode);
-        }
-        if (!file_exists(__DIR__ . '/resources/js/Pages/Dashboard.jsx')) {
-            file_put_contents(__DIR__ . '/resources/js/Pages/Dashboard.jsx', "import React from 'react';\n\nexport default function Dashboard(props) {\n  return (\n    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>\n      <h1>Welcome to Zen PHP + React 18</h1>\n      <p>App running with Vite & React 18 Preset.</p>\n    </div>\n  );\n}\n");
-        }
 
-        // Ensure package.json has React & Vite scripts
+        $appJsxCode = "import React from 'react';\nimport { createRoot } from 'react-dom/client';\nimport { createInertiaApp } from '@inertiajs/react';\n\ncreateInertiaApp({\n  resolve: name => {\n    const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true });\n    const cleanName = name.replace(/^Pages\//, '');\n    const match = pages[`./Pages/\${cleanName}.jsx`] || pages[`./\${name}.jsx`];\n    return match ? match.default : (pages['./Pages/Dashboard.jsx'] ? pages['./Pages/Dashboard.jsx'].default : Object.values(pages)[0].default);\n  },\n  setup({ el, App, props }) {\n    createRoot(el).render(<App {...props} />);\n  },\n});\n";
+        file_put_contents(__DIR__ . '/resources/js/app.jsx', $appJsxCode);
+
+        $dashboardJsxCode = "import React, { useState } from 'react';\nimport { Head } from '@inertiajs/react';\n\nexport default function Dashboard({ title = 'Zen PHP React Inertia Dashboard', user = { name: 'Developer' } }) {\n  const [count, setCount] = useState(0);\n\n  return (\n    <>\n      <Head title={title} />\n      <div className=\"min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 font-sans\">\n        <div className=\"max-w-2xl w-full bg-slate-900/90 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-2xl text-center space-y-8 backdrop-blur-xl relative overflow-hidden\">\n          <div className=\"absolute -top-20 -left-20 w-56 h-56 bg-sky-500/10 rounded-full blur-3xl pointer-events-none\"></div>\n          <div className=\"absolute -bottom-20 -right-20 w-56 h-56 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none\"></div>\n\n          <div className=\"inline-flex items-center justify-center w-20 h-20 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded-2xl text-4xl shadow-inner mx-auto\">\n            ⚡\n          </div>\n\n          <div>\n            <h1 className=\"text-3xl sm:text-4xl font-black tracking-tight text-white mb-3\">{title}</h1>\n            <p className=\"text-slate-400 text-sm sm:text-base max-w-lg mx-auto leading-relaxed\">\n              Selamat datang, <span className=\"text-sky-400 font-bold\">{user.name}</span>! Komponen React ini dirender secara seamless oleh <strong className=\"text-white\">Zen PHP v9.1.2</strong> via <strong className=\"text-sky-400\">Inertia.js + Vite HMR + TailwindCSS v4 Native Engine</strong>.\n            </p>\n          </div>\n\n          <div className=\"bg-slate-950/80 p-6 rounded-2xl border border-slate-800 flex flex-col items-center gap-4 shadow-inner\">\n            <span className=\"text-xs uppercase tracking-widest text-slate-500 font-mono font-bold\">Inertia React State Counter</span>\n            <div className=\"text-6xl font-black text-sky-400 font-mono tracking-tight my-2\">{count}</div>\n            <div className=\"flex gap-3\">\n              <button\n                onClick={() => setCount(count + 1)}\n                className=\"px-6 py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold rounded-xl shadow-lg shadow-sky-500/20 transition active:scale-95 cursor-pointer\"\n              >\n                + Increment\n              </button>\n              <button\n                onClick={() => setCount(0)}\n                className=\"px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl border border-slate-700 transition active:scale-95 cursor-pointer\"\n              >\n                Reset\n              </button>\n            </div>\n          </div>\n\n          <div className=\"pt-4 border-t border-slate-800/80 text-xs text-slate-500 flex justify-between items-center px-2 font-mono\">\n            <span>Zen PHP Framework v9.1.2</span>\n            <span className=\"text-emerald-400\">Inertia.js React 18 Engine Active</span>\n          </div>\n        </div>\n      </div>\n    </>\n  );\n}\n";
+        file_put_contents(__DIR__ . '/resources/js/Pages/Dashboard.jsx', $dashboardJsxCode);
+
+        // Ensure package.json has React, Inertia & Vite scripts
         $pkgPath = __DIR__ . '/package.json';
         $pkgData = [
             'name' => 'zen-php-framework',
             'private' => true,
-            'version' => '8.1.0',
+            'version' => '9.1.2',
             'type' => 'module',
             'scripts' => [
                 'dev' => 'vite',
@@ -822,6 +821,7 @@ switch ($command) {
                 'vite' => '^5.1.4'
             ],
             'dependencies' => [
+                '@inertiajs/react' => '^1.2.0',
                 'react' => '^18.2.0',
                 'react-dom' => '^18.2.0'
             ]
