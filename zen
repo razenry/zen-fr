@@ -781,7 +781,8 @@ switch ($command) {
             mkdir(__DIR__ . '/resources/js/Pages', 0755, true);
         }
         if (!file_exists(__DIR__ . '/resources/js/app.jsx')) {
-            file_put_contents(__DIR__ . '/resources/js/app.jsx', "import React from 'react';\nimport { createRoot } from 'react-dom/client';\nimport Dashboard from './Pages/Dashboard';\n\nconst rootElement = document.getElementById('app');\nif (rootElement) {\n    createRoot(rootElement).render(<Dashboard />);\n}\n");
+            $appJsxCode = "import React from 'react';\nimport { createRoot } from 'react-dom/client';\nimport Dashboard from './Pages/Dashboard';\n\nconst pages = {\n  'Pages/Dashboard': Dashboard,\n};\n\nfunction initApp() {\n  const rootElement = document.getElementById('app');\n  if (!rootElement) return;\n\n  const componentName = rootElement.getAttribute('data-component') || 'Pages/Dashboard';\n  const rawProps = rootElement.getAttribute('data-props') || '{}';\n  \n  let props = {};\n  try {\n    props = JSON.parse(rawProps);\n  } catch (e) {\n    console.error('Failed to parse React props', e);\n  }\n\n  const Component = pages[componentName] || Dashboard;\n\n  const root = createRoot(rootElement);\n  root.render(\n    <React.StrictMode>\n      <Component {...props} />\n    </React.StrictMode>\n  );\n}\n\nif (document.readyState === 'loading') {\n  document.addEventListener('DOMContentLoaded', initApp);\n} else {\n  initApp();\n}\n";
+            file_put_contents(__DIR__ . '/resources/js/app.jsx', $appJsxCode);
         }
         if (!file_exists(__DIR__ . '/resources/js/Pages/Dashboard.jsx')) {
             file_put_contents(__DIR__ . '/resources/js/Pages/Dashboard.jsx', "import React from 'react';\n\nexport default function Dashboard(props) {\n  return (\n    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>\n      <h1>Welcome to Zen PHP + React 18</h1>\n      <p>App running with Vite & React 18 Preset.</p>\n    </div>\n  );\n}\n");
